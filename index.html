@@ -587,14 +587,14 @@ input,textarea,select{font:inherit;color:inherit}
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script>
 /* ============================================================
-   MY WORK BUDDY — calm personal learning workbench
-   vanilla JS · localStorage · iPhone-first
+   MY WORK BUDDY — 安静的个人学习工作台
+   vanilla JS · localStorage · iPhone-first · 中文版
    ============================================================ */
 (function(){
   'use strict';
 
   // ---------- storage keys ----------
-  const K = { tasks:'mwb.tasks', logs:'mwb.logs', evidence:'mwb.evidence', reviews:'mwb.reviews', pain:'mwb.painStatus', seeded:'mwb.seeded' };
+  const K = { tasks:'mwb2.tasks', logs:'mwb2.logs', evidence:'mwb2.evidence', reviews:'mwb2.reviews', pain:'mwb2.painStatus', seeded:'mwb2.seeded' };
 
   // ---------- helpers ----------
   const $ = (s,r=document)=>r.querySelector(s);
@@ -604,10 +604,9 @@ input,textarea,select{font:inherit;color:inherit}
   const trunc = (s,n)=>{ s=trim(s); return s.length>n? s.slice(0,n-1)+'…' : s; };
   const todayISO = ()=>{ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
   const parseISO = s => { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); };
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const wdays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const wdays = ['周日','周一','周二','周三','周四','周五','周六'];
   const fmtMD = d => String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0');
-  const fmtFullDate = iso => { const d=parseISO(iso); return months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear(); };
+  const fmtFullDate = iso => { const d=parseISO(iso); return d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日'; };
   const fmtWeekday = iso => wdays[parseISO(iso).getDay()];
   const weekStart = ()=>{ const d=new Date(); const day=d.getDay(); const diff=day===0?6:day-1; d.setDate(d.getDate()-diff); d.setHours(0,0,0,0); return d.toISOString().slice(0,10); };
   const weekEnd = ()=>{ const d=new Date(); const day=d.getDay(); const diff=day===0?0:7-day; d.setDate(d.getDate()+diff); d.setHours(0,0,0,0); return d.toISOString().slice(0,10); };
@@ -616,6 +615,11 @@ input,textarea,select{font:inherit;color:inherit}
   const avg = a => a.length? a.reduce((x,y)=>x+y,0)/a.length : 0;
   const load = k => { try { return JSON.parse(localStorage.getItem(k)||'null'); } catch { return null; } };
   const save = (k,v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} };
+
+  // ---------- 中文映射 ----------
+  const LENS_LABEL = { fact:'事实', feeling:'感受', analysis:'分析' };
+  const STATUS_LABEL = { active:'进行中', paused:'暂停', archived:'归档' };
+  const PAIN_LABEL = { open:'待处理', testing:'试验中', resolved:'已解决' };
 
   // ---------- state ----------
   let state = { tasks:[], logs:[], evidence:[], reviews:[], painStatus:{} };
@@ -632,26 +636,26 @@ input,textarea,select{font:inherit;color:inherit}
   function defaults(){
     const now = new Date().toISOString();
     const tasks = [
-      { id:'t-voc', name:'Vocabulary',     area:'Lexical', stage:'Recognition \u2192 Use',     focus:'Move passive recognition into active recall and spoken use.', pain:"Words don't come out when I need them.",         strategy:'Spaced recall + sentence production within 24h.', milestone:'200 new words actively used in speech/writing.', status:'active', createdAt:now, updatedAt:now },
-      { id:'t-lis', name:'Listening',      area:'Input',   stage:'Sentence \u2192 Discourse', focus:'Track longer arguments without losing structure.',       pain:'Long sentence processing speed slow.',           strategy:'Chunking + pre-reading transcripts.',            milestone:'Sustained 20-min listening with 80% retention.', status:'active', createdAt:now, updatedAt:now },
-      { id:'t-rea', name:'Reading',        area:'Input',   stage:'Detail \u2192 Argument',    focus:'Read academic paragraphs for structure, not just meaning.', pain:'I read words without seeing the argument.',     strategy:'Mark topic sentence + 2 supporting moves per paragraph.', milestone:'Read one academic essay/day with notes.', status:'active', createdAt:now, updatedAt:now },
-      { id:'t-wri', name:'Writing',        area:'Output',  stage:'Sentence \u2192 Essay',     focus:'Get a clear paragraph before adding length.',       pain:'Drafts ramble.',                                 strategy:'Outline 3 points + 1 example before drafting.', milestone:'One coherent 300-word essay in 25 min.', status:'active', createdAt:now, updatedAt:now },
-      { id:'t-spe', name:'Speaking',       area:'Output',  stage:'Expression \u2192 Logic \u2192 Output', focus:'Sustained expression without notes.',       pain:'Logic breaks down beyond 2 minutes.',            strategy:'Mind-map arguments before speaking; anchor with 3 signpost phrases.', milestone:'5-min continuous speech on familiar topics.', status:'active', createdAt:now, updatedAt:now },
-      { id:'t-tra', name:'Translation',    area:'Output',  stage:'Literal \u2192 Faithful',  focus:'Render meaning before polishing words.',           pain:'I translate word-by-word and lose the meaning.', strategy:'Read the full sentence, then re-translate.',   milestone:'Translate a 300-word passage in 30 min.', status:'active', createdAt:now, updatedAt:now },
-      { id:'t-int', name:'Interpretation', area:'Output',  stage:'Listening + Reformulating',focus:'Keep the main idea alive while reformulating.',    pain:'I fall behind on dense passages.',               strategy:'Symbolic note-taking + segment-by-segment output.', milestone:'Consecutive interpretation of a 2-min speech.', status:'active', createdAt:now, updatedAt:now }
+      { id:'t-voc', name:'词汇', area:'词汇', stage:'认知 \u2192 运用',     focus:'把被动认知转成主动回忆和口语运用。', pain:'需要用的时候词出不来。',         strategy:'间隔回忆 + 24小时内造句。', milestone:'200个新词能在口语/写作中主动使用。', status:'active', createdAt:now, updatedAt:now },
+      { id:'t-lis', name:'听力', area:'输入',   stage:'句子 \u2192 语篇', focus:'跟上较长的论述而不丢结构。',       pain:'长句处理速度慢。',           strategy:'按意群切分 + 提前读文稿。',            milestone:'连续听20分钟，保持80%理解。', status:'active', createdAt:now, updatedAt:now },
+      { id:'t-rea', name:'阅读', area:'输入',   stage:'细节 \u2192 论证', focus:'读学术段落要看结构，不只看意思。', pain:'读了字却看不到论证。',     strategy:'每段标出主题句 + 两处论据推进。', milestone:'每天读一篇学术文章并做笔记。', status:'active', createdAt:now, updatedAt:now },
+      { id:'t-wri', name:'写作', area:'输出',  stage:'句子 \u2192 文章', focus:'先把一个段落写清楚，再加长度。',       pain:'草稿容易发散。',                                 strategy:'起草前列3个要点 + 1个例子。', milestone:'25分钟写出一篇连贯的300词文章。', status:'active', createdAt:now, updatedAt:now },
+      { id:'t-spe', name:'口语', area:'输出',  stage:'表达 \u2192 逻辑 \u2192 输出', focus:'不靠笔记持续表达。',       pain:'超过2分钟逻辑就散了。',            strategy:'开口前画论点脑图；用3个路标短语锚定。', milestone:'就熟悉话题连续说5分钟。', status:'active', createdAt:now, updatedAt:now },
+      { id:'t-tra', name:'翻译', area:'输出',  stage:'直译 \u2192 忠实',  focus:'先传达意思，再打磨措辞。',           pain:'逐字翻译丢了意思。', strategy:'读完整句再重译。',   milestone:'30分钟翻译一段300词的文章。', status:'active', createdAt:now, updatedAt:now },
+      { id:'t-int', name:'口译', area:'输出',  stage:'听辨 + 重述',focus:'在重述中保住主旨。',    pain:'信息密集时跟不上。',               strategy:'符号笔记 + 分段输出。', milestone:'对一段2分钟讲话做交传。', status:'active', createdAt:now, updatedAt:now },
     ];
     const logs = [
-      { id:uid(), date:'2026-09-17', taskId:'t-spe', whatDid:'Shadowed a TED talk, 15 min.', evidence:'recording saved', difficulty:'Fast sections lost.', feeling:'Encouraged.', energy:6, focus:7, whatChanged:'First time finishing the full clip without pausing.', nextAdjust:'Slow the source to 0.75\u00d7 on dense passages.', lens:'fact', createdAt:now, updatedAt:now },
-      { id:uid(), date:'2026-09-19', taskId:'t-spe', whatDid:'Practiced argument mapping on 3 prompts.', evidence:'3 mind-maps', difficulty:'Maps got messy mid-way.', feeling:'Steady.', energy:5, focus:6, whatChanged:'Mapping speed improved slightly.', nextAdjust:'Limit to 5 nodes per map.', lens:'analysis', createdAt:now, updatedAt:now },
-      { id:uid(), date:'2026-09-22', taskId:'t-spe', whatDid:'Recorded a 3-min impromptu on a familiar topic.', evidence:'audio 3:12', difficulty:'Logic drifted at 2:30.', feeling:'Frustrated but a little closer.', energy:7, focus:8, whatChanged:'Passed the 2-minute wall for the first time.', nextAdjust:'Anchor with 3 signpost phrases every minute.', lens:'feeling', createdAt:now, updatedAt:now },
-      { id:uid(), date:'2026-09-15', taskId:'t-lis', whatDid:'Dictation of a 2-min BBC segment.', evidence:'text file', difficulty:'Long sentences break my flow.', feeling:'Tired.', energy:5, focus:6, whatChanged:'', nextAdjust:'Pre-read the transcript once.', lens:'fact', createdAt:now, updatedAt:now },
-      { id:uid(), date:'2026-09-18', taskId:'t-lis', whatDid:'Podcast note-taking, 20 min.', evidence:'notes', difficulty:'Long sentences still slow to process.', feeling:'Calm.', energy:6, focus:7, whatChanged:'Better at catching the topic.', nextAdjust:'Practice chunking in 7-word units.', lens:'fact', createdAt:now, updatedAt:now },
-      { id:uid(), date:'2026-09-21', taskId:'t-lis', whatDid:'Shadowed a lecture, 30 min.', evidence:'recording', difficulty:'Long sentence processing speed slow.', feeling:'Focused.', energy:6, focus:7, whatChanged:'Slightly better at chunking phrases.', nextAdjust:'Pre-read transcripts of the next 3 lectures.', lens:'analysis', createdAt:now, updatedAt:now },
-      { id:uid(), date:'2026-09-20', taskId:'t-voc', whatDid:'Reviewed 30 words from the past week with sentences.', evidence:'20 sentences written', difficulty:'Some words still feel inert.', feeling:'Patient.', energy:6, focus:7, whatChanged:'8 words now feel usable.', nextAdjust:"Add the inert 10 to tomorrow's review.", lens:'fact', createdAt:now, updatedAt:now }
+      { id:uid(), date:'2026-09-17', taskId:'t-spe', whatDid:'跟读TED演讲，15分钟。', evidence:'录音已存', difficulty:'快段跟不上。', feeling:'受鼓舞。', energy:6, focus:7, whatChanged:'第一次不暂停听完整个片段。', nextAdjust:'密集段落把源速降到0.75倍。', lens:'fact', createdAt:now, updatedAt:now },
+      { id:uid(), date:'2026-09-19', taskId:'t-spe', whatDid:'用3个话题练习论点脑图。', evidence:'3张脑图', difficulty:'脑图画到一半变乱。', feeling:'平稳。', energy:5, focus:6, whatChanged:'画图速度略有提升。', nextAdjust:'每张脑图限制5个节点。', lens:'analysis', createdAt:now, updatedAt:now },
+      { id:uid(), date:'2026-09-22', taskId:'t-spe', whatDid:'就熟悉话题录了一段3分钟即兴。', evidence:'录音 3:12', difficulty:'2:30后逻辑跑偏。', feeling:'沮丧但接近了一些。', energy:7, focus:8, whatChanged:'第一次突破了2分钟的墙。', nextAdjust:'每分钟用3个路标短语锚定。', lens:'feeling', createdAt:now, updatedAt:now },
+      { id:uid(), date:'2026-09-15', taskId:'t-lis', whatDid:'听写一段2分钟BBC新闻。', evidence:'文本文件', difficulty:'长句打断我的节奏。', feeling:'疲惫。', energy:5, focus:6, whatChanged:'', nextAdjust:'提前读一遍文稿。', lens:'fact', createdAt:now, updatedAt:now },
+      { id:uid(), date:'2026-09-18', taskId:'t-lis', whatDid:'播客笔记，20分钟。', evidence:'笔记', difficulty:'长句还是处理得慢。', feeling:'平静。', energy:6, focus:7, whatChanged:'更会抓话题了。', nextAdjust:'按7词一组练习切分。', lens:'fact', createdAt:now, updatedAt:now },
+      { id:uid(), date:'2026-09-21', taskId:'t-lis', whatDid:'跟读讲座，30分钟。', evidence:'录音', difficulty:'长句处理速度慢。', feeling:'专注。', energy:6, focus:7, whatChanged:'切分意群略好一些。', nextAdjust:'提前读接下来3场讲座的文稿。', lens:'analysis', createdAt:now, updatedAt:now },
+      { id:uid(), date:'2026-09-20', taskId:'t-voc', whatDid:'用句子复习了上周的30个词。', evidence:'写了20个句子', difficulty:'有些词还是用不起来。', feeling:'耐心。', energy:6, focus:7, whatChanged:'有8个词现在觉得能用了。', nextAdjust:'把那10个用不起来的放进明天的复习。', lens:'fact', createdAt:now, updatedAt:now },
     ];
     const evidence = [
-      { id:uid(), taskId:'t-spe', ability:'Continuous speaking',     before:'Could not speak beyond ~30 seconds without losing structure.', after:'Held a 3-minute continuous monologue on a familiar topic.', date:'2026-09-22', createdAt:now },
-      { id:uid(), taskId:'t-lis', ability:'Chunking long sentences', before:'Heard each word separately; lost the meaning by the end.',     after:'Catch the chunk and pause to catch up; meaning survives.',     date:'2026-09-21', createdAt:now }
+      { id:uid(), taskId:'t-spe', ability:'连续表达',     before:'说不到30秒结构就散了。', after:'就熟悉话题连续说了3分钟独白。', date:'2026-09-22', createdAt:now },
+      { id:uid(), taskId:'t-lis', ability:'长句切分', before:'逐词听，听到结尾意思就丢了。',     after:'能抓住意群并暂停追上，意思保住了。',     date:'2026-09-21', createdAt:now },
     ];
     return { tasks, logs, evidence, reviews:[], painStatus:{ 't-lis':'open', 't-spe':'testing' } };
   }
@@ -693,14 +697,14 @@ input,textarea,select{font:inherit;color:inherit}
   }
   function renderNav(path){
     const tabs = [
-      { key:'home',     label:'Home',     path:'/home',     icon:ICON.home },
-      { key:'tasks',    label:'Tasks',    path:'/tasks',    icon:ICON.list },
+      { key:'home',     label:'首页',     path:'/home',     icon:ICON.home },
+      { key:'tasks',    label:'任务',    path:'/tasks',    icon:ICON.list },
       { key:'new',      label:'',         path:'/new',      icon:ICON.plus, fab:true },
-      { key:'log',      label:'Log',      path:'/log',      icon:ICON.clock },
-      { key:'insights', label:'Insights', path:'/insights', icon:ICON.bulb }
+      { key:'log',      label:'记录',      path:'/log',      icon:ICON.clock },
+      { key:'insights', label:'洞察', path:'/insights', icon:ICON.bulb }
     ];
     const active = activeKey(path);
-    const html = tabs.map(t=>'<button class="nav-btn '+(t.fab?'fab':'')+' '+(t.key===active?'on':'')+'" data-go="'+t.path+'" aria-label="'+(t.label||'New log')+'"><span class="ico">'+t.icon+'</span>'+(t.label?'<span>'+t.label+'</span>':'')+'</button>').join('');
+    const html = tabs.map(t=>'<button class="nav-btn '+(t.fab?'fab':'')+' '+(t.key===active?'on':'')+'" data-go="'+t.path+'" aria-label="'+(t.label||'新建记录')+'"><span class="ico">'+t.icon+'</span>'+(t.label?'<span>'+t.label+'</span>':'')+'</button>').join('');
     $('#nav').innerHTML = html;
   }
 
@@ -735,25 +739,27 @@ input,textarea,select{font:inherit;color:inherit}
   }
   function timelineEntry(l, editable){
     const lens = l.lens || 'fact';
+    const lensLabel = LENS_LABEL[lens] || lens;
     const t = state.tasks.find(x=>x.id===l.taskId);
     const editAttr = editable? 'data-act="edit-log" data-id="'+l.id+'"' : '';
     return ''+
       '<div class="t-entry">'+
         '<div class="t-dot '+lens+'"></div>'+
         '<div class="t-card" '+editAttr+'>'+
-          '<div class="t-date">'+esc(fmtMD(parseISO(l.date)))+' <span class="lens">'+lens+'</span>'+(t? ' \u00b7 '+esc(t.name) : '')+'</div>'+
+          '<div class="t-date">'+esc(fmtMD(parseISO(l.date)))+' <span class="lens">'+lensLabel+'</span>'+(t? ' \u00b7 '+esc(t.name) : '')+'</div>'+
           '<div class="t-rows">'+
-            rowItem('Did', l.whatDid)+
-            rowItem('Found', l.whatChanged)+
-            rowItem('Problem', l.difficulty)+
-            rowItem('Adjust', l.nextAdjust)+
-            rowItem('Evidence', l.evidence)+
-            rowItem('Feeling', l.feeling)+
+            rowItem('做了', l.whatDid)+
+            rowItem('发现', l.whatChanged)+
+            rowItem('问题', l.difficulty)+
+            rowItem('调整', l.nextAdjust)+
+            rowItem('证据', l.evidence)+
+            rowItem('感受', l.feeling)+
           '</div>'+
-          ((l.energy||l.focus) ? '<div class="t-scores">'+(l.energy? '<div class="score">Energy <span class="num">'+l.energy+'</span>/10</div>':'')+(l.focus? '<div class="score">Focus <span class="num">'+l.focus+'</span>/10</div>':'')+'</div>' : '')+
+          ((l.energy||l.focus) ? '<div class="t-scores">'+(l.energy? '<div class="score">精力 <span class="num">'+l.energy+'</span>/10</div>':'')+(l.focus? '<div class="score">专注 <span class="num">'+l.focus+'</span>/10</div>':'')+'</div>' : '')+
         '</div>'+
       '</div>';
-  }// ============================================================
+  }
+  // ============================================================
   // VIEWS
   // ============================================================
 
@@ -793,13 +799,13 @@ input,textarea,select{font:inherit;color:inherit}
         '<div class="right">v1</div>'+
       '</div>'+
       '<div class="home-hero">'+
-        '<div class="greeting">Today, '+weekday+'.</div>'+
-        '<div class="date">'+date.getDate()+' <small>'+months[date.getMonth()]+' '+date.getFullYear()+'</small></div>'+
-        '<div class="weekday">A quiet day to record what really happened.</div>'+
+        '<div class="greeting">今天，'+weekday+'。</div>'+
+        '<div class="date">'+date.getDate()+' <small>'+(date.getMonth()+1)+'月 '+date.getFullYear()+'</small></div>'+
+        '<div class="weekday">安静的一天，记录真实发生的事。</div>'+
       '</div>'+
 
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>Today</div><div class="right">'+todayLogs.length+' entr'+(todayLogs.length===1?'y':'ies')+'</div></div>'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>今日</div><div class="right">'+todayLogs.length+' 条记录</div></div>'+
         (todayTasks.length ? '<div class="list">'+todayTasks.map(t => ''+
           '<div class="row" data-go="/task?id='+t.id+'">'+
             '<div class="left">'+
@@ -809,21 +815,21 @@ input,textarea,select{font:inherit;color:inherit}
               '</div>'+
             '</div>'+
             '<div class="chev">\u203a</div>'+
-          '</div>').join('')+'</div>' : '<div class="empty">Nothing logged yet today. Tap + to record what you do.</div>')+
+          '</div>').join('')+'</div>' : '<div class="empty">今天还没有记录。点击 + 记录你做的事。</div>')+
       '</section>'+
 
       (focusTask ? ''+
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>Current Focus</div><div class="right" data-go="/task?id='+focusTask.id+'" style="cursor:pointer;color:var(--blue-deep)">'+esc(focusTask.name)+' \u203a</div></div>'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>当前重点</div><div class="right" data-go="/task?id='+focusTask.id+'" style="cursor:pointer;color:var(--blue-deep)">'+esc(focusTask.name)+' \u203a</div></div>'+
         '<div class="tile focus-tile">'+
           '<div class="label">'+esc(focusTask.name)+'</div>'+
-          '<div class="body serif">'+esc(focusTask.focus||'\u2014 set your current focus on this task.')+'</div>'+
-          '<div class="muted" style="margin-top:8px;font-size:12.5px">Stage \u00b7 '+esc(focusTask.stage||'\u2014')+'</div>'+
+          '<div class="body serif">'+esc(focusTask.focus||'\u2014 为这个任务设置当前重点。')+'</div>'+
+          '<div class="muted" style="margin-top:8px;font-size:12.5px">阶段 \u00b7 '+esc(focusTask.stage||'\u2014')+'</div>'+
         '</div>'+
       '</section>' : '')+
 
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>Recent Progress</div></div>'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>近期进展</div></div>'+
         (recentLogs.length ? '<div class="list">'+recentLogs.map(l => {
           const t = state.tasks.find(x=>x.id===l.taskId);
           return '<div class="row" data-act="edit-log" data-id="'+l.id+'">'+
@@ -833,12 +839,12 @@ input,textarea,select{font:inherit;color:inherit}
             '</div></div>'+
             '<div class="chev">\u203a</div>'+
           '</div>';
-        }).join('')+'</div>' : '<div class="empty">No progress notes yet. Use + to record what changed.</div>')+
+        }).join('')+'</div>' : '<div class="empty">还没有进展笔记。用 + 记录发生了什么变化。</div>')+
       '</section>'+
 
       (lastLog ? ''+
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>Today I Noticed</div></div>'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>今日察觉</div></div>'+
         '<div class="tile">'+
           '<div class="label">'+esc((state.tasks.find(t=>t.id===lastLog.taskId)||{}).name||'')+' \u00b7 '+esc(lastLog.date)+'</div>'+
           '<div class="body serif">\u201c'+esc(trunc(lastLog.whatChanged || lastLog.feeling || lastLog.difficulty || lastLog.whatDid || '\u2014', 110))+' \u201d</div>'+
@@ -847,9 +853,9 @@ input,textarea,select{font:inherit;color:inherit}
 
       (topPain ? ''+
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>Current Pain Point</div></div>'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>当前痛点</div></div>'+
         '<div class="tile pain-tile">'+
-          '<div class="label">'+esc(topPain.task.name)+' \u00b7 observed '+topPain.count+'\u00d7 in 30 days</div>'+
+          '<div class="label">'+esc(topPain.task.name)+' \u00b7 近30天观察到 '+topPain.count+' 次</div>'+
           '<div class="body serif">'+esc(topPain.task.pain||'\u2014')+'</div>'+
         '</div>'+
       '</section>' : '')+
@@ -860,18 +866,18 @@ input,textarea,select{font:inherit;color:inherit}
   function viewTasks(){
     const list = state.tasks;
     return ''+
-      '<div class="brand"><div class="mark">MY <span>TASKS</span></div><div class="right">'+list.length+' long-term</div></div>'+
-      '<div class="section-head"><div class="section-title"><span class="dot"></span>All Tasks</div><button class="chip" data-act="add-task">+ New Task</button></div>'+
+      '<div class="brand"><div class="mark">我的<span>任务</span></div><div class="right">'+list.length+' 个长期</div></div>'+
+      '<div class="section-head"><div class="section-title"><span class="dot"></span>全部任务</div><button class="chip" data-act="add-task">+ 新建任务</button></div>'+
       (list.length ? '<div class="list">'+list.map(t => {
         const last = state.logs.filter(l=>l.taskId===t.id).sort((a,b)=>b.date.localeCompare(a.date))[0];
         return '<div class="row" data-go="/task?id='+t.id+'">'+
           '<div class="left"><div>'+
             '<div class="name">'+esc(t.name)+'</div>'+
-            '<div class="meta">'+esc(t.area||'\u2014')+' \u00b7 '+esc(t.stage||'\u2014')+' \u00b7 '+(last? 'last log '+last.date : 'no logs')+'</div>'+
+            '<div class="meta">'+esc(t.area||'\u2014')+' \u00b7 '+esc(t.stage||'\u2014')+' \u00b7 '+(last? '最近记录 '+last.date : '暂无记录')+'</div>'+
           '</div></div>'+
           '<div class="chev">\u203a</div>'+
         '</div>';
-      }).join('')+'</div>' : '<div class="empty">No tasks yet. Add one to begin.</div>')+
+      }).join('')+'</div>' : '<div class="empty">还没有任务。新建一个开始吧。</div>')+
       '<div class="spacer-lg"></div>';
   }
 
@@ -881,18 +887,18 @@ input,textarea,select{font:inherit;color:inherit}
     const logs = state.logs.filter(l=>l.taskId===id).sort((a,b)=> a.date.localeCompare(b.date) || a.createdAt.localeCompare(b.createdAt));
     const ev = state.evidence.filter(e=>e.taskId===id);
     const fields = [
-      { k:'stage',     l:'Current Stage', full:true },
-      { k:'focus',     l:'Current Focus', full:true },
-      { k:'pain',      l:'Current Pain Point', full:true },
-      { k:'strategy',  l:'Current Strategy', full:true },
-      { k:'milestone', l:'Next Milestone', full:true },
-      { k:'area',      l:'Area' }
+      { k:'stage',     l:'当前阶段', full:true },
+      { k:'focus',     l:'当前重点', full:true },
+      { k:'pain',      l:'当前痛点', full:true },
+      { k:'strategy',  l:'当前策略', full:true },
+      { k:'milestone', l:'下一个里程碑', full:true },
+      { k:'area',      l:'领域' }
     ];
     return ''+
       '<div class="topbar">'+
-        '<button class="back" data-go="/tasks" aria-label="Back">'+ICON.back+'</button>'+
-        '<div class="title">Task</div>'+
-        '<button class="back" data-act="edit-task" data-id="'+t.id+'" aria-label="Edit">'+ICON.pen+'</button>'+
+        '<button class="back" data-go="/tasks" aria-label="返回">'+ICON.back+'</button>'+
+        '<div class="title">任务</div>'+
+        '<button class="back" data-act="edit-task" data-id="'+t.id+'" aria-label="编辑">'+ICON.pen+'</button>'+
       '</div>'+
 
       '<div class="task-hero">'+
@@ -904,36 +910,36 @@ input,textarea,select{font:inherit;color:inherit}
         fields.map(f => ''+
           '<div class="task-field '+(f.full?'full':'')+'">'+
             '<div class="l">'+f.l+'</div>'+
-            '<div class="v '+(t[f.k]?'':'empty')+'">'+esc(t[f.k]||'\u2014 not set yet')+'</div>'+
+            '<div class="v '+(t[f.k]?'':'empty')+'">'+esc(t[f.k]||'\u2014 暂未设置')+'</div>'+
           '</div>').join('')+
         '<div class="task-field">'+
-          '<div class="l">Status</div>'+
-          '<div class="v"><span class="tag '+(t.status==='paused'?'amber':(t.status==='archived'?'violet':'blue'))+'">'+esc(t.status||'active')+'</span></div>'+
+          '<div class="l">状态</div>'+
+          '<div class="v"><span class="tag '+(t.status==='paused'?'amber':(t.status==='archived'?'violet':'blue'))+'">'+esc(STATUS_LABEL[t.status]||STATUS_LABEL.active)+'</span></div>'+
         '</div>'+
         '<div class="task-field">'+
-          '<div class="l">Last Updated</div>'+
+          '<div class="l">最后更新</div>'+
           '<div class="v">'+(t.updatedAt? esc(fmtFullDate(t.updatedAt.slice(0,10))) : '\u2014')+'</div>'+
         '</div>'+
       '</div>'+
 
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>Progress Timeline</div><button class="chip" data-go="/new?task='+t.id+'">+ Log</button></div>'+
-        (logs.length ? '<div class="timeline">'+logs.slice().reverse().map(l => timelineEntry(l, true)).join('')+'</div>' : '<div class="empty">No logs yet for this task. Tap + Log to add the first.</div>')+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>进展时间线</div><button class="chip" data-go="/new?task='+t.id+'">+ 记录</button></div>'+
+        (logs.length ? '<div class="timeline">'+logs.slice().reverse().map(l => timelineEntry(l, true)).join('')+'</div>' : '<div class="empty">这个任务还没有记录。点击 + 记录 添加第一条。</div>')+
       '</section>'+
 
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>Evidence of Growth</div></div>'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>成长证据</div></div>'+
         (ev.length ? '<div class="before-after">'+ev.map(x => ''+
           '<div class="ba-card">'+
             '<div class="h">'+esc(x.ability)+'</div>'+
             '<div class="pair">'+
-              '<div class="cell before"><div class="l">Before</div><div class="t">'+esc(x.before)+'</div></div>'+
-              '<div class="cell after"><div class="l">After</div><div class="t">'+esc(x.after)+'</div></div>'+
+              '<div class="cell before"><div class="l">之前</div><div class="t">'+esc(x.before)+'</div></div>'+
+              '<div class="cell after"><div class="l">之后</div><div class="t">'+esc(x.after)+'</div></div>'+
             '</div>'+
             '<div class="muted" style="margin-top:8px;font-size:12px">'+esc(x.date)+'</div>'+
-            '<div style="margin-top:8px"><button class="chip" data-act="del-evidence" data-id="'+x.id+'">remove</button></div>'+
-          '</div>').join('')+'</div>' : '<div class="empty">No before/after notes saved yet.</div>')+
-        '<div style="margin-top:10px"><button class="chip" data-act="add-evidence" data-id="'+t.id+'">+ Add Evidence (Before / After)</button></div>'+
+            '<div style="margin-top:8px"><button class="chip" data-act="del-evidence" data-id="'+x.id+'">移除</button></div>'+
+          '</div>').join('')+'</div>' : '<div class="empty">还没有保存任何前后对比。</div>')+
+        '<div style="margin-top:10px"><button class="chip" data-act="add-evidence" data-id="'+t.id+'">+ 添加证据（之前 / 之后）</button></div>'+
       '</section>'+
 
       '<div class="spacer-lg"></div>';
@@ -947,32 +953,32 @@ input,textarea,select{font:inherit;color:inherit}
     const isEdit = !!editing;
     return ''+
       '<div class="topbar">'+
-        '<button class="back" data-go="'+(isEdit?'/task?id='+l.taskId:'/log')+'" aria-label="Back">'+ICON.back+'</button>'+
-        '<div class="title">'+(isEdit?'Edit Log':'New Log')+'</div>'+
+        '<button class="back" data-go="'+(isEdit?'/task?id='+l.taskId:'/log')+'" aria-label="返回">'+ICON.back+'</button>'+
+        '<div class="title">'+(isEdit?'编辑记录':'新建记录')+'</div>'+
         '<div style="width:36px"></div>'+
       '</div>'+
       '<div class="sheet">'+
-        '<div class="field"><label>Date</label><input class="input" type="date" id="f-date" value="'+esc(l.date)+'"></div>'+
-        '<div class="field"><label>Task</label><select class="select" id="f-task">'+state.tasks.map(t => '<option value="'+t.id+'" '+(t.id===l.taskId?'selected':'')+'>'+esc(t.name)+'</option>').join('')+'</select></div>'+
-        '<div class="field"><label>What did I do?</label><textarea class="textarea" id="f-did" placeholder="Be specific. One or two sentences.">'+esc(l.whatDid||'')+'</textarea></div>'+
-        '<div class="field"><label>Output / Evidence</label><textarea class="textarea" id="f-evi" placeholder="Optional. A recording, notes, a screenshot. Keep it short.">'+esc(l.evidence||'')+'</textarea></div>'+
-        '<div class="field"><label>Difficulty / Problem</label><textarea class="textarea" id="f-diff" placeholder="Where did I get stuck?">'+esc(l.difficulty||'')+'</textarea></div>'+
-        '<div class="field"><label>Feeling / State</label><textarea class="textarea" id="f-feel" placeholder="Honest feeling, not performance.">'+esc(l.feeling||'')+'</textarea></div>'+
-        '<div class="field"><label>Energy</label><div class="slider-row"><input class="slider" type="range" min="1" max="10" value="'+(l.energy||5)+'" id="f-energy"><div class="val" id="v-energy">'+(l.energy||5)+'</div></div></div>'+
-        '<div class="field"><label>Focus</label><div class="slider-row"><input class="slider" type="range" min="1" max="10" value="'+(l.focus||5)+'" id="f-focus"><div class="val" id="v-focus">'+(l.focus||5)+'</div></div></div>'+
-        '<div class="field"><label>What changed?</label><textarea class="textarea" id="f-changed" placeholder="Compared to before, what shifted?">'+esc(l.whatChanged||'')+'</textarea></div>'+
-        '<div class="field"><label>Next adjustment</label><textarea class="textarea" id="f-adjust" placeholder="One small change for next time.">'+esc(l.nextAdjust||'')+'</textarea></div>'+
-        '<div class="field"><label>This entry is mainly</label>'+
+        '<div class="field"><label>日期</label><input class="input" type="date" id="f-date" value="'+esc(l.date)+'"></div>'+
+        '<div class="field"><label>任务</label><select class="select" id="f-task">'+state.tasks.map(t => '<option value="'+t.id+'" '+(t.id===l.taskId?'selected':'')+'>'+esc(t.name)+'</option>').join('')+'</select></div>'+
+        '<div class="field"><label>做了什么？</label><textarea class="textarea" id="f-did" placeholder="具体一点。一两句话。">'+esc(l.whatDid||'')+'</textarea></div>'+
+        '<div class="field"><label>产出 / 证据</label><textarea class="textarea" id="f-evi" placeholder="可选。一段录音、笔记、截图。简短即可。">'+esc(l.evidence||'')+'</textarea></div>'+
+        '<div class="field"><label>困难 / 问题</label><textarea class="textarea" id="f-diff" placeholder="哪里卡住了？">'+esc(l.difficulty||'')+'</textarea></div>'+
+        '<div class="field"><label>感受 / 状态</label><textarea class="textarea" id="f-feel" placeholder="真实的感受，不是表现。">'+esc(l.feeling||'')+'</textarea></div>'+
+        '<div class="field"><label>精力</label><div class="slider-row"><input class="slider" type="range" min="1" max="10" value="'+(l.energy||5)+'" id="f-energy"><div class="val" id="v-energy">'+(l.energy||5)+'</div></div></div>'+
+        '<div class="field"><label>专注</label><div class="slider-row"><input class="slider" type="range" min="1" max="10" value="'+(l.focus||5)+'" id="f-focus"><div class="val" id="v-focus">'+(l.focus||5)+'</div></div></div>'+
+        '<div class="field"><label>有什么变化？</label><textarea class="textarea" id="f-changed" placeholder="和之前相比，什么改变了？">'+esc(l.whatChanged||'')+'</textarea></div>'+
+        '<div class="field"><label>下一步调整</label><textarea class="textarea" id="f-adjust" placeholder="下次的一个小调整。">'+esc(l.nextAdjust||'')+'</textarea></div>'+
+        '<div class="field"><label>这条记录主要是</label>'+
           '<div class="seg" id="f-lens">'+
-            '<button type="button" data-lens="fact" class="'+(l.lens==='fact'?'on fact':'')+'">Fact</button>'+
-            '<button type="button" data-lens="feeling" class="'+(l.lens==='feeling'?'on feeling':'')+'">Feeling</button>'+
-            '<button type="button" data-lens="analysis" class="'+(l.lens==='analysis'?'on analysis':'')+'">Analysis</button>'+
+            '<button type="button" data-lens="fact" class="'+(l.lens==='fact'?'on fact':'')+'">事实</button>'+
+            '<button type="button" data-lens="feeling" class="'+(l.lens==='feeling'?'on feeling':'')+'">感受</button>'+
+            '<button type="button" data-lens="analysis" class="'+(l.lens==='analysis'?'on analysis':'')+'">分析</button>'+
           '</div>'+
-          '<div class="hint">Fact \u2014 what happened. Feeling \u2014 how it felt. Analysis \u2014 what you think it means.</div>'+
+          '<div class="hint">事实——发生了什么。感受——感觉如何。分析——你认为这意味着什么。</div>'+
         '</div>'+
         '<div class="actions">'+
-          (isEdit ? '<button class="btn btn-danger" data-act="delete-log" data-id="'+l.id+'">'+ICON.trash+'</button>' : '<button class="btn btn-ghost" data-go="/log">Cancel</button>')+
-          '<button class="btn btn-primary" data-act="save-log" data-id="'+(isEdit?l.id:'')+'">'+(isEdit?'Save Changes':'Save Log')+'</button>'+
+          (isEdit ? '<button class="btn btn-danger" data-act="delete-log" data-id="'+l.id+'">'+ICON.trash+'</button>' : '<button class="btn btn-ghost" data-go="/log">取消</button>')+
+          '<button class="btn btn-primary" data-act="save-log" data-id="'+(isEdit?l.id:'')+'">'+(isEdit?'保存修改':'保存记录')+'</button>'+
         '</div>'+
       '</div>'+
       '<div class="spacer-lg"></div>';
@@ -982,10 +988,10 @@ input,textarea,select{font:inherit;color:inherit}
     const seg = p.seg || 'timeline';
     const taskFilter = p.task || '';
     return ''+
-      '<div class="brand"><div class="mark">MY <span>LOG</span></div><div class="right">'+state.logs.length+' entries</div></div>'+
+      '<div class="brand"><div class="mark">我的<span>记录</span></div><div class="right">'+state.logs.length+' 条记录</div></div>'+
       '<div class="segments">'+
-        '<button class="'+(seg==='timeline'?'on':'')+'" data-go="/log?seg=timeline">Timeline</button>'+
-        '<button class="'+(seg==='progress'?'on':'')+'" data-go="/log?seg=progress">Progress</button>'+
+        '<button class="'+(seg==='timeline'?'on':'')+'" data-go="/log?seg=timeline">时间线</button>'+
+        '<button class="'+(seg==='progress'?'on':'')+'" data-go="/log?seg=progress">进展</button>'+
       '</div>'+
       (seg==='timeline' ? renderTimeline(taskFilter) : renderProgress(taskFilter, p))+
       '<div class="spacer-lg"></div>';
@@ -993,10 +999,10 @@ input,textarea,select{font:inherit;color:inherit}
 
   function renderTimeline(taskFilter){
     const logs = state.logs.filter(l => !taskFilter || l.taskId===taskFilter).sort((a,b)=> b.date.localeCompare(a.date) || b.createdAt.localeCompare(a.createdAt));
-    const taskChips = '<button class="chip '+(!taskFilter?'on':'')+'" data-go="/log?seg=timeline">All</button>' + state.tasks.map(t => '<button class="chip '+(taskFilter===t.id?'on':'')+'" data-go="/log?seg=timeline&task='+t.id+'">'+esc(t.name)+'</button>').join('');
+    const taskChips = '<button class="chip '+(!taskFilter?'on':'')+'" data-go="/log?seg=timeline">全部</button>' + state.tasks.map(t => '<button class="chip '+(taskFilter===t.id?'on':'')+'" data-go="/log?seg=timeline&task='+t.id+'">'+esc(t.name)+'</button>').join('');
     return ''+
       '<div class="filter-bar">'+taskChips+'</div>'+
-      (logs.length ? '<div class="timeline">'+logs.map(l => timelineEntry(l, true)).join('')+'</div>' : '<div class="empty">No logs yet. Tap + to record your first entry.</div>');
+      (logs.length ? '<div class="timeline">'+logs.map(l => timelineEntry(l, true)).join('')+'</div>' : '<div class="empty">还没有记录。点击 + 记录第一条。</div>');
   }
 
   function renderProgress(taskFilter, p){
@@ -1011,32 +1017,32 @@ input,textarea,select{font:inherit;color:inherit}
       (t ? ''+
       '<div class="chart-wrap">'+
         '<div class="chart-head">'+
-          '<div class="name">'+esc(t.name)+' \u00b7 Energy / Focus</div>'+
-          '<div class="legend"><div class="l"><span class="sw" style="background:#4A6FA5"></span>Energy</div><div class="l"><span class="sw" style="background:#7868A0"></span>Focus</div></div>'+
+          '<div class="name">'+esc(t.name)+' \u00b7 精力 / 专注</div>'+
+          '<div class="legend"><div class="l"><span class="sw" style="background:#4A6FA5"></span>精力</div><div class="l"><span class="sw" style="background:#7868A0"></span>专注</div></div>'+
         '</div>'+
-        (logs.length? trendChart(logs) : '<div class="empty" style="margin-top:8px">No data points yet.</div>')+
-        '<div class="muted" style="font-size:12px;margin-top:8px">Observation, not pressure. Trends are only meaningful across weeks.</div>'+
+        (logs.length? trendChart(logs) : '<div class="empty" style="margin-top:8px">还没有数据。</div>')+
+        '<div class="muted" style="font-size:12px;margin-top:8px">观察，不是压力。趋势只有跨周才有意义。</div>'+
       '</div>'+
 
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>Evidence of Growth</div></div>'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>成长证据</div></div>'+
         (evidence.length ? '<div class="before-after">'+evidence.map(x => ''+
           '<div class="ba-card">'+
             '<div class="h">'+esc(x.ability)+'</div>'+
             '<div class="pair">'+
-              '<div class="cell before"><div class="l">Before</div><div class="t">'+esc(x.before)+'</div></div>'+
-              '<div class="cell after"><div class="l">After</div><div class="t">'+esc(x.after)+'</div></div>'+
+              '<div class="cell before"><div class="l">之前</div><div class="t">'+esc(x.before)+'</div></div>'+
+              '<div class="cell after"><div class="l">之后</div><div class="t">'+esc(x.after)+'</div></div>'+
             '</div>'+
             '<div class="muted" style="margin-top:8px;font-size:12px">'+esc(x.date)+'</div>'+
-          '</div>').join('')+'</div>' : '<div class="empty">No before/after notes saved yet.</div>')+
-        '<div style="margin-top:10px"><button class="chip" data-act="add-evidence" data-id="'+sel+'">+ Add Evidence</button></div>'+
+          '</div>').join('')+'</div>' : '<div class="empty">还没有保存任何前后对比。</div>')+
+        '<div style="margin-top:10px"><button class="chip" data-act="add-evidence" data-id="'+sel+'">+ 添加证据</button></div>'+
       '</section>'+
 
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>What Changed (from logs)</div></div>'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>变化记录（来自日志）</div></div>'+
         (()=>{
           const changed = logs.filter(l=>trim(l.whatChanged)).reverse();
-          if (!changed.length) return '<div class="empty">Fill in "What changed?" on a log to build evidence.</div>';
+          if (!changed.length) return '<div class="empty">在记录里填写"有什么变化？"来积累证据。</div>';
           return '<div class="list">'+changed.slice(0,8).map(l => '<div class="row" data-act="edit-log" data-id="'+l.id+'">'+
             '<div class="left"><div>'+
               '<div class="name" style="font-weight:500">'+esc(l.date)+'</div>'+
@@ -1046,7 +1052,7 @@ input,textarea,select{font:inherit;color:inherit}
           '</div>').join('')+'</div>';
         })()+
       '</section>'
-      : '<div class="empty">Select a task.</div>');
+      : '<div class="empty">请选择一个任务。</div>');
   }
 
   function viewInsights(p){
@@ -1070,65 +1076,65 @@ input,textarea,select{font:inherit;color:inherit}
     const showCards = cards.filter(c=>c.count>0 || trim(c.task.pain));
 
     return ''+
-      '<div class="brand"><div class="mark">MY <span>INSIGHTS</span></div><div class="right">observed patterns</div></div>'+
-      '<div class="muted" style="font-size:12.5px;margin-bottom:10px">These are observations from your logs, not judgments. Treat them as starting points, not conclusions.</div>'+
+      '<div class="brand"><div class="mark">我的<span>洞察</span></div><div class="right">观察到的模式</div></div>'+
+      '<div class="muted" style="font-size:12.5px;margin-bottom:10px">这些来自你的记录的观察，不是判断。把它们当作起点，不是结论。</div>'+
 
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>Repeated Pain Points</div></div>'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>反复出现的痛点</div></div>'+
         (showCards.length ? '<div class="list">'+showCards.map(c => ''+
           '<div class="insight-card">'+
             '<div class="head">'+
               '<div class="task">'+esc(c.task.name)+'</div>'+
               '<div class="count">'+c.count+'</div>'+
             '</div>'+
-            '<div class="desc">'+esc(c.task.pain || 'No active pain point set.')+'</div>'+
+            '<div class="desc">'+esc(c.task.pain || '未设置当前痛点。')+'</div>'+
             '<div class="row-line">'+
-              '<span class="status-pill '+c.status+'"><span class="d"></span>'+c.status+'</span>'+
-              '<button class="chip" data-act="set-pain" data-id="'+c.task.id+'" data-status="open">open</button>'+
-              '<button class="chip" data-act="set-pain" data-id="'+c.task.id+'" data-status="testing">testing</button>'+
-              '<button class="chip" data-act="set-pain" data-id="'+c.task.id+'" data-status="resolved">resolved</button>'+
+              '<span class="status-pill '+c.status+'"><span class="d"></span>'+(PAIN_LABEL[c.status]||c.status)+'</span>'+
+              '<button class="chip" data-act="set-pain" data-id="'+c.task.id+'" data-status="open">待处理</button>'+
+              '<button class="chip" data-act="set-pain" data-id="'+c.task.id+'" data-status="testing">试验中</button>'+
+              '<button class="chip" data-act="set-pain" data-id="'+c.task.id+'" data-status="resolved">已解决</button>'+
             '</div>'+
-            '<div class="meta" style="font-size:12px;color:var(--ink-3);margin-top:8px">Count = how many logs in the last 30 days recorded a difficulty for this task.</div>'+
-          '</div>').join('')+'</div>' : '<div class="empty">No pain points logged yet.</div>')+
+            '<div class="meta" style="font-size:12px;color:var(--ink-3);margin-top:8px">次数 = 近30天内该任务记录了困难的日志数。</div>'+
+          '</div>').join('')+'</div>' : '<div class="empty">还没有记录痛点。</div>')+
       '</section>'+
 
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>Evidence of Growth</div></div>'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>成长证据</div></div>'+
         (evAll.length ? '<div class="list">'+evAll.slice(0,6).map(ev => {
           const t = state.tasks.find(x=>x.id===ev.taskId);
           return '<div class="insight-card">'+
             '<div class="head"><div class="task">'+esc(t?t.name:'')+' \u00b7 '+esc(ev.ability)+'</div><div class="fine">'+esc(ev.date)+'</div></div>'+
-            '<div class="desc"><span class="muted" style="font-size:12px">Before.</span> '+esc(ev.before)+'<br><span class="muted" style="font-size:12px">After.</span> '+esc(ev.after)+'</div>'+
+            '<div class="desc"><span class="muted" style="font-size:12px">之前。</span> '+esc(ev.before)+'<br><span class="muted" style="font-size:12px">之后。</span> '+esc(ev.after)+'</div>'+
           '</div>';
-        }).join('')+'</div>' : '<div class="empty">Add before/after evidence from a Progress page to start collecting.</div>')+
+        }).join('')+'</div>' : '<div class="empty">在进展页添加前后对比来开始收集。</div>')+
       '</section>'+
 
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>Possible Patterns</div></div>'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>可能的模式</div></div>'+
         '<div class="insight-card">'+
-          '<div class="desc">Across '+total+' log'+(total===1?'':'s')+':'+
-            (total? '<br>\u00b7 Most-logged task: <b>'+esc(byTask[0].t.name)+'</b> ('+byTask[0].n+').' : '')+
-            (avgEnergy? '<br>\u00b7 Average energy: <b>'+avgEnergy.toFixed(1)+'</b>/10.' : '')+
-            (avgFocus? '<br>\u00b7 Average focus: <b>'+avgFocus.toFixed(1)+'</b>/10.' : '')+
+          '<div class="desc">共 '+total+' 条记录：'+
+            (total? '<br>\u00b7 记录最多的任务：<b>'+esc(byTask[0].t.name)+'</b>（'+byTask[0].n+' 条）。' : '')+
+            (avgEnergy? '<br>\u00b7 平均精力：<b>'+avgEnergy.toFixed(1)+'</b>/10。' : '')+
+            (avgFocus? '<br>\u00b7 平均专注：<b>'+avgFocus.toFixed(1)+'</b>/10。' : '')+
           '</div>'+
-          '<div class="meta" style="font-size:12px;color:var(--ink-3);margin-top:8px">Patterns here are simple aggregates, not causal claims.</div>'+
+          '<div class="meta" style="font-size:12px;color:var(--ink-3);margin-top:8px">这里的模式只是简单统计，不是因果关系。</div>'+
         '</div>'+
       '</section>'+
 
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>Suggested Adjustments</div></div>'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>建议的调整</div></div>'+
         (adjustByTask.length ? '<div class="list">'+adjustByTask.map(x => ''+
           '<div class="insight-card">'+
-            '<div class="head"><div class="task">'+esc(x.t.name)+'</div><div class="fine">recent plans</div></div>'+
-            '<div class="desc">'+x.items.slice().reverse().map((l,i)=> (x.items.length-i)+'. '+esc(l.nextAdjust)+' <span class="dim" style="font-size:12px">('+esc(l.date)+')</span>').join('<br>')+'</div>'+
-          '</div>').join('')+'</div>' : '<div class="empty">No next-step adjustments recorded yet. Try filling that field on a log.</div>')+
+            '<div class="head"><div class="task">'+esc(x.t.name)+'</div><div class="fine">近期计划</div></div>'+
+            '<div class="desc">'+x.items.slice().reverse().map((l,i)=> (x.items.length-i)+'. '+esc(l.nextAdjust)+' <span class="dim" style="font-size:12px">（'+esc(l.date)+'）</span>').join('<br>')+'</div>'+
+          '</div>').join('')+'</div>' : '<div class="empty">还没有记录下一步调整。试试在记录里填写那个字段。</div>')+
       '</section>'+
 
       '<section class="section">'+
-        '<div class="section-head"><div class="section-title"><span class="dot"></span>Weekly Review</div></div>'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>每周复盘</div></div>'+
         '<div class="insight-card">'+
-          '<div class="desc">A short weekly reflection helps separate signal from noise. Once a week. No pressure.</div>'+
-          '<div style="margin-top:10px"><button class="chip" data-go="/weekly">'+ICON.pen+' Open this week\u2019s review</button></div>'+
+          '<div class="desc">每周一次简短复盘，帮助区分信号与噪音。没有压力。</div>'+
+          '<div style="margin-top:10px"><button class="chip" data-go="/weekly">'+ICON.pen+' 打开本周复盘</button></div>'+
         '</div>'+
       '</section>'+
       '<div class="spacer-lg"></div>';
@@ -1141,34 +1147,34 @@ input,textarea,select{font:inherit;color:inherit}
       r = { id: uid(), weekKey: wk, startDate: weekStart(), endDate: weekEnd(), whatHappened:'', whatImproved:'', whatBlocked:'', whatWorked:'', whatDidnt:'', whatWillChange:'', sentence:'', updatedAt: new Date().toISOString() };
     }
     return ''+
-      '<div class="topbar"><button class="back" data-go="/insights" aria-label="Back">'+ICON.back+'</button><div class="title">Weekly Review</div><div style="width:36px"></div></div>'+
+      '<div class="topbar"><button class="back" data-go="/insights" aria-label="返回">'+ICON.back+'</button><div class="title">每周复盘</div><div style="width:36px"></div></div>'+
       '<div class="review-card">'+
-        '<div class="h">This week</div>'+
+        '<div class="h">本周</div>'+
         '<div class="sub">'+esc(fmtFullDate(r.startDate))+' \u2192 '+esc(fmtFullDate(r.endDate))+'</div>'+
-        '<div class="muted" style="font-size:12.5px;margin-bottom:8px">A short reflection. Once a week. No pressure.</div>'+
+        '<div class="muted" style="font-size:12.5px;margin-bottom:8px">一次简短复盘。一周一次。没有压力。</div>'+
         '<div class="review-grid">'+
-          reviewField('What actually happened?', r.whatHappened, 'r-happened')+
-          reviewField('What improved?', r.whatImproved, 'r-improved')+
-          reviewField('What repeatedly blocked me?', r.whatBlocked, 'r-blocked')+
-          reviewField('What worked?', r.whatWorked, 'r-worked')+
-          reviewField("What didn\u2019t work?", r.whatDidnt, 'r-didnt')+
-          reviewField('What will I change next week?', r.whatWillChange, 'r-change')+
-          reviewField('One sentence to remember', r.sentence, 'r-sentence', true)+
+          reviewField('实际发生了什么？', r.whatHappened, 'r-happened')+
+          reviewField('有什么改善？', r.whatImproved, 'r-improved')+
+          reviewField('什么反复阻碍了我？', r.whatBlocked, 'r-blocked')+
+          reviewField('什么有效？', r.whatWorked, 'r-worked')+
+          reviewField('什么无效？', r.whatDidnt, 'r-didnt')+
+          reviewField('下周我打算改变什么？', r.whatWillChange, 'r-change')+
+          reviewField('记住的一句话', r.sentence, 'r-sentence', true)+
         '</div>'+
         '<div class="actions">'+
-          '<button class="btn btn-ghost" data-go="/insights">Close</button>'+
-          '<button class="btn btn-primary" data-act="save-review" data-week="'+wk+'">Save Review</button>'+
+          '<button class="btn btn-ghost" data-go="/insights">关闭</button>'+
+          '<button class="btn btn-primary" data-act="save-review" data-week="'+wk+'">保存复盘</button>'+
         '</div>'+
       '</div>'+
       '<div class="spacer-lg"></div>';
   }
   function reviewField(label, val, id, single){
-    if (single) return '<div class="q"><div class="k">'+label+'</div><input class="input" id="'+id+'" value="'+esc(val||'')+'" placeholder="One honest sentence."></div>';
+    if (single) return '<div class="q"><div class="k">'+label+'</div><input class="input" id="'+id+'" value="'+esc(val||'')+'" placeholder="一句真实的话。"></div>';
     return '<div class="q"><div class="k">'+label+'</div><textarea class="textarea" id="'+id+'" rows="2">'+esc(val||'')+'</textarea></div>';
   }
 
   function notFound(){
-    return '<div class="brand"><div class="mark">NOT FOUND</div></div><div class="empty">That page doesn\u2019t exist.</div><div class="spacer-lg"></div>';
+    return '<div class="brand"><div class="mark">未找到</div></div><div class="empty">这个页面不存在。</div><div class="spacer-lg"></div>';
   }
 
   function render(){
@@ -1186,7 +1192,8 @@ input,textarea,select{font:inherit;color:inherit}
     renderNav(path);
     attachHandlers();
     window.scrollTo(0,0);
-  }// ============================================================
+  }
+  // ============================================================
   // ACTIONS · MODAL · INIT
   // ============================================================
 
@@ -1207,7 +1214,7 @@ input,textarea,select{font:inherit;color:inherit}
     if (act === 'add-evidence') return openAddEvidence(b.dataset.id);
     if (act === 'del-evidence') return delEvidence(b.dataset.id);
     if (act === 'edit-log') return go('/new?id='+b.dataset.id);
-    if (act === 'set-pain'){ state.painStatus[b.dataset.id] = b.dataset.status; saveAll(); toast('Pain point status updated.'); render(); return; }
+    if (act === 'set-pain'){ state.painStatus[b.dataset.id] = b.dataset.status; saveAll(); toast('痛点状态已更新。'); render(); return; }
     if (act === 'save-review') return saveReview(b.dataset.week);
   }
 
@@ -1226,13 +1233,13 @@ input,textarea,select{font:inherit;color:inherit}
 
   function openAddTask(){
     const html = ''+
-      '<div class="head"><div class="t">New Task</div><button class="close" data-modal-close>'+ICON.x+'</button></div>'+
+      '<div class="head"><div class="t">新建任务</div><button class="close" data-modal-close>'+ICON.x+'</button></div>'+
       '<div class="edit-grid">'+
-        '<div><label>Name</label><input id="m-name" class="input" placeholder="e.g. Pronunciation"></div>'+
-        '<div><label>Area (optional)</label><input id="m-area" class="input" placeholder="e.g. Output"></div>'+
-        '<div><label>Current Stage (optional)</label><input id="m-stage" class="input" placeholder="e.g. Recognition \u2192 Use"></div>'+
+        '<div><label>名称</label><input id="m-name" class="input" placeholder="如：发音"></div>'+
+        '<div><label>领域（可选）</label><input id="m-area" class="input" placeholder="如：输出"></div>'+
+        '<div><label>当前阶段（可选）</label><input id="m-stage" class="input" placeholder="如：认知 → 运用"></div>'+
       '</div>'+
-      '<div class="actions"><button class="btn btn-ghost" data-modal-close>Cancel</button><button class="btn btn-primary" id="m-add">Add Task</button></div>';
+      '<div class="actions"><button class="btn btn-ghost" data-modal-close>取消</button><button class="btn btn-primary" id="m-add">添加任务</button></div>';
     openModal(html, (ov, close) => {
       ov.querySelectorAll('[data-modal-close]').forEach(b => b.addEventListener('click', close));
       const nameI = ov.querySelector('#m-name');
@@ -1245,7 +1252,7 @@ input,textarea,select{font:inherit;color:inherit}
         state.tasks.push(t);
         saveAll();
         close();
-        toast('Task added.');
+        toast('任务已添加。');
         go('/task?id='+t.id);
       };
       ov.querySelector('#m-add').addEventListener('click', submit);
@@ -1257,19 +1264,19 @@ input,textarea,select{font:inherit;color:inherit}
     const t = state.tasks.find(x=>x.id===id);
     if (!t) return;
     const fields = ['area','stage','focus','pain','strategy','milestone','status'];
-    const labels = {area:'Area',stage:'Current Stage',focus:'Current Focus',pain:'Current Pain Point',strategy:'Current Strategy',milestone:'Next Milestone',status:'Status'};
+    const labels = {area:'领域',stage:'当前阶段',focus:'当前重点',pain:'当前痛点',strategy:'当前策略',milestone:'下一个里程碑',status:'状态'};
     const html = ''+
-      '<div class="head"><div class="t">Edit \u00b7 '+esc(t.name)+'</div><button class="close" data-modal-close>'+ICON.x+'</button></div>'+
+      '<div class="head"><div class="t">编辑 \u00b7 '+esc(t.name)+'</div><button class="close" data-modal-close>'+ICON.x+'</button></div>'+
       '<div class="edit-grid">'+
         fields.map(k => ''+
           '<div><label>'+labels[k]+'</label>'+
             (k==='status'
-              ? '<select id="e-'+k+'" class="select"><option '+(t[k]==='active'?'selected':'')+'>active</option><option '+(t[k]==='paused'?'selected':'')+'>paused</option><option '+(t[k]==='archived'?'selected':'')+'>archived</option></select>'
+              ? '<select id="e-'+k+'" class="select"><option value="active" '+(t[k]==='active'?'selected':'')+'>进行中</option><option value="paused" '+(t[k]==='paused'?'selected':'')+'>暂停</option><option value="archived" '+(t[k]==='archived'?'selected':'')+'>归档</option></select>'
               : '<textarea id="e-'+k+'" rows="'+(['focus','pain','strategy','milestone'].includes(k)?2:1)+'">'+esc(t[k]||'')+'</textarea>'
             )+
           '</div>').join('')+
       '</div>'+
-      '<div class="actions"><button class="btn btn-ghost" data-modal-close>Cancel</button><button class="btn btn-primary" id="m-save-task">Save</button></div>';
+      '<div class="actions"><button class="btn btn-ghost" data-modal-close>取消</button><button class="btn btn-primary" id="m-save-task">保存</button></div>';
     openModal(html, (ov, close) => {
       ov.querySelectorAll('[data-modal-close]').forEach(b => b.addEventListener('click', close));
       ov.querySelector('#m-save-task').addEventListener('click', () => {
@@ -1277,7 +1284,7 @@ input,textarea,select{font:inherit;color:inherit}
         t.updatedAt = new Date().toISOString();
         saveAll();
         close();
-        toast('Task updated.');
+        toast('任务已更新。');
         render();
       });
     });
@@ -1287,14 +1294,14 @@ input,textarea,select{font:inherit;color:inherit}
     const t = state.tasks.find(x=>x.id===taskId);
     if (!t) return;
     const html = ''+
-      '<div class="head"><div class="t">Add Evidence \u00b7 '+esc(t.name)+'</div><button class="close" data-modal-close>'+ICON.x+'</button></div>'+
-      '<div class="muted" style="font-size:12.5px;margin-bottom:10px">A concrete before/after snapshot. All three fields are needed.</div>'+
+      '<div class="head"><div class="t">添加证据 \u00b7 '+esc(t.name)+'</div><button class="close" data-modal-close>'+ICON.x+'</button></div>'+
+      '<div class="muted" style="font-size:12.5px;margin-bottom:10px">一个具体的前后对比。三个字段都需要填写。</div>'+
       '<div class="edit-grid">'+
-        '<div><label>Ability</label><input id="m-ability" class="input" placeholder="e.g. Continuous speaking"></div>'+
-        '<div><label>Before</label><textarea id="m-before" class="textarea" rows="2" placeholder="What it was like before"></textarea></div>'+
-        '<div><label>After</label><textarea id="m-after" class="textarea" rows="2" placeholder="What it is like now"></textarea></div>'+
+        '<div><label>能力</label><input id="m-ability" class="input" placeholder="如：连续表达"></div>'+
+        '<div><label>之前</label><textarea id="m-before" class="textarea" rows="2" placeholder="之前是什么样"></textarea></div>'+
+        '<div><label>之后</label><textarea id="m-after" class="textarea" rows="2" placeholder="现在是什么样"></textarea></div>'+
       '</div>'+
-      '<div class="actions"><button class="btn btn-ghost" data-modal-close>Cancel</button><button class="btn btn-primary" id="m-save-ev">Save</button></div>';
+      '<div class="actions"><button class="btn btn-ghost" data-modal-close>取消</button><button class="btn btn-primary" id="m-save-ev">保存</button></div>';
     openModal(html, (ov, close) => {
       ov.querySelectorAll('[data-modal-close]').forEach(b => b.addEventListener('click', close));
       setTimeout(()=> ov.querySelector('#m-ability').focus(), 60);
@@ -1302,11 +1309,11 @@ input,textarea,select{font:inherit;color:inherit}
         const ability = ov.querySelector('#m-ability').value.trim();
         const before = ov.querySelector('#m-before').value.trim();
         const after = ov.querySelector('#m-after').value.trim();
-        if (!ability || !before || !after){ toast('All three fields are needed.'); return; }
+        if (!ability || !before || !after){ toast('三个字段都需要填写。'); return; }
         state.evidence.push({ id: uid(), taskId, ability, before, after, date: todayISO(), createdAt: new Date().toISOString() });
         saveAll();
         close();
-        toast('Evidence added.');
+        toast('证据已添加。');
         render();
       });
     });
@@ -1314,7 +1321,7 @@ input,textarea,select{font:inherit;color:inherit}
   function delEvidence(id){
     state.evidence = state.evidence.filter(x=>x.id!==id);
     saveAll();
-    toast('Removed.');
+    toast('已移除。');
     render();
   }
 
@@ -1333,7 +1340,7 @@ input,textarea,select{font:inherit;color:inherit}
       nextAdjust: trim(($('#f-adjust')||{}).value),
       lens: ((document.querySelector('#f-lens button.on')||{}).dataset||{}).lens || 'fact'
     };
-    if (!data.taskId){ toast('Please choose a task.'); return; }
+    if (!data.taskId){ toast('请选择一个任务。'); return; }
     const now = new Date().toISOString();
     if (id){
       const i = state.logs.findIndex(l=>l.id===id);
@@ -1345,16 +1352,16 @@ input,textarea,select{font:inherit;color:inherit}
     const t = state.tasks.find(x=>x.id===data.taskId);
     if (t) t.updatedAt = now;
     saveAll();
-    toast(id ? 'Log updated.' : 'Saved to timeline.');
+    toast(id ? '记录已更新。' : '已保存到时间线。');
     go('/task?id='+data.taskId);
   }
   function deleteLog(id){
     const l = state.logs.find(x=>x.id===id);
     if (!l) return;
-    if (!confirm('Delete this log entry?')) return;
+    if (!confirm('删除这条记录？')) return;
     state.logs = state.logs.filter(x=>x.id!==id);
     saveAll();
-    toast('Log deleted.');
+    toast('记录已删除。');
     go('/task?id='+l.taskId);
   }
 
@@ -1371,7 +1378,7 @@ input,textarea,select{font:inherit;color:inherit}
     const i = state.reviews.findIndex(x=>x.weekKey===wk);
     if (i<0) state.reviews.push(r); else state.reviews[i] = r;
     saveAll();
-    toast('Weekly review saved.');
+    toast('复盘已保存。');
     go('/insights');
   }
 
@@ -1421,6 +1428,7 @@ input,textarea,select{font:inherit;color:inherit}
 
   init();
 })();
+
   </script>
 </body>
 </html>
