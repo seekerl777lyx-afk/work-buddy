@@ -579,6 +579,19 @@ input,textarea,select{font:inherit;color:inherit}
 .hide{display:none !important}
 .scroll-x{overflow-x:auto;scrollbar-width:none}
 .scroll-x::-webkit-scrollbar{display:none}
+
+/* Import modal */
+.imp-tabs{display:flex;border-bottom:1px solid var(--line);margin-bottom:14px}
+.imp-tab{flex:1;padding:10px 0;background:none;font-size:14px;color:var(--ink-3);border-bottom:2px solid transparent;cursor:pointer}
+.imp-tab.on{color:var(--blue-deep);border-bottom-color:var(--blue);font-weight:600}
+.imp-panel{padding-bottom:4px}
+.imp-convos{max-height:300px;overflow-y:auto;border:1px solid var(--line);border-radius:var(--radius-xs)}
+.imp-conv{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line);cursor:pointer}
+.imp-conv:last-child{border-bottom:none}
+.imp-conv input[type=checkbox]{margin-top:3px;accent-color:var(--blue)}
+.imp-conv .ic-body{flex:1;min-width:0}
+.imp-conv .ic-title{font-size:13.5px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.imp-conv .ic-meta{font-size:12px;color:var(--ink-3);margin-top:2px}
   </style>
 </head>
 <body>
@@ -594,7 +607,7 @@ input,textarea,select{font:inherit;color:inherit}
   'use strict';
 
   // ---------- storage keys ----------
-  const K = { tasks:'mwb2.tasks', logs:'mwb2.logs', evidence:'mwb2.evidence', reviews:'mwb2.reviews', pain:'mwb2.painStatus', seeded:'mwb2.seeded' };
+  const K = { tasks:'mwb2.tasks', logs:'mwb2.logs', evidence:'mwb2.evidence', reviews:'mwb2.reviews', pain:'mwb2.painStatus', seeded:'mwb2.seeded', draft:'mwb2.draft' };
 
   // ---------- helpers ----------
   const $ = (s,r=document)=>r.querySelector(s);
@@ -671,7 +684,9 @@ input,textarea,select{font:inherit;color:inherit}
     back: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>',
     pen:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
     trash:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>',
-    x:    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>'
+    x:    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+    upload: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 9l5-5 5 5"/><path d="M12 4v12"/></svg>',
+    download: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>'
   };
 
   // ---------- router ----------
@@ -948,8 +963,10 @@ input,textarea,select{font:inherit;color:inherit}
   function viewNewLog(p){
     const editing = p.id && state.logs.find(l=>l.id===p.id);
     const last = state.logs.slice().sort((a,b)=>b.createdAt.localeCompare(a.createdAt))[0];
-    const presetTask = p.task || (editing? editing.taskId : (last? last.taskId : (state.tasks[0]? state.tasks[0].id : '')));
-    const l = editing || { date: todayISO(), taskId: presetTask, whatDid:'', evidence:'', difficulty:'', feeling:'', energy:5, focus:5, whatChanged:'', nextAdjust:'', lens:'fact' };
+    let draft = null;
+    if (!editing){ draft = load(K.draft); if (draft){ try{ localStorage.removeItem(K.draft); }catch{} } }
+    const presetTask = draft ? draft.taskId : (p.task || (editing? editing.taskId : (last? last.taskId : (state.tasks[0]? state.tasks[0].id : ''))));
+    const l = editing || draft || { date: todayISO(), taskId: presetTask, whatDid:'', evidence:'', difficulty:'', feeling:'', energy:5, focus:5, whatChanged:'', nextAdjust:'', lens:'fact' };
     const isEdit = !!editing;
     return ''+
       '<div class="topbar">'+
@@ -993,6 +1010,7 @@ input,textarea,select{font:inherit;color:inherit}
         '<button class="'+(seg==='timeline'?'on':'')+'" data-go="/log?seg=timeline">时间线</button>'+
         '<button class="'+(seg==='progress'?'on':'')+'" data-go="/log?seg=progress">进展</button>'+
       '</div>'+
+      '<div style="margin:-4px 0 14px"><button class="chip" data-act="open-import">'+ICON.upload+' 从 AI 对话导入</button></div>'+
       (seg==='timeline' ? renderTimeline(taskFilter) : renderProgress(taskFilter, p))+
       '<div class="spacer-lg"></div>';
   }
@@ -1137,6 +1155,18 @@ input,textarea,select{font:inherit;color:inherit}
           '<div style="margin-top:10px"><button class="chip" data-go="/weekly">'+ICON.pen+' 打开本周复盘</button></div>'+
         '</div>'+
       '</section>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>数据</div></div>'+
+        '<div class="insight-card">'+
+          '<div class="desc">导入豆包 / ChatGPT 的对话记录，或备份 / 恢复你的全部数据。</div>'+
+          '<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">'+
+            '<button class="chip" data-act="open-import">'+ICON.upload+' 导入记录</button>'+
+            '<button class="chip" data-act="export-data">'+ICON.download+' 导出备份</button>'+
+            '<button class="chip" data-act="restore-data">'+ICON.upload+' 恢复备份</button>'+
+          '</div>'+
+        '</div>'+
+      '</section>'+
       '<div class="spacer-lg"></div>';
   }
 
@@ -1216,6 +1246,9 @@ input,textarea,select{font:inherit;color:inherit}
     if (act === 'edit-log') return go('/new?id='+b.dataset.id);
     if (act === 'set-pain'){ state.painStatus[b.dataset.id] = b.dataset.status; saveAll(); toast('痛点状态已更新。'); render(); return; }
     if (act === 'save-review') return saveReview(b.dataset.week);
+    if (act === 'open-import') return openImport();
+    if (act === 'export-data') return exportData();
+    if (act === 'restore-data') return openRestore();
   }
 
   // ---------- modal ----------
@@ -1323,6 +1356,217 @@ input,textarea,select{font:inherit;color:inherit}
     saveAll();
     toast('已移除。');
     render();
+  }
+
+  // ---------- import & backup ----------
+  function openImport(){
+    const taskOpts = state.tasks.map(t=>'<option value="'+t.id+'">'+esc(t.name)+'</option>').join('');
+    const html = ''+
+      '<div class="head"><div class="t">导入记录</div><button class="close" data-modal-close>'+ICON.x+'</button></div>'+
+      '<div class="imp-tabs">'+
+        '<button class="imp-tab on" data-imp-tab="paste">粘贴对话</button>'+
+        '<button class="imp-tab" data-imp-tab="file">ChatGPT 文件</button>'+
+      '</div>'+
+      '<div class="imp-panel imp-paste">'+
+        '<div class="hint" style="margin-bottom:10px">把和 AI 的对话粘贴进来（豆包 / ChatGPT / 任意来源）。对话会作为「证据」保存，你再补充困难、感受和调整。</div>'+
+        '<div class="field"><label>对话内容</label><textarea class="textarea" id="imp-text" rows="5" placeholder="直接粘贴你和 AI 的对话…"></textarea></div>'+
+        '<div class="field"><label>任务</label><select class="select" id="imp-task">'+taskOpts+'</select></div>'+
+        '<div class="field"><label>日期</label><input class="input" type="date" id="imp-date" value="'+todayISO()+'"></div>'+
+        '<div class="field"><label>这条主要是</label>'+
+          '<div class="seg" id="imp-lens">'+
+            '<button type="button" data-lens="fact" class="on fact">事实</button>'+
+            '<button type="button" data-lens="feeling" class="feeling">感受</button>'+
+            '<button type="button" data-lens="analysis" class="analysis">分析</button>'+
+          '</div>'+
+        '</div>'+
+        '<div class="actions"><button class="btn btn-ghost" data-modal-close>取消</button><button class="btn btn-primary" id="imp-go">创建记录</button></div>'+
+      '</div>'+
+      '<div class="imp-panel imp-file" style="display:none">'+
+        '<div class="hint" style="margin-bottom:10px">ChatGPT 设置 → Data Controls → Export 导出 ZIP，解压后选 conversations.json。每个对话 → 一条记录。</div>'+
+        '<div class="field"><label>选择 conversations.json</label><input type="file" id="imp-file-input" accept=".json" style="font-size:13px"></div>'+
+        '<div id="imp-file-list" style="margin-top:4px"></div>'+
+        '<div class="field" id="imp-file-task-wrap" style="display:none"><label>导入到任务</label><select class="select" id="imp-file-task">'+taskOpts+'</select></div>'+
+        '<div class="actions" id="imp-file-actions" style="display:none"><button class="btn btn-ghost" data-modal-close>取消</button><button class="btn btn-primary" id="imp-file-go">导入选中</button></div>'+
+      '</div>';
+    openModal(html, (ov, close) => {
+      ov.querySelectorAll('[data-modal-close]').forEach(b => b.addEventListener('click', close));
+      ov.querySelectorAll('.imp-tab').forEach(t => {
+        t.addEventListener('click', () => {
+          ov.querySelectorAll('.imp-tab').forEach(x => x.classList.remove('on'));
+          t.classList.add('on');
+          const tab = t.dataset.impTab;
+          ov.querySelector('.imp-paste').style.display = tab==='paste'?'':'none';
+          ov.querySelector('.imp-file').style.display = tab==='file'?'':'none';
+        });
+      });
+      ov.querySelectorAll('#imp-lens button').forEach(b => {
+        b.addEventListener('click', () => {
+          ov.querySelectorAll('#imp-lens button').forEach(x => { x.className = x.dataset.lens; });
+          b.className = 'on ' + b.dataset.lens;
+        });
+      });
+      ov.querySelector('#imp-go').addEventListener('click', () => {
+        const text = trim(ov.querySelector('#imp-text').value);
+        const taskId = ov.querySelector('#imp-task').value;
+        const date = ov.querySelector('#imp-date').value || todayISO();
+        const lensBtn = ov.querySelector('#imp-lens button.on');
+        const lens = (lensBtn? lensBtn.dataset.lens : 'fact');
+        if (!text){ toast('请粘贴对话内容。'); return; }
+        const lines = text.split('\n').map(s=>s.trim()).filter(Boolean);
+        let topic = '';
+        for (const ln of lines) {
+          const m = ln.replace(/^(我[:：]\s*|user[:：]\s*|用户[:：]\s*|我\s)/i,'').trim();
+          if (m.length >= 2) { topic = m; break; }
+        }
+        const whatDid = topic ? '与 AI 对话：'+trunc(topic,30) : '与 AI 对话练习';
+        save(K.draft, { whatDid, evidence: trunc(text, 1200), taskId, date, lens, difficulty:'', feeling:'', energy:5, focus:5, whatChanged:'', nextAdjust:'' });
+        close();
+        go('/new');
+      });
+      ov.querySelector('#imp-file-input').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const data = JSON.parse(reader.result);
+            const convos = parseChatGPT(data);
+            if (!convos.length){ toast('未在文件中找到对话。'); return; }
+            renderFileList(convos);
+          } catch(err){ toast('文件解析失败。请确认是 ChatGPT 导出的 JSON。'); }
+        };
+        reader.readAsText(file);
+      });
+      function renderFileList(convos){
+        const sorted = convos.slice().sort((a,b)=> (b.createTime||0)-(a.createTime||0));
+        const list = ov.querySelector('#imp-file-list');
+        list.innerHTML = ''+
+          '<div class="muted" style="font-size:12px;margin-bottom:6px">'+sorted.length+' 个对话。勾选要导入的：</div>'+
+          '<div class="imp-convos">'+sorted.map((c,i) => ''+
+            '<label class="imp-conv">'+
+              '<input type="checkbox" checked data-ci="'+i+'">'+
+              '<div class="ic-body">'+
+                '<div class="ic-title">'+esc(trunc(c.title,42))+'</div>'+
+                '<div class="ic-meta">'+esc(c.date)+' \u00b7 '+c.messages.length+' 条消息</div>'+
+              '</div>'+
+            '</label>').join('')+'</div>';
+        ov.querySelector('#imp-file-task-wrap').style.display = '';
+        ov.querySelector('#imp-file-actions').style.display = '';
+        ov.querySelector('#imp-file-go').onclick = () => {
+          const taskId = ov.querySelector('#imp-file-task').value;
+          const checked = Array.from(ov.querySelectorAll('.imp-conv input:checked')).map(cb => +cb.dataset.ci);
+          if (!checked.length){ toast('请勾选至少一个对话。'); return; }
+          const now = new Date().toISOString();
+          let added = 0;
+          checked.forEach(ci => {
+            const c = sorted[ci];
+            const convoText = c.messages.map(m => (m.role==='user'?'我：':'AI：')+m.text).join('\n');
+            state.logs.push({
+              id: uid(), date: c.date, taskId,
+              whatDid: trunc('与 ChatGPT 对话：'+c.title, 60),
+              evidence: trunc(convoText, 1500),
+              difficulty: '', feeling: '', energy: 5, focus: 5,
+              whatChanged: '', nextAdjust: '',
+              lens: 'fact', createdAt: now, updatedAt: now
+            });
+            added++;
+          });
+          saveAll();
+          close();
+          toast('已导入 '+added+' 条记录。');
+          go('/log');
+        };
+      }
+    });
+  }
+
+  function parseChatGPT(data){
+    if (!Array.isArray(data)) return [];
+    return data.map(conv => {
+      const mapping = conv.mapping || {};
+      let rootKey = null;
+      for (const [k, node] of Object.entries(mapping)) {
+        if (node.parent === null || node.parent === undefined) { rootKey = k; break; }
+      }
+      const messages = [];
+      let cur = rootKey;
+      const seen = new Set();
+      let guard = 0;
+      while (cur && !seen.has(cur) && guard < 5000) {
+        seen.add(cur); guard++;
+        const node = mapping[cur];
+        if (node && node.message && node.message.author && node.message.content) {
+          const role = node.message.author.role;
+          const parts = node.message.content.parts || [];
+          const text = (Array.isArray(parts)?parts:[]).filter(p => typeof p === 'string').join('').trim();
+          if (text && (role === 'user' || role === 'assistant')) {
+            messages.push({ role, text });
+          }
+        }
+        cur = node && node.children && node.children[0];
+      }
+      const title = conv.title || (messages[0] ? trunc(messages[0].text, 50) : '未命名对话');
+      const ts = conv.create_time ? new Date(conv.create_time * 1000) : new Date();
+      const date = ts.getFullYear()+'-'+String(ts.getMonth()+1).padStart(2,'0')+'-'+String(ts.getDate()).padStart(2,'0');
+      return { title, date, messages, createTime: conv.create_time };
+    }).filter(c => c.messages.length > 0);
+  }
+
+  function exportData(){
+    const backup = {
+      version: 2, app: 'MY WORK BUDDY', exportedAt: new Date().toISOString(),
+      tasks: state.tasks, logs: state.logs, evidence: state.evidence,
+      reviews: state.reviews, painStatus: state.painStatus
+    };
+    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'work-buddy-backup-'+todayISO()+'.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+    toast('备份已下载。');
+  }
+
+  function openRestore(){
+    const html = ''+
+      '<div class="head"><div class="t">恢复备份</div><button class="close" data-modal-close>'+ICON.x+'</button></div>'+
+      '<div class="hint" style="margin-bottom:10px">选择之前导出的备份文件。这会<strong>替换</strong>当前全部数据。</div>'+
+      '<div class="field"><label>选择备份 JSON</label><input type="file" id="restore-input" accept=".json" style="font-size:13px"></div>'+
+      '<div id="restore-info" style="margin-top:6px"></div>'+
+      '<div class="actions" id="restore-actions" style="display:none"><button class="btn btn-ghost" data-modal-close>取消</button><button class="btn btn-danger" id="restore-go">确认替换</button></div>';
+    openModal(html, (ov, close) => {
+      ov.querySelectorAll('[data-modal-close]').forEach(b => b.addEventListener('click', close));
+      let backup = null;
+      ov.querySelector('#restore-input').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const data = JSON.parse(reader.result);
+            if (!data.tasks || !data.logs){ toast('这不是有效的备份文件。'); return; }
+            backup = data;
+            const info = ov.querySelector('#restore-info');
+            info.innerHTML = '<div class="muted" style="font-size:12.5px">该备份包含 '+data.tasks.length+' 个任务、'+data.logs.length+' 条记录、'+(data.evidence?data.evidence.length:0)+' 条证据。导出于 '+esc(trunc(data.exportedAt||'',10))+'。</div>';
+            ov.querySelector('#restore-actions').style.display = '';
+          } catch(err){ toast('文件解析失败。'); }
+        };
+        reader.readAsText(file);
+      });
+      ov.querySelector('#restore-go').addEventListener('click', () => {
+        if (!backup){ toast('请先选择备份文件。'); return; }
+        if (!confirm('确认用备份替换当前全部数据？此操作不可撤销。')) return;
+        state.tasks = backup.tasks || [];
+        state.logs = backup.logs || [];
+        state.evidence = backup.evidence || [];
+        state.reviews = backup.reviews || [];
+        state.painStatus = backup.painStatus || {};
+        saveAll();
+        close();
+        toast('数据已恢复。');
+        go('/home');
+      });
+    });
   }
 
   // ---------- log actions ----------
