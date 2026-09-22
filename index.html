@@ -1,0 +1,1426 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>MY WORK BUDDY</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#4A6FA5" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="white-translucent" />
+  <meta name="apple-mobile-web-app-title" content="WORK BUDDY" />
+  <meta name="description" content="A quiet personal learning workbench." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%234A6FA5%22/%3E%3Crect%20x%3D%2210%22%20y%3D%2211%22%20width%3D%2214%22%20height%3D%2211%22%20rx%3D%222%22%20fill%3D%22%23fff%22/%3E%3Crect%20x%3D%2212%22%20y%3D%2214%22%20width%3D%228%22%20height%3D%221.4%22%20rx%3D%22.7%22%20fill%3D%22%234A6FA5%22/%3E%3Crect%20x%3D%2212%22%20y%3D%2216.6%22%20width%3D%226%22%20height%3D%221.4%22%20rx%3D%22.7%22%20fill%3D%22%234A6FA5%22/%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAGbUlEQVR4nO3dS08kVRiH8bdJJS6Mu/ksgyaCiS7daAYYh6gMLHTpRMNldK1zSRjBnS40Gi4OmIALv4AuBuazzIpLMqzaBd1NX6q7q7pO1TnnX88v6cSJM3CgH15OnaabhgXi7sPDpu81oJjnj+YbvtfgbQELGwcELO7g8ULlfVX6Dom4vqqKu/R3QsToV2bcpb1hQsY4ZYTt/A0SMvJyGbbToBc2nhMzJnLw+K6TFp28EUKGK0XDniq6AGKGS0V7KvTVsLBOzCjHwZPJJvVE/2iekFGRw5xh595yEDOqlLe3XEETM3zI013moIkZPmXtr/ApBxCSTEEznRGCLB2ODZqYEZJxPY48Eplf+5OYEaTDp5+ktsseGlKGTug5pjMC91fKlE6d0MSMGKR1ypYDUgaCZjojJv29JoN/hZ4Rr54JPbe2T82ITne3vROanBE5LgohpRP03CrbDcSr3W9ny0HNUNC1hyZpxK9hZnZndY+aIYGLQkghaEghaEhp3FndZf8MGUxoSCFoSEnYb0AJExpSCBpSEh7yhpKEnqGELQekEDSkEDSkEDSkJE2uCiGECQ0pBA0pBA0pPLACKTz0DSlsOSCFoCGFoCGFZ6xAChMaUpLzy9f21ptv+F4H4MT1OTT7DohgywEpKb80qL6ONj9/5XsNVfn4mz9u+V5DGRoffPlL08xqvY+uU8j9lMI+v7yyKetsout5q3PMZu0vZv/3g6tbrffQR5tLtY65TenzMNVu++zyKoCvr+puSneiC0ebS6983ydFbu1+azmhj4k5lcLnpffnoZtD/54amQuhDPJFGmsDrXU33v/i554PQfm04/jZku8l+JQ57I++/j2qL/jzy6vOf6f8gH+sX6KjHT+773sJvt2yzFHH1sDNegf20N21qyDmjqgmbxb9vcpfFBLzALmou6UGrTKliXkoiajTOh06oVWihqZhfY58xkpslwbd/mY6jzP0IjGG+33YGhNrDl/++QU//F9LI5oIwajdw9iLQrYeCMm4HjOdchA1QpClQ/ljO9RL5qCZ0vApa3+5XtuOZ4jXRVgXhXmGae4tB5MaVcrb20RPkm2/E6Y1yjLp4EyKHDmeXVzJRP3hg71T32so6p+txWkXb8f3MXSRXUDhUw6FLYhCzGYaH0fRnpwc251fXkUdtqvJ5lvMH4erhpy+gn/MpyAxx+BetXsOl8PQ+SsnccGIrMr4rl7aS4ERNoYpc3ta+mvbdS+euOurqmusSl+skbjrxcdBgbdXH+3/YAk8fiGcdCVN36foLWcXr30vAS0x3xf8+Cik8ILnLaE9ysa5+GSY0BZezGZhrikGBG1hTsMQ1xQDfnl9CwF1i7cJJjSkEDSkJBF/d0FZIm6CX16PATE3wZYDUjjlQIp4m2BCQwoPfbeE9sgc5+KTYUJbeDGbhbmmGBC0hTkNQ1xTDEa+4HmdEFCXiJtgQqPHeys/Rf0LhXhgBT1i74EJjY7ZyKezGUGjRSFmM4KG6cRsxkPftTe7si0Ts5lZY2Z5S7bof3/9yvcSgjW7su17CaXg56HrSvR+l95Dzy5rTqGilD8v0kGbad95k1D/fEw17fq7j/JtRvxOzGpmedv7fVH2bcr/Eqq5zSxv9d+/tXL98fu/H8q+Nd69/2PT1SctFv/99sD3EipTty/kWgYNXfIXhagXzqEhhYe+IYUtB6QQNKTwjBVIYUJDCkFDCqcckMI5NKSw5YAUgoYUgoYUgoaUpMlVIYQwoSGFoCGFoCGFB1YghYe+IYUtB6QQNKQQNKTwjBVIYUJDSsPM7J3PnjKoIeH6d32TM0Sw5YAUgoaUKTOzFztrDd8LAYp6sbPWSG7+yEYa8WPLASk9W423P33CmEaUTnbWG2ZMaIhJev7EfEbkeib0ye46px2ITne3yeD/ZkwjXgN76JPdDaY0otHfKxeFkJIaNFMaMUjrdOiEJmqEbFifKReFN7g8RGzGTuHpxUd0jaCc7j0c2u3Yi8JR/xio2rgeM51yEDVCkKVDju0gJXPQTGn4lLW/3JFOL/7ARSIqdbr3beZOc2858rxxoKi8vRWKk2mNskw6OAtP29v3iBpuvdyffBdQ+JSjyDsH+hXtyWmMTGtMytVgdD5db9/7nqiRy8v975x1WNp2gbAxjsuQ20rf/xI2+pURclulF3TEXV9lRtzN2wkFceurKuJu/wP2S8WQNFtiWAAAAABJRU5ErkJggg==" />
+  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%20%22MY%20WORK%20BUDDY%22%2C%20%22short_name%22%3A%20%22WORK%20BUDDY%22%2C%20%22start_url%22%3A%20%22.%22%2C%20%22display%22%3A%20%22standalone%22%2C%20%22background_color%22%3A%20%22%23F6F8FB%22%2C%20%22theme_color%22%3A%20%22%234A6FA5%22%2C%20%22icons%22%3A%20%5B%7B%22src%22%3A%20%22data%3Aimage/png%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAGbUlEQVR4nO3dS08kVRiH8bdJJS6Mu/ksgyaCiS7daAYYh6gMLHTpRMNldK1zSRjBnS40Gi4OmIALv4AuBuazzIpLMqzaBd1NX6q7q7pO1TnnX88v6cSJM3CgH15OnaabhgXi7sPDpu81oJjnj%2BYbvtfgbQELGwcELO7g8ULlfVX6Dom4vqqKu/R3QsToV2bcpb1hQsY4ZYTt/A0SMvJyGbbToBc2nhMzJnLw%2BK6TFp28EUKGK0XDniq6AGKGS0V7KvTVsLBOzCjHwZPJJvVE/2iekFGRw5xh595yEDOqlLe3XEETM3zI013moIkZPmXtr/ApBxCSTEEznRGCLB2ODZqYEZJxPY48Eplf%2B5OYEaTDp5%2BktsseGlKGTug5pjMC91fKlE6d0MSMGKR1ypYDUgaCZjojJv29JoN/hZ4Rr54JPbe2T82ITne3vROanBE5LgohpRP03CrbDcSr3W9ny0HNUNC1hyZpxK9hZnZndY%2BaIYGLQkghaEghaEhp3FndZf8MGUxoSCFoSEnYb0AJExpSCBpSEh7yhpKEnqGELQekEDSkEDSkEDSkJE2uCiGECQ0pBA0pBA0pPLACKTz0DSlsOSCFoCGFoCGFZ6xAChMaUpLzy9f21ptv%2BF4H4MT1OTT7DohgywEpKb80qL6ONj9/5XsNVfn4mz9u%2BV5DGRoffPlL08xqvY%2BuU8j9lMI%2Bv7yyKetsout5q3PMZu0vZv/3g6tbrffQR5tLtY65TenzMNVu%2B%2BzyKoCvr%2BpuSneiC0ebS6983ydFbu1%2Bazmhj4k5lcLnpffnoZtD/54amQuhDPJFGmsDrXU33v/i554PQfm04/jZku8l%2BJQ57I%2B%2B/j2qL/jzy6vOf6f8gH%2BsX6KjHT%2B773sJvt2yzFHH1sDNegf20N21qyDmjqgmbxb9vcpfFBLzALmou6UGrTKliXkoiajTOh06oVWihqZhfY58xkpslwbd/mY6jzP0IjGG%2B33YGhNrDl/%2B%2BQU//F9LI5oIwajdw9iLQrYeCMm4HjOdchA1QpClQ/ljO9RL5qCZ0vApa3%2B5XtuOZ4jXRVgXhXmGae4tB5MaVcrb20RPkm2/E6Y1yjLp4EyKHDmeXVzJRP3hg71T32so6p%2BtxWkXb8f3MXSRXUDhUw6FLYhCzGYaH0fRnpwc251fXkUdtqvJ5lvMH4erhpy%2Bgn/MpyAxx%2BBetXsOl8PQ%2BSsnccGIrMr4rl7aS4ERNoYpc3ta%2BmvbdS%2BeuOurqmusSl%2BskbjrxcdBgbdXH%2B3/YAk8fiGcdCVN36foLWcXr30vAS0x3xf8%2BCik8ILnLaE9ysa5%2BGSY0BZezGZhrikGBG1hTsMQ1xQDfnl9CwF1i7cJJjSkEDSkJBF/d0FZIm6CX16PATE3wZYDUjjlQIp4m2BCQwoPfbeE9sgc5%2BKTYUJbeDGbhbmmGBC0hTkNQ1xTDEa%2B4HmdEFCXiJtgQqPHeys/Rf0LhXhgBT1i74EJjY7ZyKezGUGjRSFmM4KG6cRsxkPftTe7si0Ts5lZY2Z5S7bof3/9yvcSgjW7su17CaXg56HrSvR%2Bl95Dzy5rTqGilD8v0kGbad95k1D/fEw17fq7j/JtRvxOzGpmedv7fVH2bcr/Eqq5zSxv9d%2B/tXL98fu/H8q%2BNd69/2PT1SctFv/99sD3EipTty/kWgYNXfIXhagXzqEhhYe%2BIYUtB6QQNKTwjBVIYUJDCkFDCqcckMI5NKSw5YAUgoYUgoYUgoaUpMlVIYQwoSGFoCGFoCGFB1YghYe%2BIYUtB6QQNKQQNKTwjBVIYUJDSsPM7J3PnjKoIeH6d32TM0Sw5YAUgoaUKTOzFztrDd8LAYp6sbPWSG7%2ByEYa8WPLASk9W423P33CmEaUTnbWG2ZMaIhJev7EfEbkeib0ye46px2ITne3yeD/ZkwjXgN76JPdDaY0otHfKxeFkJIaNFMaMUjrdOiEJmqEbFifKReFN7g8RGzGTuHpxUd0jaCc7j0c2u3Yi8JR/xio2rgeM51yEDVCkKVDju0gJXPQTGn4lLW/3JFOL/7ARSIqdbr3beZOc2858rxxoKi8vRWKk2mNskw6OAtP29v3iBpuvdyffBdQ%2BJSjyDsH%2BhXtyWmMTGtMytVgdD5db9/7nqiRy8v975x1WNp2gbAxjsuQ20rf/xI2%2BpURclulF3TEXV9lRtzN2wkFceurKuJu/wP2S8WQNFtiWAAAAABJRU5ErkJggg%3D%3D%22%2C%20%22sizes%22%3A%20%22180x180%22%2C%20%22type%22%3A%20%22image/png%22%7D%2C%20%7B%22src%22%3A%20%22data%3Aimage/png%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAASiElEQVR4nO3dTY9kV30G8NOjK7FA7PxZPEQCI8HSG4jfYicKtiOFZaygMSZZJ4AjjIFVskEJeBxsIszCnwAp9vizsGI8kmfVWUzKU%2B7u6q6Xe%2B95eX4/qRbIaHTrVvV9nvqfc6vOCs174Yfvn9c%2BBoBD/fZHz53VPgZ28%2BI04Pk33hPwQJz3fvy8DKrIyV%2BZsAfYTSlYjxO9IGEPcDqlYBlO6syEPsBylIH5OJEnEvgA9SgEx3PijiD0AdqjDBzGyTqA4AdonyKwHyfpBkIfoF/KwG5OzA6CH2AcisBlTsgWoQ8wPmXgESehCH6AROlFIPrJC34AUotA5JMW/ABclFYEbtU%2BgLUJfwCukpYPMW0n7YUF4HgJ04Dhn6DgB%2BBYIxeBYZ9YKaU8/8ZvhT8AJ3nvxy8MmZVDPinBD8DcRisCQz0ZwQ/A0kYpAsPcBSD8AVjDKHkzRAEY5cUAoA8j5E7XY4wRXgAA%2BtbrkkC3EwDhD0ALes2jLlvL8z/o82QDMK73ftLXJKCrgxX8ALSulyLQxUGWUspzwh%2BATrzfQQnoYg%2BA8AegJz3kVvMFoIeTCAAXtZ5fTReA1k8eAFyn5Rxrco2i5RMGAMdobV9AcxMA4Q/AiFrLt6YKQGsnBwDm1FLONVMAWjopALCUVvKuiQLQyskAgDW0kHvVC0ALJwEA1lY7/6oWgNpPHgBqqpmD1QqA8AeAenlYfQkAAFhflQLg0z8APFYjF1cvAMIfAC5bOx9XLQDCHwB2WzMnVysAwh8AbrZWXq5SAIQ/AOxvjdx0FwAABFq8APj0DwCHWzo/Fy0Awh8Ajrdkjp4t9Q8/97rwB4A5vP/mC7PntT0AABBokQnAc6//t0//ADCj99/8q1kze/YJgPAHgPnNna%2BzFgDhDwDLmTNnp7n%2BoVJKkf4A0IfZJgDP%2BvQPAIubK2/dBQAAgWYpAD79A8B65sjdkwuA8AeA9Z2av5YAACDQSQXAp38AqOeUHDYBAIBARxcAn/4BoL5j8/ioAiD8AaAdx%2BSyJQAACHRwAfDpHwDac2g%2BmwAAQKCDflv42dff9ekfABr2uzdf3CvbTQAAINDeBcCnfwBo3755bQIAAIEUAAAItNdGgWfvGP8DQE9%2B92/XbwY0AQCAQDcWAJ/%2BAaA/N%2BW3CQAABFIAACDQtQXA%2BB8A%2BnVdjpsAAECgnbcIPOPTPwAM4X%2BuuCXQBAAAAikAABDoygJg/A8A47gq16er/6/yHwBGZgkAAAIpAAAQ6FIBeObOXfN/ABjMxXw3AQCAQAoAAAT6QgEw/geAcW3nvAkAAARSAAAgkAIAAIEUAAAI9HkBsAEQAMa3yXsTAAAIpAAAQCAFAAACKQAAEOislFKeufOODYAAEMQEAAACKQAAEEgBAIBACgAABFIAACDQVEopbgEAgCwmAAAQ6NZf%2Bg4AAIhjAgAAgRQAAAikAABAIAUAAAIpAAAQSAEAgEAKAAAEmnwPIADkMQEAgEAKAAAEUgAAINBkCwAA5DEBAIBACgAABFIAACCQAgAAgRQAAAikAABAIAUAAAIpAAAQSAEAgEAKAAAEUgAAINB07scAACCOCQAABFIAACCQAgAAgRQAAAikAABAIAUAAAIpAAAQSAEAgEAKAAAEUgAAINDkm4ABII8JAAAEUgAAIJACAACBFAAACDQVuwABII4JAAAEUgAAIJACAACBFAAACKQAAEAgBQAAAt26/%2BBh7WMAAFZmAgAAgabz4quAACCNCQAABFIAACCQAgAAgRQAAAikAABAoFullOK7AAAgx/0HD8v0%2BCZANwMCQIZzSwAAkGgyAACAMOc2AQJApM8LgI2AADC%2BTd6bAABAIAUAAAIpAAAQSAEAgEBfKAA2AgLAuLZz3gQAAAJNtQ8AWvL7n/7tn2ofAxm%2B8/3/eqL2MZDt7Fvf%2B49L3wH4lS9/qcaxwOoEPq1QCFjaxWV%2BEwAiCX5as3lPKgKsRQEghtCnB9vvU2WAJdkESAThT4%2B8b1nS2be%2B9%2B9X/g6gfQCM4Pc//a4LKEP4zvf/0zSAo111m78JAMMS/ozE%2B5m5KQAMycWSEXlfM6ezb%2B5YAijFMgB9%2BsBFksF923IAB9j1Lb8mAAxF%2BJPA%2B5w5XFsA/DYAPXFRJIn3O/u4LsdNABiCiyGJvO85hQJA91wESeb9z7FuLACWAWiZix/4O%2BBqN%2BW3CQAABDr75t/vvg1wm1sCac0Hb/nUA9u%2B/Y9uD%2BSRfab3JgB0SfjDZf4uOIRfA2QkPv2wFkFL9/YuAPcfPLQMQGsEPrVcfO8pBDRj3837lgDozgdvfbcU4U9bniiNvCctA7Cvg5YATAGo5f9DH1q3XQIEMas75Nb9W6WcFw%2BPlh/Cn05Vmwg8mgLU/9v1aPtx8CZAUwDW8sFbL9c%2BBDjVpgSYBrC4Q7%2B4zx4AmiT8GUwT%2BwNg21EFwNcDsyThz6CUABZzTC4fPQFQAliC8Gdwq5WAD9562bJDiGPz2BIAzRD%2BhDAJoAknFQBTAOYi/AmjBDCLU3LYBIDqhD%2BhlACqOrkAmAJwCuFPOCWAo52av7NMAJQAjiH8oZSiBHCEOXLXEgAABJqtAJgCcAif/uELTAHY21x5O53P8s88Mue/xbj%2BIPzhKk%2BUmb8y2DV5THO9rrMuAZgCAMBy5szZ2fcAKAEAML%2B583WRTYBKALsY/8O17AXgSkvk6rTcKpHVJ4C6XIfHMf9rOS31/rj/6cPylS9/aZl/nC794Wev1D4E6MF8mwHl/xCWmqov%2Bj0AlgIA4HhL5ujiXwSkBADA4ZbOT98ECACBVikApgBY/4eDuBsg3Bq5udoEQAkAgJutlZerLgEoAQCw25o5ufoeACUAAC5bOx%2BrbAJUAgDgsRq56C4AAAhUrQCYAgBAvTysOgFQAgBIVjMHqy8BKAEAJKqdf9ULQCn1TwIArKmF3GuiAJTSxskAgKW1kndTS78Xef/BZ35CGGA27VzfeaSV8C%2BloQnARksnBwDm0lq%2BTbUP4Cqbk2QaAEDvWgv%2BjeYmANtaPWkAsI%2BWc6zpAlBK2ycPAHZpPb%2BaLwCltH8SAWBbD7k19bJH9M8PHtoTAHCAXq7vo%2Bkh/EtpdBPgLjYHAtCqXoJ/Y%2BqxIt7/1DQA4EYdXt971Vv4l9LZBGDbfUsCHOHp1%2B7eq30MtO3Dt1%2B6XfsY6EuP4V9KJ5sAd7n/4GG3J571CX/24X3CvnrPoK4LwEbPLwDrcFHnEN4v3GSE3BmiAJQyxosBQPtGyZtu9wBcxV0CACxllODfGGYCsK33dRnmZ2MXh/B%2BYduomTJkAdgY8QXjeC7q7MP7hG0j58g0%2Bo2i9x98VkqxLMAjLu5kGfv6vqSRg39jqD0A17E/AICbJAT/xtBLAFdJenEB2F9aPsRMALaZBgCwkRb8G5EFYEMRAMiVGvwb0QVgQxEAyJEe/BsKwJbtN4UyADAOoX%2BZArCDqQBA/wT/bgrADUwFAPoi9PejABzAVACgXYL/MArAEUwFANog9I%2BnAJzo4ptPIQBYjsCfjwIwM9MBgHkJ/WUoAAu66k2rFADsJuzXowCsTCkAeETY16UANOCmPwIFAeiRgG/bdH7u96Jb9%2BdPP6t9CECHXDu4TtzPAQMACgAARFIAACCQAgAAgRQAAAikAABAIAUAAAIpAAAQSAEAgEC%2BCpgoT792917tY%2BCxD99%2B6XbtY4BUJgDEEP7t8ZpAPQoAEQRNu7w2UIcCAACBFAAACKQAEMFms3Z5baCOW6WcFw%2BP5R/1CZr2eE2WVvvv3qPlh9sAiSJwAB6xBAAAgRQAAAikAABAIAUAAAIpAAAQaCrntQ8BgEW4vnMNEwAACDQpiABjcn3nOiYAABBIAQCAQAoAAARSAAAgkAIAAIEUAAAINLlRBGBUru/sZgIAAIEUAAAIpAAAQCAFAAACKQAAEEgBAIBACgAABFIAACCQAgAAgRQAAAg01T4AWNPTr929V/sYeOzDt1%2B6XfsYIJUJADGEf3u8Jsv5xt/98onax0DbFAAiCJp2eW2gjsmPRQEMyLWdG5gAAECgW49qoofH0o%2B6bDZrl9dmft949RdP1P%2Bb92j9YQJADEHTHq8J1OM2QKIIHEb36NM/3Gw6r30EAMzGNZ19WQIAgEAKAMAgnjL%2B5wAKAMAAhD%2BHUgAAIJACANA5n/45hgIA0DHhz7EUAIBOCX9OoQAAdEj4cyoFAKAzwp85KACs4qlXf1H7EKAnf9r1H4Q/c1EAADoh/JmTAgDQAeHP3CY/HQHQrqde/bngZxEmAKzmqVd/XvsQoAefr/8Lf5Y01T4AAB4T%2BqzFBIBVmQLAbv4%2BWJMCAACBJnsAARrhesyKTABY3VOvGHPCRf4uWJsCQBUudvCYvwdqUAAAIJACQDU%2B9YC/A%2BpRAKjKxY9k3v/UpABQnYsgibzvqe3say%2B/7cYTmvDHX/1D7UOAVXxd%2BNMAEwCa4aJIAu9zWqEA0BQXR0bm/U1LFACa4yLJiLyvac3Z117%2BmT0ANOmPv3qt9iHALL7%2Bytu1DwEuUQBoniJArwQ/LbMEQPNcROmR9y2tMwGgOyYCtEro0xMFgG4pArRC8NMjBYBhKASsReAzAgUAAALZBAgAgRQAAAikAABAIAUAAAIpAAAQSAEAgEBTcRMgAMQxAQCAQAoAAASaijUAAIhjAgAAgRQAAAikAABAIAUAAAIpAAAQaHIPAADkMQEAgEAKAAAEUgAAIJACAACBFAAACKQAAEAgBQAAAikAABBIAQCAQFMpvgsQANKYAABAIAUAAAIpAAAQaLIFAADymAAAQCAFAAACKQAAEEgBAIBACgAABFIAACCQAgAAgRQAAAikAABAIAUAAAIpAAAQaDr3YwAAEMcEAAACKQAAEEgBAIBACgAABFIAACCQAgAAgRQAAAikAABAIAUAAAIpAAAQaPJNwACQxwQAAAIpAAAQSAEAgEAKAAAEmopdgAAQxwQAAAIpAAAQSAEAgEAKAAAEUgAAIJACAACBbv3vr%2B%2Bc1T4IAGBdJgAAEGgqxVcBAUAaEwAACKQAAEAgBQAAAikAABBIAQCAQLdKKeUj3wUAADE%2B%2BvWds%2Bnx/3QzIACksAQAAIEeTwAMAAAghgkAAAT6vAB89JvXbQQEgMFt8t4EAAACKQAAEEgBAIBACgAABPpCAbAREADGtZ3zJgAAEEgBAIBAlwqAZQAAGM/FfDcBAIBACgAABFIAACDQzvX%2Bv/ibn/h9QAAYwEe/%2BcGlvDcBAIBACgAABLr2lr%2BvWgYAgK59fMX4vxQTAACIdG0B2NUaAID2XZfjJgAAEEgBAIBANxYAywAA0J%2Bb8tsEAAAC7f3p/qt/7ZZAAOjBx%2B/cPL03AQCAQAoAAATauwDsM04AAOraN69NAAAg0EEFwBQAANp1SE5Ph//zbgYAgN4dvATw8TtvmAIAQGMOzWd7AAAg0FEFwBQAANpxTC4fPQFQAgCgvmPz2BIAAAQ6qQCYAgBAPafksAkAAAQ6uQCYAgDA%2Bk7N31kmAEoAAKxnjty1BAAAgWYrAKYAALC8ufL2iN8C2M2vBABAH2ZdArhnCgAAi5kzZ2ffA6AEAMD85s7XRTYBKgEAMJ8lcnXWPQBfZEcAALRq0U/qt1/6kRYAACe4d/eHi2T1ot8DsNRBA0CCJXN08S8CUgIA4HBL56dvAgSAQKsUAFMAANjfGrm52gRACQCAm62Vl6suASgBALDbmjm5%2Bh4AJQAALls7H6tsAlQCAOCxGrnoLgAACFStAJgCAEC9PKw6AVACAEhWMwerLwEoAQAkqp1/1QtAKfVPAgCsqYXca6IAlNLGyQCApbWSd00cxLbbL/2rnxAGYEj37v5TM7nbzARgo6WTAwBzaS3fmjqYi0wDAOhda8G/0dwEYFurJw0A9tFyjjVdAEpp%2B%2BQBwC6t51fzBaCU9k8iAGzrIbeaP8BtT9oTAEDjPukg/EvprABsKAIAtKaX4N/o6mC3PfmiEgBAGz55t6/wL6WTPQBX6fFkAzCeXvOoy4O%2ByDQAgLX1Gvwb3U4AtvX%2BIgDQlxFyZ4gCUMoYLwYA7Rslb4Z4EhdZEgBgbqME/8ZQT%2BYiRQCAU40W/BvDLAFcZdQXDYB1jJwjwz6xi5588V9MAwDYyyfv/vPw%2BTj8E7xIEQBgl4Tg3xh6CeAqSS8uAPtLy4eoJ3uRaQAAacG/EfmkL1IEAPKkBv9G9JO/SBEAGF968G84CTsoAwDjEPqXOSE3UAQA%2BiX4d3NiDqAMALRP6O/HSTqCIgDQHsF/GCfrRMoAQD1C/3hO3MwUAoDlCPz5OJELUgYATif0l%2BGkrkwpANhN2K/HiW6AUgAkEvZ1/R%2BlVIOcR03S%2BAAAAABJRU5ErkJggg%3D%3D%22%2C%20%22sizes%22%3A%20%22512x512%22%2C%20%22type%22%3A%20%22image/png%22%7D%5D%7D" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+/* ============================================
+   MY WORK BUDDY — calm editorial blue
+   mobile-first · minimal · personal journal
+   ============================================ */
+
+:root{
+  --bg:#F4F6FA;
+  --surface:#FFFFFF;
+  --surface-2:#EEF2F8;
+  --surface-3:#E7ECF3;
+  --ink:#1A2735;
+  --ink-2:#4D5D70;
+  --ink-3:#8A98AA;
+  --ink-4:#B7C0CD;
+  --line:#E3E9F1;
+  --line-2:#EDF1F6;
+  --blue:#4A6FA5;
+  --blue-deep:#34547E;
+  --blue-soft:#D7E2F1;
+  --blue-tint:#E9EFF8;
+  --blue-mist:#F2F5FB;
+  --amber:#A77B45;
+  --amber-soft:#F1E6D2;
+  --green:#5E8770;
+  --green-soft:#DCE7E0;
+  --violet:#7868A0;
+  --violet-soft:#E0D9EE;
+  --radius:18px;
+  --radius-sm:12px;
+  --radius-xs:10px;
+  --shadow-sm:0 1px 2px rgba(20,35,55,.04);
+  --shadow:0 1px 2px rgba(20,35,55,.04), 0 8px 24px rgba(20,35,55,.06);
+  --shadow-nav:0 -1px 1px rgba(20,35,55,.04), 0 -8px 28px rgba(20,35,55,.08);
+  --tap:44px;
+  --nav-h:62px;
+  --serif:'Newsreader', Georgia, 'Times New Roman', serif;
+  --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background:var(--bg);
+  font-size:15.5px;
+  line-height:1.5;
+  letter-spacing:-.005em;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overscroll-behavior-y:contain;
+}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+a{color:inherit;text-decoration:none}
+input,textarea,select{font:inherit;color:inherit}
+::selection{background:var(--blue-soft);color:var(--ink)}
+
+/* App frame */
+.app{
+  max-width:480px;
+  margin:0 auto;
+  min-height:100vh;
+  min-height:100dvh;
+  padding:
+    calc(env(safe-area-inset-top, 0px) + 14px)
+    18px
+    calc(var(--nav-h) + env(safe-area-inset-bottom, 0px) + 28px);
+  position:relative;
+}
+.view{animation:fade .28s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* Typography */
+.eyebrow{
+  font-size:10.5px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  font-weight:600;
+}
+.serif{font-family:var(--serif);font-weight:400}
+.h-display{
+  font-family:var(--serif);
+  font-weight:400;
+  letter-spacing:-.01em;
+}
+.date-serif{
+  font-family:var(--serif);
+  font-weight:300;
+  font-size:34px;
+  letter-spacing:-.015em;
+  color:var(--ink);
+  line-height:1.1;
+}
+.section-title{
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.section-title .dot{
+  width:4px;height:4px;border-radius:50%;background:var(--blue);
+}
+.muted{color:var(--ink-2)}
+.dim{color:var(--ink-3)}
+.fine{color:var(--ink-3);font-size:12.5px}
+.divider{height:1px;background:var(--line);margin:18px 0;border:0}
+
+/* Cards */
+.card{
+  background:var(--surface);
+  border-radius:var(--radius);
+  padding:18px 18px;
+  box-shadow:var(--shadow-sm);
+  border:1px solid var(--line-2);
+}
+.card.tight{padding:14px 16px}
+.card.flat{box-shadow:none;border:1px solid var(--line)}
+.card-link{display:block;cursor:pointer;transition:transform .15s ease}
+.card-link:active{transform:scale(.995)}
+
+/* Header bar */
+.brand{
+  display:flex;align-items:baseline;justify-content:space-between;
+  margin:6px 0 18px;
+}
+.brand .mark{
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:18px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.brand .mark span{color:var(--blue)}
+.brand .right{font-size:12px;color:var(--ink-3)}
+
+/* Home */
+.home-hero{
+  background:linear-gradient(160deg,#FFFFFF 0%, var(--blue-mist) 100%);
+  border:1px solid var(--line-2);
+  border-radius:var(--radius);
+  padding:20px 20px 18px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow-sm);
+}
+.home-hero .greeting{
+  font-family:var(--serif);
+  font-size:13px;
+  color:var(--ink-2);
+  font-style:italic;
+}
+.home-hero .date{font-family:var(--serif);font-weight:300;font-size:34px;line-height:1.15;letter-spacing:-.015em}
+.home-hero .date small{font-size:18px;color:var(--ink-3);margin-left:6px;font-weight:300}
+.home-hero .weekday{color:var(--ink-3);font-size:12.5px;letter-spacing:.04em;margin-top:4px}
+
+.section{margin-top:22px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:0 4px 10px}
+.section-head .section-title{margin:0}
+.section-head .right{font-size:11.5px;color:var(--ink-3);letter-spacing:.04em}
+
+.tile{
+  background:var(--surface);
+  border-radius:var(--radius);
+  padding:16px 18px;
+  border:1px solid var(--line-2);
+  box-shadow:var(--shadow-sm);
+}
+.tile .label{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-bottom:8px}
+.tile .body{font-size:14.5px;color:var(--ink);line-height:1.55}
+.tile .body.serif{font-family:var(--serif);font-size:16px;font-weight:300}
+
+.focus-tile{
+  background:linear-gradient(170deg, var(--blue-soft) 0%, var(--blue-tint) 100%);
+  border:1px solid #C9D6EA;
+}
+.focus-tile .label{color:var(--blue-deep)}
+.focus-tile .body{color:var(--ink)}
+
+.pain-tile{border-color:#E8DCC4;background:linear-gradient(170deg, #FBF5EA 0%, #F6EEDD 100%)}
+.pain-tile .label{color:var(--amber)}
+.pain-tile .body{color:var(--ink)}
+
+.growth-tile{border-color:#D5E1D9;background:linear-gradient(170deg, #F2F7F3 0%, #E9F1EC 100%)}
+.growth-tile .label{color:var(--green)}
+.growth-tile .body{color:var(--ink)}
+
+/* Lists */
+.list{display:flex;flex-direction:column;gap:10px}
+.row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--surface);
+  border:1px solid var(--line-2);
+  border-radius:var(--radius-sm);
+  padding:14px 16px;
+  box-shadow:var(--shadow-sm);
+  cursor:pointer;
+  transition:transform .15s ease;
+}
+.row:active{transform:scale(.997)}
+.row .left{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
+.row .name{font-weight:500;color:var(--ink);font-size:15px}
+.row .meta{font-size:12px;color:var(--ink-3);margin-top:2px}
+.row .chev{color:var(--ink-4);font-size:18px;line-height:1}
+.tag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;letter-spacing:.04em;
+  background:var(--surface-2);
+  color:var(--ink-2);
+  padding:3px 9px;
+  border-radius:999px;
+  border:1px solid var(--line);
+}
+.tag.blue{background:var(--blue-tint);color:var(--blue-deep);border-color:#D4E0F0}
+.tag.amber{background:var(--amber-soft);color:#7C582C;border-color:#ECDDC0}
+.tag.green{background:var(--green-soft);color:#345640;border-color:#CFE0D5}
+.tag.violet{background:var(--violet-soft);color:#4F406E;border-color:#D7CFEA}
+
+/* Task detail */
+.task-hero{
+  background:var(--surface);
+  border:1px solid var(--line-2);
+  border-radius:var(--radius);
+  padding:20px 20px 16px;
+  box-shadow:var(--shadow-sm);
+  margin-bottom:14px;
+}
+.task-hero .name{
+  font-family:var(--serif);font-weight:400;font-size:26px;letter-spacing:-.01em;
+}
+.task-hero .stage{color:var(--blue-deep);font-size:13px;letter-spacing:.06em;margin-top:6px}
+.task-hero .meta-line{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.task-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.task-field{
+  background:var(--surface);
+  border:1px solid var(--line-2);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+}
+.task-field.full{grid-column:1/-1}
+.task-field .l{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-bottom:5px}
+.task-field .v{font-size:14px;color:var(--ink);line-height:1.5}
+.task-field .v.empty{color:var(--ink-4);font-style:italic}
+
+/* Timeline */
+.timeline{display:flex;flex-direction:column;gap:14px;margin-top:6px}
+.t-entry{
+  position:relative;
+  padding-left:22px;
+}
+.t-entry::before{
+  content:"";
+  position:absolute;left:6px;top:8px;bottom:-14px;
+  width:1px;background:var(--line);
+}
+.t-entry:last-child::before{display:none}
+.t-dot{
+  position:absolute;left:0;top:6px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--surface);border:2px solid var(--blue);
+}
+.t-dot.fact{background:var(--blue);}
+.t-dot.feeling{background:var(--violet);border-color:var(--violet);}
+.t-dot.analysis{background:var(--green);border-color:var(--green);}
+
+.t-card{
+  background:var(--surface);
+  border:1px solid var(--line-2);
+  border-radius:var(--radius-sm);
+  padding:14px 16px;
+  box-shadow:var(--shadow-sm);
+  cursor:pointer;
+}
+.t-date{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:15px;
+  color:var(--ink);
+  display:flex;align-items:center;gap:8px;
+}
+.t-date .lens{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);font-family:var(--sans);font-weight:600;margin-left:6px}
+.t-rows{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.t-row{display:grid;grid-template-columns:82px 1fr;gap:8px;font-size:14px}
+.t-row .k{color:var(--ink-3);font-size:12px;letter-spacing:.04em}
+.t-row .v{color:var(--ink);line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.t-row .v.empty{color:var(--ink-4);font-style:italic}
+.t-scores{display:flex;gap:14px;margin-top:10px;color:var(--ink-2);font-size:12.5px}
+.t-scores .score{display:flex;align-items:center;gap:6px}
+.t-scores .score .num{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+
+/* Forms / New Log */
+.sheet{
+  background:var(--surface);
+  border:1px solid var(--line-2);
+  border-radius:var(--radius);
+  padding:8px 18px 18px;
+  box-shadow:var(--shadow-sm);
+}
+.field{margin-top:14px}
+.field label{display:block;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-bottom:6px}
+.field .hint{font-size:12px;color:var(--ink-3);margin-top:6px;line-height:1.5}
+.input,.textarea,.select{
+  width:100%;
+  background:#FBFCFE;
+  border:1px solid var(--line);
+  border-radius:var(--radius-xs);
+  padding:12px 14px;
+  font-size:15px;
+  color:var(--ink);
+  outline:none;
+  transition:border-color .15s ease, background .15s ease;
+}
+.input:focus,.textarea:focus,.select:focus{border-color:var(--blue);background:#fff}
+.textarea{min-height:82px;resize:vertical;line-height:1.55}
+
+.seg{display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--surface-2);border-radius:999px;padding:3px;border:1px solid var(--line)}
+.seg button{
+  padding:9px 0;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:500;
+  color:var(--ink-2);
+  letter-spacing:.04em;
+  transition:background .15s ease, color .15s ease;
+}
+.seg button.on.fact{background:var(--blue);color:#fff}
+.seg button.on.feeling{background:var(--violet);color:#fff}
+.seg button.on.analysis{background:var(--green);color:#fff}
+
+.slider-row{display:flex;align-items:center;gap:12px}
+.slider-row .val{
+  font-family:var(--serif);font-weight:500;font-size:24px;color:var(--ink);
+  width:38px;text-align:right;font-variant-numeric:tabular-nums;
+}
+.slider{
+  -webkit-appearance:none;appearance:none;
+  flex:1;height:6px;border-radius:999px;
+  background:linear-gradient(90deg, var(--blue-soft), var(--blue-soft));
+  outline:none;
+}
+.slider::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:24px;height:24px;border-radius:50%;background:var(--blue);
+  border:3px solid #fff;box-shadow:0 1px 4px rgba(20,35,55,.18);
+}
+.slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--blue);border:3px solid #fff}
+
+.actions{display:flex;gap:10px;margin-top:18px}
+.btn{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;
+  padding:13px 16px;border-radius:14px;font-weight:500;font-size:15px;
+  letter-spacing:.01em;transition:transform .12s ease, background .12s ease;
+}
+.btn:active{transform:scale(.985)}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 4px 14px rgba(74,111,165,.25)}
+.btn-primary:active{background:var(--blue-deep)}
+.btn-ghost{background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
+.btn-danger{background:#fff;color:#9B4040;border:1px solid #EBC9C9}
+
+/* Edit sheet (task fields) */
+.edit-grid{display:grid;gap:10px}
+.edit-grid label{font-size:12px;color:var(--ink-2)}
+.edit-grid input,.edit-grid textarea{
+  width:100%;border:1px solid var(--line);background:#FBFCFE;
+  border-radius:var(--radius-xs);padding:10px 12px;font-size:14px;outline:none;
+}
+.edit-grid input:focus,.edit-grid textarea:focus{border-color:var(--blue);background:#fff}
+.edit-grid textarea{min-height:64px;line-height:1.5}
+
+/* Log view segments */
+.segments{
+  display:flex;background:var(--surface-2);
+  border-radius:999px;padding:4px;border:1px solid var(--line);
+  margin:6px 0 16px;
+}
+.segments button{
+  flex:1;padding:9px 0;border-radius:999px;
+  font-size:13px;font-weight:500;color:var(--ink-2);letter-spacing:.04em;
+}
+.segments button.on{background:#fff;color:var(--ink);box-shadow:var(--shadow-sm)}
+
+.filter-bar{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;margin-bottom:8px;scrollbar-width:none}
+.filter-bar::-webkit-scrollbar{display:none}
+.chip{
+  flex:none;padding:7px 13px;border-radius:999px;
+  background:var(--surface);border:1px solid var(--line);
+  font-size:12.5px;color:var(--ink-2);letter-spacing:.02em;
+}
+.chip.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* Progress view */
+.before-after{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.ba-card{
+  background:var(--surface);
+  border:1px solid var(--line-2);
+  border-radius:var(--radius-sm);
+  padding:14px 16px;
+}
+.ba-card .h{font-family:var(--serif);font-size:17px;font-weight:400;color:var(--ink);margin-bottom:8px}
+.ba-card .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ba-card .pair .cell{
+  background:var(--blue-mist);
+  border:1px solid #DEE6F1;
+  border-radius:10px;
+  padding:10px 12px;
+}
+.ba-card .pair .cell.after{background:#F1F7F2;border-color:#D9E5DD}
+.ba-card .pair .cell .l{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--ink-3);margin-bottom:4px}
+.ba-card .pair .cell .t{font-size:13.5px;color:var(--ink);line-height:1.5}
+.ba-card .pair .cell.before .l{color:var(--ink-3)}
+.ba-card .pair .cell.after .l{color:var(--green)}
+
+/* Trend chart */
+.chart-wrap{
+  background:var(--surface);
+  border:1px solid var(--line-2);
+  border-radius:var(--radius-sm);
+  padding:14px 14px 10px;
+}
+.chart-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.chart-head .name{font-family:var(--serif);font-size:15px;color:var(--ink)}
+.chart-head .legend{display:flex;gap:12px;font-size:11.5px;color:var(--ink-2)}
+.chart-head .legend .l{display:flex;align-items:center;gap:5px}
+.chart-head .legend .sw{width:10px;height:2px;border-radius:2px}
+.chart-svg{width:100%;height:140px;display:block}
+.chart-svg .axis{stroke:var(--line);stroke-width:1}
+.chart-svg .grid{stroke:var(--line-2);stroke-width:1}
+.chart-svg .pt-energy{stroke:var(--blue);fill:#fff;stroke-width:2}
+.chart-svg .pt-focus{stroke:var(--violet);fill:#fff;stroke-width:2}
+
+/* Insights */
+.insight-card{
+  background:var(--surface);
+  border:1px solid var(--line-2);
+  border-radius:var(--radius);
+  padding:16px 18px;
+  box-shadow:var(--shadow-sm);
+}
+.insight-card .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.insight-card .head .task{font-family:var(--serif);font-size:17px;color:var(--ink)}
+.insight-card .head .count{
+  font-family:var(--serif);font-size:22px;color:var(--blue);font-variant-numeric:tabular-nums;
+}
+.insight-card .desc{font-size:14px;color:var(--ink);line-height:1.55;margin-bottom:10px}
+.insight-card .row-line{display:flex;gap:8px;flex-wrap:wrap}
+.insight-card .row-line .meta{font-size:12px;color:var(--ink-2);line-height:1.5}
+.insight-card .row-line .meta .k{color:var(--ink-3);font-weight:500}
+
+.status-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11.5px;letter-spacing:.06em;padding:3px 9px;border-radius:999px;
+  border:1px solid var(--line);
+}
+.status-pill .d{width:6px;height:6px;border-radius:50%}
+.status-pill.open{color:var(--amber);background:var(--amber-soft);border-color:#E7D2B0}
+.status-pill.open .d{background:var(--amber)}
+.status-pill.testing{color:var(--blue);background:var(--blue-tint);border-color:#CADBEF}
+.status-pill.testing .d{background:var(--blue)}
+.status-pill.resolved{color:var(--green);background:var(--green-soft);border-color:#CCDCCF}
+.status-pill.resolved .d{background:var(--green)}
+
+.empty{
+  text-align:center;color:var(--ink-3);font-size:13px;padding:20px 14px;
+  background:var(--surface);border:1px dashed var(--line);border-radius:var(--radius-sm);
+}
+
+/* Nav */
+.nav{
+  position:fixed;left:50%;transform:translateX(-50%);
+  bottom:0;width:100%;max-width:480px;
+  background:rgba(255,255,255,.86);
+  backdrop-filter:saturate(140%) blur(18px);
+  -webkit-backdrop-filter:saturate(140%) blur(18px);
+  border-top:1px solid var(--line);
+  box-shadow:var(--shadow-nav);
+  display:grid;grid-template-columns:repeat(5,1fr);
+  padding:6px 6px calc(env(safe-area-inset-bottom, 0px) + 6px);
+  z-index:50;
+}
+.nav-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;padding:8px 4px;color:var(--ink-3);font-size:10.5px;letter-spacing:.04em;
+  border-radius:12px;
+}
+.nav-btn .ico{width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+.nav-btn.on{color:var(--blue-deep)}
+.nav-btn.fab{
+  position:relative;margin-top:-22px;
+}
+.nav-btn.fab .ico{
+  width:50px;height:50px;border-radius:50%;
+  background:var(--blue);
+  color:#fff;
+  box-shadow:0 6px 16px rgba(74,111,165,.35), inset 0 -2px 0 rgba(0,0,0,.05);
+}
+.nav-btn.fab.on .ico{background:var(--blue-deep)}
+
+/* Toast */
+.toast{
+  position:fixed;left:50%;transform:translateX(-50%);
+  bottom:calc(var(--nav-h) + env(safe-area-inset-bottom, 0px) + 18px);
+  background:var(--ink);color:#fff;font-size:13px;
+  padding:10px 16px;border-radius:999px;
+  box-shadow:var(--shadow);opacity:0;pointer-events:none;
+  transition:opacity .2s ease, transform .2s ease;
+  z-index:60;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+
+/* Misc */
+.spacer-sm{height:8px}
+.spacer-md{height:16px}
+.spacer-lg{height:28px}
+.center{text-align:center}
+.notes{font-size:12.5px;color:var(--ink-3);line-height:1.6}
+
+/* Header w/ back */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin:2px 0 14px;
+}
+.topbar .back{
+  width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+  color:var(--ink-2);background:var(--surface);border:1px solid var(--line);
+}
+.topbar .title{font-family:var(--serif);font-size:18px;color:var(--ink);font-weight:500}
+
+/* Weekly review */
+.review-grid{display:grid;gap:10px}
+.review-card{
+  background:var(--surface);
+  border:1px solid var(--line-2);
+  border-radius:var(--radius);
+  padding:18px 18px;
+  box-shadow:var(--shadow-sm);
+}
+.review-card .h{font-family:var(--serif);font-size:18px;color:var(--ink);margin-bottom:4px}
+.review-card .sub{font-size:12px;color:var(--ink-3);margin-bottom:12px}
+.review-card .q{margin-top:10px}
+.review-card .q .k{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-bottom:4px}
+.review-card .q .v{font-size:14px;color:var(--ink);line-height:1.55;white-space:pre-wrap}
+.review-card .q .v.empty{color:var(--ink-4);font-style:italic}
+.review-card .sentence{
+  font-family:var(--serif);font-style:italic;font-size:16px;
+  color:var(--blue-deep);border-top:1px solid var(--line);margin-top:14px;padding-top:12px;
+}
+
+/* Inline tag selector for task edit status */
+.status-row{display:flex;gap:6px;flex-wrap:wrap}
+
+/* Animations & util */
+.fadein{animation:fade .28s ease both}
+.hide{display:none !important}
+.scroll-x{overflow-x:auto;scrollbar-width:none}
+.scroll-x::-webkit-scrollbar{display:none}
+  </style>
+</head>
+<body>
+  <div id="app" class="app"></div>
+  <nav id="nav" class="nav" aria-label="Primary"></nav>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script>
+/* ============================================================
+   MY WORK BUDDY — calm personal learning workbench
+   vanilla JS · localStorage · iPhone-first
+   ============================================================ */
+(function(){
+  'use strict';
+
+  // ---------- storage keys ----------
+  const K = { tasks:'mwb.tasks', logs:'mwb.logs', evidence:'mwb.evidence', reviews:'mwb.reviews', pain:'mwb.painStatus', seeded:'mwb.seeded' };
+
+  // ---------- helpers ----------
+  const $ = (s,r=document)=>r.querySelector(s);
+  const uid = ()=> Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
+  const esc = s => s==null?'':String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+  const trim = s => (s==null?'':String(s)).trim();
+  const trunc = (s,n)=>{ s=trim(s); return s.length>n? s.slice(0,n-1)+'…' : s; };
+  const todayISO = ()=>{ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+  const parseISO = s => { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); };
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const wdays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const fmtMD = d => String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0');
+  const fmtFullDate = iso => { const d=parseISO(iso); return months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear(); };
+  const fmtWeekday = iso => wdays[parseISO(iso).getDay()];
+  const weekStart = ()=>{ const d=new Date(); const day=d.getDay(); const diff=day===0?6:day-1; d.setDate(d.getDate()-diff); d.setHours(0,0,0,0); return d.toISOString().slice(0,10); };
+  const weekEnd = ()=>{ const d=new Date(); const day=d.getDay(); const diff=day===0?0:7-day; d.setDate(d.getDate()+diff); d.setHours(0,0,0,0); return d.toISOString().slice(0,10); };
+  const weekNumber = d => { const date=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())); const dn=date.getUTCDay()||7; date.setUTCDate(date.getUTCDate()+4-dn); const ys=new Date(Date.UTC(date.getUTCFullYear(),0,1)); return Math.ceil((((date-ys)/86400000)+1)/7); };
+  const weekKey = ()=>{ const s=weekStart(); return s.slice(0,4)+'-W'+String(weekNumber(parseISO(s))).padStart(2,'0'); };
+  const avg = a => a.length? a.reduce((x,y)=>x+y,0)/a.length : 0;
+  const load = k => { try { return JSON.parse(localStorage.getItem(k)||'null'); } catch { return null; } };
+  const save = (k,v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} };
+
+  // ---------- state ----------
+  let state = { tasks:[], logs:[], evidence:[], reviews:[], painStatus:{} };
+  function saveAll(){ save(K.tasks,state.tasks); save(K.logs,state.logs); save(K.evidence,state.evidence); save(K.reviews,state.reviews); save(K.pain,state.painStatus); }
+  function loadAll(){
+    state.tasks = load(K.tasks) || [];
+    state.logs = load(K.logs) || [];
+    state.evidence = load(K.evidence) || [];
+    state.reviews = load(K.reviews) || [];
+    state.painStatus = load(K.pain) || {};
+  }
+
+  // ---------- defaults (first-run seed) ----------
+  function defaults(){
+    const now = new Date().toISOString();
+    const tasks = [
+      { id:'t-voc', name:'Vocabulary',     area:'Lexical', stage:'Recognition \u2192 Use',     focus:'Move passive recognition into active recall and spoken use.', pain:"Words don't come out when I need them.",         strategy:'Spaced recall + sentence production within 24h.', milestone:'200 new words actively used in speech/writing.', status:'active', createdAt:now, updatedAt:now },
+      { id:'t-lis', name:'Listening',      area:'Input',   stage:'Sentence \u2192 Discourse', focus:'Track longer arguments without losing structure.',       pain:'Long sentence processing speed slow.',           strategy:'Chunking + pre-reading transcripts.',            milestone:'Sustained 20-min listening with 80% retention.', status:'active', createdAt:now, updatedAt:now },
+      { id:'t-rea', name:'Reading',        area:'Input',   stage:'Detail \u2192 Argument',    focus:'Read academic paragraphs for structure, not just meaning.', pain:'I read words without seeing the argument.',     strategy:'Mark topic sentence + 2 supporting moves per paragraph.', milestone:'Read one academic essay/day with notes.', status:'active', createdAt:now, updatedAt:now },
+      { id:'t-wri', name:'Writing',        area:'Output',  stage:'Sentence \u2192 Essay',     focus:'Get a clear paragraph before adding length.',       pain:'Drafts ramble.',                                 strategy:'Outline 3 points + 1 example before drafting.', milestone:'One coherent 300-word essay in 25 min.', status:'active', createdAt:now, updatedAt:now },
+      { id:'t-spe', name:'Speaking',       area:'Output',  stage:'Expression \u2192 Logic \u2192 Output', focus:'Sustained expression without notes.',       pain:'Logic breaks down beyond 2 minutes.',            strategy:'Mind-map arguments before speaking; anchor with 3 signpost phrases.', milestone:'5-min continuous speech on familiar topics.', status:'active', createdAt:now, updatedAt:now },
+      { id:'t-tra', name:'Translation',    area:'Output',  stage:'Literal \u2192 Faithful',  focus:'Render meaning before polishing words.',           pain:'I translate word-by-word and lose the meaning.', strategy:'Read the full sentence, then re-translate.',   milestone:'Translate a 300-word passage in 30 min.', status:'active', createdAt:now, updatedAt:now },
+      { id:'t-int', name:'Interpretation', area:'Output',  stage:'Listening + Reformulating',focus:'Keep the main idea alive while reformulating.',    pain:'I fall behind on dense passages.',               strategy:'Symbolic note-taking + segment-by-segment output.', milestone:'Consecutive interpretation of a 2-min speech.', status:'active', createdAt:now, updatedAt:now }
+    ];
+    const logs = [
+      { id:uid(), date:'2026-09-17', taskId:'t-spe', whatDid:'Shadowed a TED talk, 15 min.', evidence:'recording saved', difficulty:'Fast sections lost.', feeling:'Encouraged.', energy:6, focus:7, whatChanged:'First time finishing the full clip without pausing.', nextAdjust:'Slow the source to 0.75\u00d7 on dense passages.', lens:'fact', createdAt:now, updatedAt:now },
+      { id:uid(), date:'2026-09-19', taskId:'t-spe', whatDid:'Practiced argument mapping on 3 prompts.', evidence:'3 mind-maps', difficulty:'Maps got messy mid-way.', feeling:'Steady.', energy:5, focus:6, whatChanged:'Mapping speed improved slightly.', nextAdjust:'Limit to 5 nodes per map.', lens:'analysis', createdAt:now, updatedAt:now },
+      { id:uid(), date:'2026-09-22', taskId:'t-spe', whatDid:'Recorded a 3-min impromptu on a familiar topic.', evidence:'audio 3:12', difficulty:'Logic drifted at 2:30.', feeling:'Frustrated but a little closer.', energy:7, focus:8, whatChanged:'Passed the 2-minute wall for the first time.', nextAdjust:'Anchor with 3 signpost phrases every minute.', lens:'feeling', createdAt:now, updatedAt:now },
+      { id:uid(), date:'2026-09-15', taskId:'t-lis', whatDid:'Dictation of a 2-min BBC segment.', evidence:'text file', difficulty:'Long sentences break my flow.', feeling:'Tired.', energy:5, focus:6, whatChanged:'', nextAdjust:'Pre-read the transcript once.', lens:'fact', createdAt:now, updatedAt:now },
+      { id:uid(), date:'2026-09-18', taskId:'t-lis', whatDid:'Podcast note-taking, 20 min.', evidence:'notes', difficulty:'Long sentences still slow to process.', feeling:'Calm.', energy:6, focus:7, whatChanged:'Better at catching the topic.', nextAdjust:'Practice chunking in 7-word units.', lens:'fact', createdAt:now, updatedAt:now },
+      { id:uid(), date:'2026-09-21', taskId:'t-lis', whatDid:'Shadowed a lecture, 30 min.', evidence:'recording', difficulty:'Long sentence processing speed slow.', feeling:'Focused.', energy:6, focus:7, whatChanged:'Slightly better at chunking phrases.', nextAdjust:'Pre-read transcripts of the next 3 lectures.', lens:'analysis', createdAt:now, updatedAt:now },
+      { id:uid(), date:'2026-09-20', taskId:'t-voc', whatDid:'Reviewed 30 words from the past week with sentences.', evidence:'20 sentences written', difficulty:'Some words still feel inert.', feeling:'Patient.', energy:6, focus:7, whatChanged:'8 words now feel usable.', nextAdjust:"Add the inert 10 to tomorrow's review.", lens:'fact', createdAt:now, updatedAt:now }
+    ];
+    const evidence = [
+      { id:uid(), taskId:'t-spe', ability:'Continuous speaking',     before:'Could not speak beyond ~30 seconds without losing structure.', after:'Held a 3-minute continuous monologue on a familiar topic.', date:'2026-09-22', createdAt:now },
+      { id:uid(), taskId:'t-lis', ability:'Chunking long sentences', before:'Heard each word separately; lost the meaning by the end.',     after:'Catch the chunk and pause to catch up; meaning survives.',     date:'2026-09-21', createdAt:now }
+    ];
+    return { tasks, logs, evidence, reviews:[], painStatus:{ 't-lis':'open', 't-spe':'testing' } };
+  }
+
+  // ---------- icons ----------
+  const ICON = {
+    home: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>',
+    list: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>',
+    plus: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+    clock:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    bulb: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a6 6 0 0 0-4 10.4c.7.6 1 1.5 1 2.4V16h6v-1.2c0-.9.3-1.8 1-2.4A6 6 0 0 0 12 2Z"/></svg>',
+    chev: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>',
+    back: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>',
+    pen:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+    trash:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>',
+    x:    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>'
+  };
+
+  // ---------- router ----------
+  function parseHash(){
+    const h = (location.hash||'#/home').replace(/^#/,'');
+    const [path, qs] = h.split('?');
+    const params = {};
+    if (qs) qs.split('&').forEach(p=>{ if(!p) return; const [k,v='']=p.split('='); params[k]=decodeURIComponent(v); });
+    return { path: path||'/home', params };
+  }
+  function go(path, params){
+    let q = '';
+    if (params) q = '?'+Object.entries(params).filter(([,v])=>v!==''&&v!=null).map(([k,v])=>k+'='+encodeURIComponent(v)).join('&');
+    location.hash = path + q;
+  }
+  function activeKey(path){
+    if (path==='/'||path==='/home') return 'home';
+    if (path==='/tasks'||path==='/task') return 'tasks';
+    if (path==='/new') return 'new';
+    if (path==='/log') return 'log';
+    if (path==='/insights'||path==='/weekly') return 'insights';
+    return 'home';
+  }
+  function renderNav(path){
+    const tabs = [
+      { key:'home',     label:'Home',     path:'/home',     icon:ICON.home },
+      { key:'tasks',    label:'Tasks',    path:'/tasks',    icon:ICON.list },
+      { key:'new',      label:'',         path:'/new',      icon:ICON.plus, fab:true },
+      { key:'log',      label:'Log',      path:'/log',      icon:ICON.clock },
+      { key:'insights', label:'Insights', path:'/insights', icon:ICON.bulb }
+    ];
+    const active = activeKey(path);
+    const html = tabs.map(t=>'<button class="nav-btn '+(t.fab?'fab':'')+' '+(t.key===active?'on':'')+'" data-go="'+t.path+'" aria-label="'+(t.label||'New log')+'"><span class="ico">'+t.icon+'</span>'+(t.label?'<span>'+t.label+'</span>':'')+'</button>').join('');
+    $('#nav').innerHTML = html;
+  }
+
+  // ---------- trend chart (inline SVG) ----------
+  function trendChart(logs){
+    const w=320, h=140, pad=20;
+    const data = logs.map(l=>({ date:l.date, e:l.energy||null, f:l.focus||null }));
+    const xPos = i => pad + (data.length<=1? (w-pad*2)/2 : (i/(data.length-1))*(w-pad*2));
+    const yPos = v => h-pad - ((v-1)/9)*(h-pad*2);
+    const path = key => {
+      const pts = data.map((d,i)=> d[key]!=null? [xPos(i), yPos(d[key])] : null).filter(Boolean);
+      if (pts.length < 2) return '';
+      return 'M '+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L ');
+    };
+    const dots = key => data.map((d,i)=> d[key]!=null? '<circle cx="'+xPos(i).toFixed(1)+'" cy="'+yPos(d[key]).toFixed(1)+'" r="3.6" fill="'+(key==='e'?'#4A6FA5':'#7868A0')+'" stroke="#fff" stroke-width="1.5"/>' : '').join('');
+    return ''+
+      '<svg class="chart-svg" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none">'+
+        '<line x1="'+pad+'" y1="'+(h-pad)+'" x2="'+(w-pad)+'" y2="'+(h-pad)+'" stroke="#E3E9F1" stroke-width="1"/>'+
+        [3,5,7,9].map(v=>'<line x1="'+pad+'" y1="'+yPos(v).toFixed(1)+'" x2="'+(w-pad)+'" y2="'+yPos(v).toFixed(1)+'" stroke="#EDF1F6" stroke-dasharray="2 5"/>').join('')+
+        '<path d="'+path('e')+'" fill="none" stroke="#4A6FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'+
+        '<path d="'+path('f')+'" fill="none" stroke="#7868A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'+
+        dots('e')+dots('f')+
+        '<text x="'+pad+'" y="'+(h-4)+'" font-size="9.5" fill="#8A98AA" font-family="Inter">'+(data[0]?esc(data[0].date.slice(5)):'')+'</text>'+
+        '<text x="'+(w-pad)+'" y="'+(h-4)+'" font-size="9.5" fill="#8A98AA" font-family="Inter" text-anchor="end">'+(data.length? esc(data[data.length-1].date.slice(5)) : '')+'</text>'+
+      '</svg>';
+  }
+
+  // ---------- shared bits ----------
+  function rowItem(k, v){
+    const empty = !trim(v);
+    return '<div class="t-row"><div class="k">'+k+'</div><div class="v '+(empty?'empty':'')+'">'+esc(v||'\u2014')+'</div></div>';
+  }
+  function timelineEntry(l, editable){
+    const lens = l.lens || 'fact';
+    const t = state.tasks.find(x=>x.id===l.taskId);
+    const editAttr = editable? 'data-act="edit-log" data-id="'+l.id+'"' : '';
+    return ''+
+      '<div class="t-entry">'+
+        '<div class="t-dot '+lens+'"></div>'+
+        '<div class="t-card" '+editAttr+'>'+
+          '<div class="t-date">'+esc(fmtMD(parseISO(l.date)))+' <span class="lens">'+lens+'</span>'+(t? ' \u00b7 '+esc(t.name) : '')+'</div>'+
+          '<div class="t-rows">'+
+            rowItem('Did', l.whatDid)+
+            rowItem('Found', l.whatChanged)+
+            rowItem('Problem', l.difficulty)+
+            rowItem('Adjust', l.nextAdjust)+
+            rowItem('Evidence', l.evidence)+
+            rowItem('Feeling', l.feeling)+
+          '</div>'+
+          ((l.energy||l.focus) ? '<div class="t-scores">'+(l.energy? '<div class="score">Energy <span class="num">'+l.energy+'</span>/10</div>':'')+(l.focus? '<div class="score">Focus <span class="num">'+l.focus+'</span>/10</div>':'')+'</div>' : '')+
+        '</div>'+
+      '</div>';
+  }// ============================================================
+  // VIEWS
+  // ============================================================
+
+  function viewHome(){
+    const today = todayISO();
+    const date = parseISO(today);
+    const weekday = fmtWeekday(today);
+
+    // tasks with logs today, or most recent active tasks
+    const todayLogs = state.logs.filter(l => l.date === today);
+    const todayTaskIds = Array.from(new Set(todayLogs.map(l=>l.taskId)));
+    const todayTasks = todayTaskIds.length
+      ? todayTaskIds.map(id => state.tasks.find(t=>t.id===id)).filter(Boolean)
+      : state.tasks.slice().sort((a,b)=> (b.updatedAt||'').localeCompare(a.updatedAt||'')).slice(0,4);
+
+    // current focus: most recently updated task with focus/pain set
+    const focusTask = state.tasks.slice().sort((a,b)=> (b.updatedAt||'').localeCompare(a.updatedAt||''))[0];
+
+    // recent progress: logs with whatChanged in latest first
+    const recentLogs = state.logs.slice().sort((a,b)=> (b.createdAt||'').localeCompare(a.createdAt||'')).filter(l=> trim(l.whatChanged)).slice(0,5);
+
+    // today I noticed: most recent log (any)
+    const allSorted = state.logs.slice().sort((a,b)=> (b.createdAt||'').localeCompare(a.createdAt||''));
+    const lastLog = allSorted[0];
+
+    // current pain point: task with most difficulty entries in last 30 days
+    const cutoff = new Date(date.getTime() - 30*86400000).toISOString().slice(0,10);
+    const pains = state.tasks.map(t => ({
+      task:t,
+      count: state.logs.filter(l => l.taskId===t.id && trim(l.difficulty) && l.date >= cutoff).length
+    })).filter(x => x.count > 0).sort((a,b)=> b.count - a.count);
+    const topPain = pains[0];
+
+    return ''+
+      '<div class="brand">'+
+        '<div class="mark">MY <span>WORK BUDDY</span></div>'+
+        '<div class="right">v1</div>'+
+      '</div>'+
+      '<div class="home-hero">'+
+        '<div class="greeting">Today, '+weekday+'.</div>'+
+        '<div class="date">'+date.getDate()+' <small>'+months[date.getMonth()]+' '+date.getFullYear()+'</small></div>'+
+        '<div class="weekday">A quiet day to record what really happened.</div>'+
+      '</div>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>Today</div><div class="right">'+todayLogs.length+' entr'+(todayLogs.length===1?'y':'ies')+'</div></div>'+
+        (todayTasks.length ? '<div class="list">'+todayTasks.map(t => ''+
+          '<div class="row" data-go="/task?id='+t.id+'">'+
+            '<div class="left">'+
+              '<div>'+
+                '<div class="name">'+esc(t.name)+'</div>'+
+                '<div class="meta">'+esc(t.area||'\u2014')+' \u00b7 '+esc(t.stage||'\u2014')+'</div>'+
+              '</div>'+
+            '</div>'+
+            '<div class="chev">\u203a</div>'+
+          '</div>').join('')+'</div>' : '<div class="empty">Nothing logged yet today. Tap + to record what you do.</div>')+
+      '</section>'+
+
+      (focusTask ? ''+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>Current Focus</div><div class="right" data-go="/task?id='+focusTask.id+'" style="cursor:pointer;color:var(--blue-deep)">'+esc(focusTask.name)+' \u203a</div></div>'+
+        '<div class="tile focus-tile">'+
+          '<div class="label">'+esc(focusTask.name)+'</div>'+
+          '<div class="body serif">'+esc(focusTask.focus||'\u2014 set your current focus on this task.')+'</div>'+
+          '<div class="muted" style="margin-top:8px;font-size:12.5px">Stage \u00b7 '+esc(focusTask.stage||'\u2014')+'</div>'+
+        '</div>'+
+      '</section>' : '')+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>Recent Progress</div></div>'+
+        (recentLogs.length ? '<div class="list">'+recentLogs.map(l => {
+          const t = state.tasks.find(x=>x.id===l.taskId);
+          return '<div class="row" data-act="edit-log" data-id="'+l.id+'">'+
+            '<div class="left"><div>'+
+              '<div class="name" style="font-weight:500">'+esc(t?t.name:'')+'</div>'+
+              '<div class="meta">'+esc(l.date)+' \u00b7 '+esc(trunc(l.whatChanged,56))+'</div>'+
+            '</div></div>'+
+            '<div class="chev">\u203a</div>'+
+          '</div>';
+        }).join('')+'</div>' : '<div class="empty">No progress notes yet. Use + to record what changed.</div>')+
+      '</section>'+
+
+      (lastLog ? ''+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>Today I Noticed</div></div>'+
+        '<div class="tile">'+
+          '<div class="label">'+esc((state.tasks.find(t=>t.id===lastLog.taskId)||{}).name||'')+' \u00b7 '+esc(lastLog.date)+'</div>'+
+          '<div class="body serif">\u201c'+esc(trunc(lastLog.whatChanged || lastLog.feeling || lastLog.difficulty || lastLog.whatDid || '\u2014', 110))+' \u201d</div>'+
+        '</div>'+
+      '</section>' : '')+
+
+      (topPain ? ''+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>Current Pain Point</div></div>'+
+        '<div class="tile pain-tile">'+
+          '<div class="label">'+esc(topPain.task.name)+' \u00b7 observed '+topPain.count+'\u00d7 in 30 days</div>'+
+          '<div class="body serif">'+esc(topPain.task.pain||'\u2014')+'</div>'+
+        '</div>'+
+      '</section>' : '')+
+
+      '<div class="spacer-lg"></div>';
+  }
+
+  function viewTasks(){
+    const list = state.tasks;
+    return ''+
+      '<div class="brand"><div class="mark">MY <span>TASKS</span></div><div class="right">'+list.length+' long-term</div></div>'+
+      '<div class="section-head"><div class="section-title"><span class="dot"></span>All Tasks</div><button class="chip" data-act="add-task">+ New Task</button></div>'+
+      (list.length ? '<div class="list">'+list.map(t => {
+        const last = state.logs.filter(l=>l.taskId===t.id).sort((a,b)=>b.date.localeCompare(a.date))[0];
+        return '<div class="row" data-go="/task?id='+t.id+'">'+
+          '<div class="left"><div>'+
+            '<div class="name">'+esc(t.name)+'</div>'+
+            '<div class="meta">'+esc(t.area||'\u2014')+' \u00b7 '+esc(t.stage||'\u2014')+' \u00b7 '+(last? 'last log '+last.date : 'no logs')+'</div>'+
+          '</div></div>'+
+          '<div class="chev">\u203a</div>'+
+        '</div>';
+      }).join('')+'</div>' : '<div class="empty">No tasks yet. Add one to begin.</div>')+
+      '<div class="spacer-lg"></div>';
+  }
+
+  function viewTaskDetail(id){
+    const t = state.tasks.find(x=>x.id===id);
+    if(!t) return notFound();
+    const logs = state.logs.filter(l=>l.taskId===id).sort((a,b)=> a.date.localeCompare(b.date) || a.createdAt.localeCompare(b.createdAt));
+    const ev = state.evidence.filter(e=>e.taskId===id);
+    const fields = [
+      { k:'stage',     l:'Current Stage', full:true },
+      { k:'focus',     l:'Current Focus', full:true },
+      { k:'pain',      l:'Current Pain Point', full:true },
+      { k:'strategy',  l:'Current Strategy', full:true },
+      { k:'milestone', l:'Next Milestone', full:true },
+      { k:'area',      l:'Area' }
+    ];
+    return ''+
+      '<div class="topbar">'+
+        '<button class="back" data-go="/tasks" aria-label="Back">'+ICON.back+'</button>'+
+        '<div class="title">Task</div>'+
+        '<button class="back" data-act="edit-task" data-id="'+t.id+'" aria-label="Edit">'+ICON.pen+'</button>'+
+      '</div>'+
+
+      '<div class="task-hero">'+
+        '<div class="name">'+esc(t.name.toUpperCase())+'</div>'+
+        (t.stage ? '<div class="stage">'+esc(t.stage)+'</div>' : '')+
+      '</div>'+
+
+      '<div class="task-fields">'+
+        fields.map(f => ''+
+          '<div class="task-field '+(f.full?'full':'')+'">'+
+            '<div class="l">'+f.l+'</div>'+
+            '<div class="v '+(t[f.k]?'':'empty')+'">'+esc(t[f.k]||'\u2014 not set yet')+'</div>'+
+          '</div>').join('')+
+        '<div class="task-field">'+
+          '<div class="l">Status</div>'+
+          '<div class="v"><span class="tag '+(t.status==='paused'?'amber':(t.status==='archived'?'violet':'blue'))+'">'+esc(t.status||'active')+'</span></div>'+
+        '</div>'+
+        '<div class="task-field">'+
+          '<div class="l">Last Updated</div>'+
+          '<div class="v">'+(t.updatedAt? esc(fmtFullDate(t.updatedAt.slice(0,10))) : '\u2014')+'</div>'+
+        '</div>'+
+      '</div>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>Progress Timeline</div><button class="chip" data-go="/new?task='+t.id+'">+ Log</button></div>'+
+        (logs.length ? '<div class="timeline">'+logs.slice().reverse().map(l => timelineEntry(l, true)).join('')+'</div>' : '<div class="empty">No logs yet for this task. Tap + Log to add the first.</div>')+
+      '</section>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>Evidence of Growth</div></div>'+
+        (ev.length ? '<div class="before-after">'+ev.map(x => ''+
+          '<div class="ba-card">'+
+            '<div class="h">'+esc(x.ability)+'</div>'+
+            '<div class="pair">'+
+              '<div class="cell before"><div class="l">Before</div><div class="t">'+esc(x.before)+'</div></div>'+
+              '<div class="cell after"><div class="l">After</div><div class="t">'+esc(x.after)+'</div></div>'+
+            '</div>'+
+            '<div class="muted" style="margin-top:8px;font-size:12px">'+esc(x.date)+'</div>'+
+            '<div style="margin-top:8px"><button class="chip" data-act="del-evidence" data-id="'+x.id+'">remove</button></div>'+
+          '</div>').join('')+'</div>' : '<div class="empty">No before/after notes saved yet.</div>')+
+        '<div style="margin-top:10px"><button class="chip" data-act="add-evidence" data-id="'+t.id+'">+ Add Evidence (Before / After)</button></div>'+
+      '</section>'+
+
+      '<div class="spacer-lg"></div>';
+  }
+
+  function viewNewLog(p){
+    const editing = p.id && state.logs.find(l=>l.id===p.id);
+    const last = state.logs.slice().sort((a,b)=>b.createdAt.localeCompare(a.createdAt))[0];
+    const presetTask = p.task || (editing? editing.taskId : (last? last.taskId : (state.tasks[0]? state.tasks[0].id : '')));
+    const l = editing || { date: todayISO(), taskId: presetTask, whatDid:'', evidence:'', difficulty:'', feeling:'', energy:5, focus:5, whatChanged:'', nextAdjust:'', lens:'fact' };
+    const isEdit = !!editing;
+    return ''+
+      '<div class="topbar">'+
+        '<button class="back" data-go="'+(isEdit?'/task?id='+l.taskId:'/log')+'" aria-label="Back">'+ICON.back+'</button>'+
+        '<div class="title">'+(isEdit?'Edit Log':'New Log')+'</div>'+
+        '<div style="width:36px"></div>'+
+      '</div>'+
+      '<div class="sheet">'+
+        '<div class="field"><label>Date</label><input class="input" type="date" id="f-date" value="'+esc(l.date)+'"></div>'+
+        '<div class="field"><label>Task</label><select class="select" id="f-task">'+state.tasks.map(t => '<option value="'+t.id+'" '+(t.id===l.taskId?'selected':'')+'>'+esc(t.name)+'</option>').join('')+'</select></div>'+
+        '<div class="field"><label>What did I do?</label><textarea class="textarea" id="f-did" placeholder="Be specific. One or two sentences.">'+esc(l.whatDid||'')+'</textarea></div>'+
+        '<div class="field"><label>Output / Evidence</label><textarea class="textarea" id="f-evi" placeholder="Optional. A recording, notes, a screenshot. Keep it short.">'+esc(l.evidence||'')+'</textarea></div>'+
+        '<div class="field"><label>Difficulty / Problem</label><textarea class="textarea" id="f-diff" placeholder="Where did I get stuck?">'+esc(l.difficulty||'')+'</textarea></div>'+
+        '<div class="field"><label>Feeling / State</label><textarea class="textarea" id="f-feel" placeholder="Honest feeling, not performance.">'+esc(l.feeling||'')+'</textarea></div>'+
+        '<div class="field"><label>Energy</label><div class="slider-row"><input class="slider" type="range" min="1" max="10" value="'+(l.energy||5)+'" id="f-energy"><div class="val" id="v-energy">'+(l.energy||5)+'</div></div></div>'+
+        '<div class="field"><label>Focus</label><div class="slider-row"><input class="slider" type="range" min="1" max="10" value="'+(l.focus||5)+'" id="f-focus"><div class="val" id="v-focus">'+(l.focus||5)+'</div></div></div>'+
+        '<div class="field"><label>What changed?</label><textarea class="textarea" id="f-changed" placeholder="Compared to before, what shifted?">'+esc(l.whatChanged||'')+'</textarea></div>'+
+        '<div class="field"><label>Next adjustment</label><textarea class="textarea" id="f-adjust" placeholder="One small change for next time.">'+esc(l.nextAdjust||'')+'</textarea></div>'+
+        '<div class="field"><label>This entry is mainly</label>'+
+          '<div class="seg" id="f-lens">'+
+            '<button type="button" data-lens="fact" class="'+(l.lens==='fact'?'on fact':'')+'">Fact</button>'+
+            '<button type="button" data-lens="feeling" class="'+(l.lens==='feeling'?'on feeling':'')+'">Feeling</button>'+
+            '<button type="button" data-lens="analysis" class="'+(l.lens==='analysis'?'on analysis':'')+'">Analysis</button>'+
+          '</div>'+
+          '<div class="hint">Fact \u2014 what happened. Feeling \u2014 how it felt. Analysis \u2014 what you think it means.</div>'+
+        '</div>'+
+        '<div class="actions">'+
+          (isEdit ? '<button class="btn btn-danger" data-act="delete-log" data-id="'+l.id+'">'+ICON.trash+'</button>' : '<button class="btn btn-ghost" data-go="/log">Cancel</button>')+
+          '<button class="btn btn-primary" data-act="save-log" data-id="'+(isEdit?l.id:'')+'">'+(isEdit?'Save Changes':'Save Log')+'</button>'+
+        '</div>'+
+      '</div>'+
+      '<div class="spacer-lg"></div>';
+  }
+
+  function viewLog(p){
+    const seg = p.seg || 'timeline';
+    const taskFilter = p.task || '';
+    return ''+
+      '<div class="brand"><div class="mark">MY <span>LOG</span></div><div class="right">'+state.logs.length+' entries</div></div>'+
+      '<div class="segments">'+
+        '<button class="'+(seg==='timeline'?'on':'')+'" data-go="/log?seg=timeline">Timeline</button>'+
+        '<button class="'+(seg==='progress'?'on':'')+'" data-go="/log?seg=progress">Progress</button>'+
+      '</div>'+
+      (seg==='timeline' ? renderTimeline(taskFilter) : renderProgress(taskFilter, p))+
+      '<div class="spacer-lg"></div>';
+  }
+
+  function renderTimeline(taskFilter){
+    const logs = state.logs.filter(l => !taskFilter || l.taskId===taskFilter).sort((a,b)=> b.date.localeCompare(a.date) || b.createdAt.localeCompare(a.createdAt));
+    const taskChips = '<button class="chip '+(!taskFilter?'on':'')+'" data-go="/log?seg=timeline">All</button>' + state.tasks.map(t => '<button class="chip '+(taskFilter===t.id?'on':'')+'" data-go="/log?seg=timeline&task='+t.id+'">'+esc(t.name)+'</button>').join('');
+    return ''+
+      '<div class="filter-bar">'+taskChips+'</div>'+
+      (logs.length ? '<div class="timeline">'+logs.map(l => timelineEntry(l, true)).join('')+'</div>' : '<div class="empty">No logs yet. Tap + to record your first entry.</div>');
+  }
+
+  function renderProgress(taskFilter, p){
+    const sel = taskFilter || p.t || (state.tasks[0]? state.tasks[0].id : '');
+    const t = state.tasks.find(x=>x.id===sel);
+    const evidence = state.evidence.filter(e=>e.taskId===sel);
+    const logs = state.logs.filter(l=>l.taskId===sel).sort((a,b)=>a.date.localeCompare(b.date));
+    const taskChips = state.tasks.map(tt => '<button class="chip '+(sel===tt.id?'on':'')+'" data-go="/log?seg=progress&t='+tt.id+'">'+esc(tt.name)+'</button>').join('');
+
+    return ''+
+      '<div class="filter-bar">'+taskChips+'</div>'+
+      (t ? ''+
+      '<div class="chart-wrap">'+
+        '<div class="chart-head">'+
+          '<div class="name">'+esc(t.name)+' \u00b7 Energy / Focus</div>'+
+          '<div class="legend"><div class="l"><span class="sw" style="background:#4A6FA5"></span>Energy</div><div class="l"><span class="sw" style="background:#7868A0"></span>Focus</div></div>'+
+        '</div>'+
+        (logs.length? trendChart(logs) : '<div class="empty" style="margin-top:8px">No data points yet.</div>')+
+        '<div class="muted" style="font-size:12px;margin-top:8px">Observation, not pressure. Trends are only meaningful across weeks.</div>'+
+      '</div>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>Evidence of Growth</div></div>'+
+        (evidence.length ? '<div class="before-after">'+evidence.map(x => ''+
+          '<div class="ba-card">'+
+            '<div class="h">'+esc(x.ability)+'</div>'+
+            '<div class="pair">'+
+              '<div class="cell before"><div class="l">Before</div><div class="t">'+esc(x.before)+'</div></div>'+
+              '<div class="cell after"><div class="l">After</div><div class="t">'+esc(x.after)+'</div></div>'+
+            '</div>'+
+            '<div class="muted" style="margin-top:8px;font-size:12px">'+esc(x.date)+'</div>'+
+          '</div>').join('')+'</div>' : '<div class="empty">No before/after notes saved yet.</div>')+
+        '<div style="margin-top:10px"><button class="chip" data-act="add-evidence" data-id="'+sel+'">+ Add Evidence</button></div>'+
+      '</section>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>What Changed (from logs)</div></div>'+
+        (()=>{
+          const changed = logs.filter(l=>trim(l.whatChanged)).reverse();
+          if (!changed.length) return '<div class="empty">Fill in "What changed?" on a log to build evidence.</div>';
+          return '<div class="list">'+changed.slice(0,8).map(l => '<div class="row" data-act="edit-log" data-id="'+l.id+'">'+
+            '<div class="left"><div>'+
+              '<div class="name" style="font-weight:500">'+esc(l.date)+'</div>'+
+              '<div class="meta">'+esc(trunc(l.whatChanged,80))+'</div>'+
+            '</div></div>'+
+            '<div class="chev">\u203a</div>'+
+          '</div>').join('')+'</div>';
+        })()+
+      '</section>'
+      : '<div class="empty">Select a task.</div>');
+  }
+
+  function viewInsights(p){
+    const cutoff30 = new Date(Date.now() - 30*86400000).toISOString().slice(0,10);
+    const cards = state.tasks.map(t => {
+      const count = state.logs.filter(l => l.taskId===t.id && trim(l.difficulty) && l.date >= cutoff30).length;
+      const status = state.painStatus[t.id] || 'open';
+      return { task:t, count, status };
+    }).sort((a,b)=> b.count - a.count);
+
+    const evAll = state.evidence.slice().sort((a,b)=> b.date.localeCompare(a.date));
+    const total = state.logs.length;
+    const byTask = state.tasks.map(t => ({ t, n: state.logs.filter(l=>l.taskId===t.id).length })).sort((a,b)=> b.n - a.n);
+    const avgEnergy = avg(state.logs.map(l=>l.energy).filter(Boolean));
+    const avgFocus = avg(state.logs.map(l=>l.focus).filter(Boolean));
+    const adjustByTask = state.tasks.map(t => ({
+      t,
+      items: state.logs.filter(l=>l.taskId===t.id && trim(l.nextAdjust)).slice(-3)
+    })).filter(x=>x.items.length);
+
+    const showCards = cards.filter(c=>c.count>0 || trim(c.task.pain));
+
+    return ''+
+      '<div class="brand"><div class="mark">MY <span>INSIGHTS</span></div><div class="right">observed patterns</div></div>'+
+      '<div class="muted" style="font-size:12.5px;margin-bottom:10px">These are observations from your logs, not judgments. Treat them as starting points, not conclusions.</div>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>Repeated Pain Points</div></div>'+
+        (showCards.length ? '<div class="list">'+showCards.map(c => ''+
+          '<div class="insight-card">'+
+            '<div class="head">'+
+              '<div class="task">'+esc(c.task.name)+'</div>'+
+              '<div class="count">'+c.count+'</div>'+
+            '</div>'+
+            '<div class="desc">'+esc(c.task.pain || 'No active pain point set.')+'</div>'+
+            '<div class="row-line">'+
+              '<span class="status-pill '+c.status+'"><span class="d"></span>'+c.status+'</span>'+
+              '<button class="chip" data-act="set-pain" data-id="'+c.task.id+'" data-status="open">open</button>'+
+              '<button class="chip" data-act="set-pain" data-id="'+c.task.id+'" data-status="testing">testing</button>'+
+              '<button class="chip" data-act="set-pain" data-id="'+c.task.id+'" data-status="resolved">resolved</button>'+
+            '</div>'+
+            '<div class="meta" style="font-size:12px;color:var(--ink-3);margin-top:8px">Count = how many logs in the last 30 days recorded a difficulty for this task.</div>'+
+          '</div>').join('')+'</div>' : '<div class="empty">No pain points logged yet.</div>')+
+      '</section>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>Evidence of Growth</div></div>'+
+        (evAll.length ? '<div class="list">'+evAll.slice(0,6).map(ev => {
+          const t = state.tasks.find(x=>x.id===ev.taskId);
+          return '<div class="insight-card">'+
+            '<div class="head"><div class="task">'+esc(t?t.name:'')+' \u00b7 '+esc(ev.ability)+'</div><div class="fine">'+esc(ev.date)+'</div></div>'+
+            '<div class="desc"><span class="muted" style="font-size:12px">Before.</span> '+esc(ev.before)+'<br><span class="muted" style="font-size:12px">After.</span> '+esc(ev.after)+'</div>'+
+          '</div>';
+        }).join('')+'</div>' : '<div class="empty">Add before/after evidence from a Progress page to start collecting.</div>')+
+      '</section>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>Possible Patterns</div></div>'+
+        '<div class="insight-card">'+
+          '<div class="desc">Across '+total+' log'+(total===1?'':'s')+':'+
+            (total? '<br>\u00b7 Most-logged task: <b>'+esc(byTask[0].t.name)+'</b> ('+byTask[0].n+').' : '')+
+            (avgEnergy? '<br>\u00b7 Average energy: <b>'+avgEnergy.toFixed(1)+'</b>/10.' : '')+
+            (avgFocus? '<br>\u00b7 Average focus: <b>'+avgFocus.toFixed(1)+'</b>/10.' : '')+
+          '</div>'+
+          '<div class="meta" style="font-size:12px;color:var(--ink-3);margin-top:8px">Patterns here are simple aggregates, not causal claims.</div>'+
+        '</div>'+
+      '</section>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>Suggested Adjustments</div></div>'+
+        (adjustByTask.length ? '<div class="list">'+adjustByTask.map(x => ''+
+          '<div class="insight-card">'+
+            '<div class="head"><div class="task">'+esc(x.t.name)+'</div><div class="fine">recent plans</div></div>'+
+            '<div class="desc">'+x.items.slice().reverse().map((l,i)=> (x.items.length-i)+'. '+esc(l.nextAdjust)+' <span class="dim" style="font-size:12px">('+esc(l.date)+')</span>').join('<br>')+'</div>'+
+          '</div>').join('')+'</div>' : '<div class="empty">No next-step adjustments recorded yet. Try filling that field on a log.</div>')+
+      '</section>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>Weekly Review</div></div>'+
+        '<div class="insight-card">'+
+          '<div class="desc">A short weekly reflection helps separate signal from noise. Once a week. No pressure.</div>'+
+          '<div style="margin-top:10px"><button class="chip" data-go="/weekly">'+ICON.pen+' Open this week\u2019s review</button></div>'+
+        '</div>'+
+      '</section>'+
+      '<div class="spacer-lg"></div>';
+  }
+
+  function viewWeekly(){
+    const wk = weekKey();
+    let r = state.reviews.find(x=>x.weekKey===wk);
+    if(!r){
+      r = { id: uid(), weekKey: wk, startDate: weekStart(), endDate: weekEnd(), whatHappened:'', whatImproved:'', whatBlocked:'', whatWorked:'', whatDidnt:'', whatWillChange:'', sentence:'', updatedAt: new Date().toISOString() };
+    }
+    return ''+
+      '<div class="topbar"><button class="back" data-go="/insights" aria-label="Back">'+ICON.back+'</button><div class="title">Weekly Review</div><div style="width:36px"></div></div>'+
+      '<div class="review-card">'+
+        '<div class="h">This week</div>'+
+        '<div class="sub">'+esc(fmtFullDate(r.startDate))+' \u2192 '+esc(fmtFullDate(r.endDate))+'</div>'+
+        '<div class="muted" style="font-size:12.5px;margin-bottom:8px">A short reflection. Once a week. No pressure.</div>'+
+        '<div class="review-grid">'+
+          reviewField('What actually happened?', r.whatHappened, 'r-happened')+
+          reviewField('What improved?', r.whatImproved, 'r-improved')+
+          reviewField('What repeatedly blocked me?', r.whatBlocked, 'r-blocked')+
+          reviewField('What worked?', r.whatWorked, 'r-worked')+
+          reviewField("What didn\u2019t work?", r.whatDidnt, 'r-didnt')+
+          reviewField('What will I change next week?', r.whatWillChange, 'r-change')+
+          reviewField('One sentence to remember', r.sentence, 'r-sentence', true)+
+        '</div>'+
+        '<div class="actions">'+
+          '<button class="btn btn-ghost" data-go="/insights">Close</button>'+
+          '<button class="btn btn-primary" data-act="save-review" data-week="'+wk+'">Save Review</button>'+
+        '</div>'+
+      '</div>'+
+      '<div class="spacer-lg"></div>';
+  }
+  function reviewField(label, val, id, single){
+    if (single) return '<div class="q"><div class="k">'+label+'</div><input class="input" id="'+id+'" value="'+esc(val||'')+'" placeholder="One honest sentence."></div>';
+    return '<div class="q"><div class="k">'+label+'</div><textarea class="textarea" id="'+id+'" rows="2">'+esc(val||'')+'</textarea></div>';
+  }
+
+  function notFound(){
+    return '<div class="brand"><div class="mark">NOT FOUND</div></div><div class="empty">That page doesn\u2019t exist.</div><div class="spacer-lg"></div>';
+  }
+
+  function render(){
+    const { path, params } = parseHash();
+    let html;
+    if (path === '/home') html = viewHome();
+    else if (path === '/tasks') html = viewTasks();
+    else if (path === '/task') html = viewTaskDetail(params.id);
+    else if (path === '/new') html = viewNewLog(params);
+    else if (path === '/log') html = viewLog(params);
+    else if (path === '/insights') html = viewInsights(params);
+    else if (path === '/weekly') html = viewWeekly(params);
+    else html = viewHome();
+    $('#app').innerHTML = '<div class="view fadein">'+html+'</div>';
+    renderNav(path);
+    attachHandlers();
+    window.scrollTo(0,0);
+  }// ============================================================
+  // ACTIONS · MODAL · INIT
+  // ============================================================
+
+  // global click delegation (set up once)
+  function onClick(e){
+    const goBtn = e.target.closest('[data-go]');
+    if (goBtn && !goBtn.disabled){ e.preventDefault(); go(goBtn.dataset.go); return; }
+    const actBtn = e.target.closest('[data-act]');
+    if (actBtn){ e.preventDefault(); handleAction(actBtn); return; }
+  }
+
+  function handleAction(b){
+    const act = b.dataset.act;
+    if (act === 'save-log') return saveLog(b.dataset.id || '');
+    if (act === 'delete-log') return deleteLog(b.dataset.id);
+    if (act === 'add-task') return openAddTask();
+    if (act === 'edit-task') return openEditTask(b.dataset.id);
+    if (act === 'add-evidence') return openAddEvidence(b.dataset.id);
+    if (act === 'del-evidence') return delEvidence(b.dataset.id);
+    if (act === 'edit-log') return go('/new?id='+b.dataset.id);
+    if (act === 'set-pain'){ state.painStatus[b.dataset.id] = b.dataset.status; saveAll(); toast('Pain point status updated.'); render(); return; }
+    if (act === 'save-review') return saveReview(b.dataset.week);
+  }
+
+  // ---------- modal ----------
+  function openModal(contentHTML, onMount){
+    const ov = document.createElement('div');
+    ov.className = 'modal-overlay';
+    ov.innerHTML = '<div class="modal" role="dialog">'+contentHTML+'</div>';
+    document.body.appendChild(ov);
+    document.body.style.overflow = 'hidden';
+    const close = () => { ov.remove(); document.body.style.overflow = ''; };
+    ov.addEventListener('click', e => { if (e.target === ov) close(); });
+    if (onMount) onMount(ov, close);
+    return close;
+  }
+
+  function openAddTask(){
+    const html = ''+
+      '<div class="head"><div class="t">New Task</div><button class="close" data-modal-close>'+ICON.x+'</button></div>'+
+      '<div class="edit-grid">'+
+        '<div><label>Name</label><input id="m-name" class="input" placeholder="e.g. Pronunciation"></div>'+
+        '<div><label>Area (optional)</label><input id="m-area" class="input" placeholder="e.g. Output"></div>'+
+        '<div><label>Current Stage (optional)</label><input id="m-stage" class="input" placeholder="e.g. Recognition \u2192 Use"></div>'+
+      '</div>'+
+      '<div class="actions"><button class="btn btn-ghost" data-modal-close>Cancel</button><button class="btn btn-primary" id="m-add">Add Task</button></div>';
+    openModal(html, (ov, close) => {
+      ov.querySelectorAll('[data-modal-close]').forEach(b => b.addEventListener('click', close));
+      const nameI = ov.querySelector('#m-name');
+      setTimeout(()=> nameI.focus(), 60);
+      const submit = () => {
+        const name = nameI.value.trim();
+        if (!name){ nameI.focus(); return; }
+        const now = new Date().toISOString();
+        const t = { id: uid(), name, area: ov.querySelector('#m-area').value.trim(), stage: ov.querySelector('#m-stage').value.trim(), focus:'', pain:'', strategy:'', milestone:'', status:'active', createdAt: now, updatedAt: now };
+        state.tasks.push(t);
+        saveAll();
+        close();
+        toast('Task added.');
+        go('/task?id='+t.id);
+      };
+      ov.querySelector('#m-add').addEventListener('click', submit);
+      nameI.addEventListener('keydown', e => { if (e.key==='Enter') submit(); });
+    });
+  }
+
+  function openEditTask(id){
+    const t = state.tasks.find(x=>x.id===id);
+    if (!t) return;
+    const fields = ['area','stage','focus','pain','strategy','milestone','status'];
+    const labels = {area:'Area',stage:'Current Stage',focus:'Current Focus',pain:'Current Pain Point',strategy:'Current Strategy',milestone:'Next Milestone',status:'Status'};
+    const html = ''+
+      '<div class="head"><div class="t">Edit \u00b7 '+esc(t.name)+'</div><button class="close" data-modal-close>'+ICON.x+'</button></div>'+
+      '<div class="edit-grid">'+
+        fields.map(k => ''+
+          '<div><label>'+labels[k]+'</label>'+
+            (k==='status'
+              ? '<select id="e-'+k+'" class="select"><option '+(t[k]==='active'?'selected':'')+'>active</option><option '+(t[k]==='paused'?'selected':'')+'>paused</option><option '+(t[k]==='archived'?'selected':'')+'>archived</option></select>'
+              : '<textarea id="e-'+k+'" rows="'+(['focus','pain','strategy','milestone'].includes(k)?2:1)+'">'+esc(t[k]||'')+'</textarea>'
+            )+
+          '</div>').join('')+
+      '</div>'+
+      '<div class="actions"><button class="btn btn-ghost" data-modal-close>Cancel</button><button class="btn btn-primary" id="m-save-task">Save</button></div>';
+    openModal(html, (ov, close) => {
+      ov.querySelectorAll('[data-modal-close]').forEach(b => b.addEventListener('click', close));
+      ov.querySelector('#m-save-task').addEventListener('click', () => {
+        fields.forEach(k => { const el = ov.querySelector('#e-'+k); if (el) t[k] = el.value.trim(); });
+        t.updatedAt = new Date().toISOString();
+        saveAll();
+        close();
+        toast('Task updated.');
+        render();
+      });
+    });
+  }
+
+  function openAddEvidence(taskId){
+    const t = state.tasks.find(x=>x.id===taskId);
+    if (!t) return;
+    const html = ''+
+      '<div class="head"><div class="t">Add Evidence \u00b7 '+esc(t.name)+'</div><button class="close" data-modal-close>'+ICON.x+'</button></div>'+
+      '<div class="muted" style="font-size:12.5px;margin-bottom:10px">A concrete before/after snapshot. All three fields are needed.</div>'+
+      '<div class="edit-grid">'+
+        '<div><label>Ability</label><input id="m-ability" class="input" placeholder="e.g. Continuous speaking"></div>'+
+        '<div><label>Before</label><textarea id="m-before" class="textarea" rows="2" placeholder="What it was like before"></textarea></div>'+
+        '<div><label>After</label><textarea id="m-after" class="textarea" rows="2" placeholder="What it is like now"></textarea></div>'+
+      '</div>'+
+      '<div class="actions"><button class="btn btn-ghost" data-modal-close>Cancel</button><button class="btn btn-primary" id="m-save-ev">Save</button></div>';
+    openModal(html, (ov, close) => {
+      ov.querySelectorAll('[data-modal-close]').forEach(b => b.addEventListener('click', close));
+      setTimeout(()=> ov.querySelector('#m-ability').focus(), 60);
+      ov.querySelector('#m-save-ev').addEventListener('click', () => {
+        const ability = ov.querySelector('#m-ability').value.trim();
+        const before = ov.querySelector('#m-before').value.trim();
+        const after = ov.querySelector('#m-after').value.trim();
+        if (!ability || !before || !after){ toast('All three fields are needed.'); return; }
+        state.evidence.push({ id: uid(), taskId, ability, before, after, date: todayISO(), createdAt: new Date().toISOString() });
+        saveAll();
+        close();
+        toast('Evidence added.');
+        render();
+      });
+    });
+  }
+  function delEvidence(id){
+    state.evidence = state.evidence.filter(x=>x.id!==id);
+    saveAll();
+    toast('Removed.');
+    render();
+  }
+
+  // ---------- log actions ----------
+  function saveLog(id){
+    const data = {
+      date: ($('#f-date')||{}).value || todayISO(),
+      taskId: ($('#f-task')||{}).value,
+      whatDid: trim(($('#f-did')||{}).value),
+      evidence: trim(($('#f-evi')||{}).value),
+      difficulty: trim(($('#f-diff')||{}).value),
+      feeling: trim(($('#f-feel')||{}).value),
+      energy: +(($('#f-energy')||{}).value || 5),
+      focus: +(($('#f-focus')||{}).value || 5),
+      whatChanged: trim(($('#f-changed')||{}).value),
+      nextAdjust: trim(($('#f-adjust')||{}).value),
+      lens: ((document.querySelector('#f-lens button.on')||{}).dataset||{}).lens || 'fact'
+    };
+    if (!data.taskId){ toast('Please choose a task.'); return; }
+    const now = new Date().toISOString();
+    if (id){
+      const i = state.logs.findIndex(l=>l.id===id);
+      if (i<0) return;
+      state.logs[i] = Object.assign({}, state.logs[i], data, { updatedAt: now });
+    } else {
+      state.logs.push({ id: uid(), createdAt: now, updatedAt: now, ...data });
+    }
+    const t = state.tasks.find(x=>x.id===data.taskId);
+    if (t) t.updatedAt = now;
+    saveAll();
+    toast(id ? 'Log updated.' : 'Saved to timeline.');
+    go('/task?id='+data.taskId);
+  }
+  function deleteLog(id){
+    const l = state.logs.find(x=>x.id===id);
+    if (!l) return;
+    if (!confirm('Delete this log entry?')) return;
+    state.logs = state.logs.filter(x=>x.id!==id);
+    saveAll();
+    toast('Log deleted.');
+    go('/task?id='+l.taskId);
+  }
+
+  function saveReview(wk){
+    const r = state.reviews.find(x=>x.weekKey===wk) || { id: uid(), weekKey: wk, startDate: weekStart(), endDate: weekEnd() };
+    r.whatHappened = trim(($('#r-happened')||{}).value);
+    r.whatImproved = trim(($('#r-improved')||{}).value);
+    r.whatBlocked = trim(($('#r-blocked')||{}).value);
+    r.whatWorked = trim(($('#r-worked')||{}).value);
+    r.whatDidnt = trim(($('#r-didnt')||{}).value);
+    r.whatWillChange = trim(($('#r-change')||{}).value);
+    r.sentence = trim(($('#r-sentence')||{}).value);
+    r.updatedAt = new Date().toISOString();
+    const i = state.reviews.findIndex(x=>x.weekKey===wk);
+    if (i<0) state.reviews.push(r); else state.reviews[i] = r;
+    saveAll();
+    toast('Weekly review saved.');
+    go('/insights');
+  }
+
+  function toast(msg){
+    const el = $('#toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(()=> el.classList.remove('show'), 1600);
+  }
+
+  // ---------- per-view handlers ----------
+  function attachHandlers(){
+    // sliders: live update value display
+    document.querySelectorAll('.slider').forEach(s => {
+      s.addEventListener('input', () => {
+        const v = s.parentElement.querySelector('.val');
+        if (v) v.textContent = s.value;
+      });
+    });
+    // lens segmented control
+    document.querySelectorAll('#f-lens button').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('#f-lens button').forEach(x => { x.className = x.dataset.lens; });
+        b.className = 'on ' + b.dataset.lens;
+      });
+    });
+  }
+
+  // ---------- init ----------
+  function init(){
+    loadAll();
+    if (!state.tasks.length && !state.logs.length){
+      const d = defaults();
+      state.tasks = d.tasks;
+      state.logs = d.logs;
+      state.evidence = d.evidence;
+      state.painStatus = d.painStatus;
+      saveAll();
+      try{ localStorage.setItem(K.seeded,'1'); }catch{}
+    }
+    document.body.addEventListener('click', onClick);
+    window.addEventListener('hashchange', render);
+    render();
+  }
+
+  init();
+})();
+  </script>
+</body>
+</html>
