@@ -683,6 +683,71 @@ input,textarea,select{font:inherit;color:inherit}
 .lb-inner{position:relative;max-width:100%;max-height:100%}
 .lb-inner img{max-width:100%;max-height:75vh;border-radius:var(--radius-sm);display:block;box-shadow:0 8px 40px rgba(0,0,0,.4)}
 .lb-close{position:absolute;top:-14px;right:-14px;width:36px;height:36px;border-radius:50%;background:#fff;color:var(--ink);display:inline-flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+
+/* Todo list */
+.todo-list{display:flex;flex-direction:column;gap:2px}
+.todo-item{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--line-2)}
+.todo-item:last-child{border-bottom:none}
+.todo-item.done{opacity:.48}
+.todo-item.done .todo-text{text-decoration:line-through;text-decoration-color:var(--ink-3);text-decoration-thickness:1px}
+.todo-check{
+  width:24px;height:24px;flex:none;border-radius:7px;
+  border:1.5px solid var(--ink-4);background:var(--surface);
+  display:inline-flex;align-items:center;justify-content:center;color:#fff;
+  transition:all .15s ease
+}
+.todo-check.checked{background:var(--blue);border-color:var(--blue)}
+.todo-text{flex:1;font-size:14.5px;color:var(--ink);line-height:1.4;word-break:break-word}
+.todo-del{width:26px;height:26px;flex:none;border-radius:50%;color:var(--ink-4);display:inline-flex;align-items:center;justify-content:center}
+.todo-del:active{color:var(--amber);background:var(--amber-soft)}
+.todo-add{display:flex;gap:8px;margin-top:10px}
+.todo-add .input{flex:1}
+.todo-add .chip{flex:none}
+.todo-input::placeholder{color:var(--ink-4)}
+
+/* Message to self */
+.msg-self-section{margin-bottom:6px}
+.msg-self{
+  background:linear-gradient(160deg, var(--blue-mist) 0%, var(--surface) 100%);
+  border:1px solid var(--blue-soft);
+  border-radius:var(--radius);
+  padding:14px 16px;
+  box-shadow:var(--shadow-sm)
+}
+.msg-input{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:16.5px;
+  line-height:1.5;
+  color:var(--blue-deep);
+  background:transparent;
+  border:none;
+  resize:vertical
+}
+.msg-input:focus{outline:none}
+.msg-input::placeholder{color:var(--ink-4);font-style:italic}
+
+/* Small button */
+.btn-sm{font-size:13px;padding:7px 16px;border-radius:var(--radius-xs)}
+
+/* Home day preview */
+.day-preview{
+  background:linear-gradient(160deg, var(--blue-mist) 0%, var(--surface) 100%);
+  border:1px solid var(--blue-soft);
+  border-radius:var(--radius);
+  padding:14px 18px;
+  cursor:pointer;
+  display:flex;flex-direction:column;gap:6px
+}
+.day-preview:active{opacity:.85}
+.day-preview.empty-preview{background:var(--surface);border:1px dashed var(--line)}
+.dp-msg{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--blue-deep);line-height:1.45}
+.day-preview.empty-preview .dp-msg{color:var(--ink-3);font-style:normal;font-size:13.5px}
+.dp-todo{font-size:12.5px;color:var(--ink-2)}
+.dp-link{font-size:12px;color:var(--blue);font-weight:500;letter-spacing:.02em}
+
+/* Calendar todo mark */
+.cal-ic.todo{color:var(--green)}
   </style>
 </head>
 <body>
@@ -698,7 +763,7 @@ input,textarea,select{font:inherit;color:inherit}
   'use strict';
 
   // ---------- storage keys ----------
-  const K = { tasks:'mwb2.tasks', logs:'mwb2.logs', evidence:'mwb2.evidence', reviews:'mwb2.reviews', pain:'mwb2.painStatus', seeded:'mwb2.seeded', draft:'mwb2.draft', diary:'mwb2.diary', cards:'mwb2.cards' };
+  const K = { tasks:'mwb2.tasks', logs:'mwb2.logs', evidence:'mwb2.evidence', reviews:'mwb2.reviews', pain:'mwb2.painStatus', seeded:'mwb2.seeded', draft:'mwb2.draft', diary:'mwb2.diary', cards:'mwb2.cards', todos:'mwb2.todos' };
 
   // ---------- helpers ----------
   const $ = (s,r=document)=>r.querySelector(s);
@@ -726,8 +791,8 @@ input,textarea,select{font:inherit;color:inherit}
   const PAIN_LABEL = { open:'待处理', testing:'试验中', resolved:'已解决' };
 
   // ---------- state ----------
-  let state = { tasks:[], logs:[], evidence:[], reviews:[], painStatus:{}, diary:[], cards:[] };
-  function saveAll(){ save(K.tasks,state.tasks); save(K.logs,state.logs); save(K.evidence,state.evidence); save(K.reviews,state.reviews); save(K.pain,state.painStatus); save(K.diary,state.diary); save(K.cards,state.cards); }
+  let state = { tasks:[], logs:[], evidence:[], reviews:[], painStatus:{}, diary:[], cards:[], todos:[] };
+  function saveAll(){ save(K.tasks,state.tasks); save(K.logs,state.logs); save(K.evidence,state.evidence); save(K.reviews,state.reviews); save(K.pain,state.painStatus); save(K.diary,state.diary); save(K.cards,state.cards); save(K.todos,state.todos); }
   function loadAll(){
     state.tasks = load(K.tasks) || [];
     state.logs = load(K.logs) || [];
@@ -736,6 +801,7 @@ input,textarea,select{font:inherit;color:inherit}
     state.painStatus = load(K.pain) || {};
     state.diary = load(K.diary) || [];
     state.cards = load(K.cards) || [];
+    state.todos = load(K.todos) || [];
   }
 
   // ---------- defaults (first-run seed) ----------
@@ -764,10 +830,21 @@ input,textarea,select{font:inherit;color:inherit}
       { id:uid(), taskId:'t-lis', ability:'长句切分', before:'逐词听，听到结尾意思就丢了。',     after:'能抓住意群并暂停追上，意思保住了。',     date:'2026-09-21', createdAt:now },
     ];
     const diary = [
-      { id: uid(), date:'2026-09-17', text:'今天跟读TED，发现快段还是跟不上。但第一次没暂停听完整个片段，这点让我意外。', location:'宿舍', gps:null, createdAt:now, updatedAt:now },
-      { id: uid(), date:'2026-09-22', text:'录了3分钟即兴，2:30后逻辑跑偏。沮丧，但确实突破了2分钟的墙。下周一分钟一个锚点试试。', location:'图书馆三楼', gps:null, createdAt:now, updatedAt:now },
+      { id: uid(), date:'2026-09-17', text:'今天跟读TED，发现快段还是跟不上。但第一次没暂停听完整个片段，这点让我意外。', location:'宿舍', gps:null, messageToSelf:'慢一点也没关系，听完就是进步。', createdAt:now, updatedAt:now },
+      { id: uid(), date:'2026-09-22', text:'录了3分钟即兴，2:30后逻辑跑偏。沮丧，但确实突破了2分钟的墙。下周一分钟一个锚点试试。', location:'图书馆三楼', gps:null, messageToSelf:'墙是用来突破的，不是用来撞的。换个方法。', createdAt:now, updatedAt:now },
     ];
-    return { tasks, logs, evidence, diary, cards:[], reviews:[], painStatus:{ 't-lis':'open', 't-spe':'testing' } };
+    const today = todayISO();
+    const wk = weekKey();
+    const mk = today.slice(0,7);
+    const todos = [
+      { id: uid(), scope:'daily', periodKey: today, text:'听力 30分钟跟读', done:true, createdAt:now, completedAt:now },
+      { id: uid(), scope:'daily', periodKey: today, text:'口语 录3分钟即兴', done:false, createdAt:now, completedAt:null },
+      { id: uid(), scope:'weekly', periodKey: wk, text:'完成3次完整听力训练', done:false, createdAt:now, completedAt:null },
+      { id: uid(), scope:'weekly', periodKey: wk, text:'整理本周高频痛点', done:false, createdAt:now, completedAt:null },
+      { id: uid(), scope:'monthly', periodKey: mk, text:'突破口语连续表达5分钟', done:false, createdAt:now, completedAt:null },
+      { id: uid(), scope:'monthly', periodKey: mk, text:'积累200个新词主动使用', done:false, createdAt:now, completedAt:null },
+    ];
+    return { tasks, logs, evidence, diary, cards:[], todos, reviews:[], painStatus:{ 't-lis':'open', 't-spe':'testing' } };
   }
 
   // ---------- icons ----------
@@ -787,7 +864,8 @@ input,textarea,select{font:inherit;color:inherit}
     cal:  '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>',
     camera: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>',
     pin: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
-    img: '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>'
+    img: '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>',
+    check: '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>'
   };
 
   // ---------- router ----------
@@ -919,6 +997,30 @@ input,textarea,select{font:inherit;color:inherit}
         '<div class="date">'+date.getDate()+' <small>'+(date.getMonth()+1)+'月 '+date.getFullYear()+'</small></div>'+
         '<div class="weekday">安静的一天，记录真实发生的事。</div>'+
       '</div>'+
+
+      (function(){
+        const todayDiary = state.diary.find(x=>x.date===today);
+        const msg = todayDiary && trim(todayDiary.messageToSelf);
+        const dailyTodos = getTodos('daily', today);
+        const todoDone = dailyTodos.filter(t=>t.done).length;
+        if (msg || dailyTodos.length){
+          return ''+
+            '<section class="section">'+
+              '<div class="day-preview" data-go="/day?date='+today+'">'+
+                (msg ? '<div class="dp-msg serif">\u201c'+esc(trunc(msg,80))+' \u201d</div>' : '')+
+                (dailyTodos.length ? '<div class="dp-todo"><span class="dot"></span>今日待办 '+todoDone+'/'+dailyTodos.length+'</div>' : '')+
+                '<div class="dp-link">打开今天 \u203a</div>'+
+              '</div>'+
+            '</section>';
+        }
+        return ''+
+          '<section class="section">'+
+            '<div class="day-preview empty-preview" data-go="/day?date='+today+'">'+
+              '<div class="dp-msg">还没有给今天写一句话。</div>'+
+              '<div class="dp-link">写一句给自己 \u203a</div>'+
+            '</div>'+
+          '</section>';
+      })() +
 
       '<section class="section">'+
         '<div class="section-head"><div class="section-title"><span class="dot"></span>今日</div><div class="right">'+todayLogs.length+' 条记录</div></div>'+
@@ -1283,10 +1385,11 @@ input,textarea,select{font:inherit;color:inherit}
     const nextKey = next.getFullYear() + '-' + String(next.getMonth() + 1).padStart(2, '0');
 
     const dayMap = {};
-    const ensure = d => { if (!dayMap[d]) dayMap[d] = { logs: [], diary: null, cards: [] }; return dayMap[d]; };
+    const ensure = d => { if (!dayMap[d]) dayMap[d] = { logs: [], diary: null, cards: [], todos: [] }; return dayMap[d]; };
     state.logs.forEach(l => { if (l.date) ensure(l.date).logs.push(l); });
     state.diary.forEach(d => { if (d.date) ensure(d.date).diary = d; });
     state.cards.forEach(c => { if (c.date) ensure(c.date).cards.push(c); });
+    state.todos.forEach(t => { if (t.scope==='daily' && t.periodKey) ensure(t.periodKey).todos.push(t); });
 
     const startOffset = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -1314,7 +1417,8 @@ input,textarea,select{font:inherit;color:inherit}
         const lensSet = Array.from(new Set(data.logs.map(l => l.lens || 'fact')));
         marks += lensSet.map(ll => '<span class="cal-dot ' + ll + '"></span>').join('');
         if (data.cards.length) marks += '<span class="cal-ic img">' + ICON.img + '</span>';
-        if (data.diary && trim(data.diary.text)) marks += '<span class="cal-ic dia">' + ICON.pen + '</span>';
+        if (data.diary && (trim(data.diary.text) || trim(data.diary.messageToSelf))) marks += '<span class="cal-ic dia">' + ICON.pen + '</span>';
+        if (data.todos.length) marks += '<span class="cal-ic todo">' + ICON.check + '</span>';
       }
       return '<button class="cal-cell' + (cell.inMonth ? '' : ' out') + (isToday ? ' today' : '') + '" data-go="/day?date=' + iso + '">' +
         '<span class="cal-num">' + cell.date.getDate() + '</span>' +
@@ -1354,6 +1458,7 @@ input,textarea,select{font:inherit;color:inherit}
         '<span class="cal-dot analysis"></span>分析' +
         '<span class="cal-ic">' + ICON.img + '</span>图片' +
         '<span class="cal-ic">' + ICON.pen + '</span>日记' +
+        '<span class="cal-ic">' + ICON.check + '</span>待办' +
       '</div>' +
       '<div class="cal-sum">' +
         '<div class="cal-sum-title">本月概览</div>' +
@@ -1366,7 +1471,74 @@ input,textarea,select{font:inherit;color:inherit}
         (topLocs.length ? '<div class="cal-sum-block"><div class="cal-sum-l">地点分布</div>' + topLocs.map(function(a){ return '<div class="cal-sum-row"><span>' + esc(a[0]) + '</span><b>' + a[1] + ' 次</b></div>'; }).join('') + '</div>' : '') +
         (topDiffs.length ? '<div class="cal-sum-block"><div class="cal-sum-l">反复困难</div>' + topDiffs.map(function(a){ return '<div class="cal-sum-row"><span>' + esc(trunc(a[0], 36)) + '</span><b>' + a[1] + '</b></div>'; }).join('') + '</div>' : '') +
         (!mLogs.length && !mDiary.length && !mCards.length ? '<div class="empty" style="margin-top:8px">本月还没有记录。点击日历上的日期开始写。</div>' : '') +
+      '</div>' +
+      renderTodoList('monthly', monthKey);
+  }
+
+  // ---------- todo helpers ----------
+  function getTodos(scope, periodKey){
+    return state.todos.filter(t => t.scope===scope && t.periodKey===periodKey).sort((a,b)=> (a.done===b.done)? (a.createdAt||'').localeCompare(b.createdAt||'') : (a.done?1:-1));
+  }
+  function addTodo(scope, periodKey, text){
+    if (!trim(text)) return;
+    const now = new Date().toISOString();
+    state.todos.push({ id: uid(), scope, periodKey, text: trim(text), done:false, createdAt: now, completedAt: null });
+    save(K.todos, state.todos);
+  }
+  function toggleTodo(id){
+    const t = state.todos.find(x=>x.id===id);
+    if (!t) return;
+    t.done = !t.done;
+    t.completedAt = t.done ? new Date().toISOString() : null;
+    save(K.todos, state.todos);
+  }
+  function delTodo(id){
+    state.todos = state.todos.filter(x=>x.id!==id);
+    save(K.todos, state.todos);
+  }
+  function renderTodoList(scope, periodKey){
+    const todos = getTodos(scope, periodKey);
+    const doneCount = todos.filter(t=>t.done).length;
+    const SCOPE_LABEL = { daily:'今日待办', weekly:'本周待办', monthly:'本月待办' };
+    const inputId = 'todo-input-'+scope;
+    let html = ''+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>'+SCOPE_LABEL[scope]+'</div>'+
+          (todos.length ? '<span class="right">'+doneCount+' / '+todos.length+'</span>' : '')+
+        '</div>';
+    if (todos.length){
+      html += '<div class="todo-list">'+
+        todos.map(t => ''+
+          '<div class="todo-item'+(t.done?' done':'')+'">'+
+            '<button class="todo-check'+(t.done?' checked':'')+'" data-act="toggle-todo" data-id="'+t.id+'" aria-label="'+(t.done?'取消完成':'完成')+'">'+(t.done?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>':'')+'</button>'+
+            '<span class="todo-text">'+esc(t.text)+'</span>'+
+            '<button class="todo-del" data-act="del-todo" data-id="'+t.id+'" aria-label="删除">'+ICON.x+'</button>'+
+          '</div>').join('')+
       '</div>';
+    } else {
+      html += '<div class="empty">还没有'+SCOPE_LABEL[scope]+'。在下面添加一项。</div>';
+    }
+    html += ''+
+      '<div class="todo-add">'+
+        '<input class="input todo-input" id="'+inputId+'" placeholder="添加一项…" enterkeyhint="done">'+
+        '<button class="chip" data-act="add-todo" data-scope="'+scope+'" data-period="'+periodKey+'" data-input="'+inputId+'">添加</button>'+
+      '</div>'+
+      '</section>';
+    return html;
+  }
+  function saveMessageToSelf(date){
+    const text = trim(($('#day-msg')||{}).value);
+    const now = new Date().toISOString();
+    let d = state.diary.find(x => x.date === date);
+    if (d){
+      d.messageToSelf = text; d.updatedAt = now;
+    } else {
+      d = { id: uid(), date, text:'', location:'', gps:null, messageToSelf: text, createdAt: now, updatedAt: now };
+      state.diary.push(d);
+    }
+    save(K.diary, state.diary);
+    toast('已保存。');
+    render();
   }
 
   function viewDay(p){
@@ -1375,7 +1547,7 @@ input,textarea,select{font:inherit;color:inherit}
     const d = parseISO(date);
     const weekday = wdays[d.getDay()];
     const dayLogs = state.logs.filter(l => l.date === date).sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
-    const diary = state.diary.find(x => x.date === date) || { id: '', date, text: '', location: '', gps: null };
+    const diary = state.diary.find(x => x.date === date) || { id: '', date, text: '', location: '', gps: null, messageToSelf: '' };
     _pendingGps = diary.gps || null;
     const cards = state.cards.filter(c => c.date === date).sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
 
@@ -1389,6 +1561,18 @@ input,textarea,select{font:inherit;color:inherit}
         '<div class="dh-num">' + d.getDate() + '</div>' +
         '<div class="dh-meta">' + (d.getMonth() + 1) + '月 ' + d.getFullYear() + ' \u00b7 ' + weekday + '</div>' +
       '</div>' +
+
+      '<section class="section msg-self-section">' +
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>写给自己的话</div></div>' +
+        '<div class="msg-self">' +
+          '<textarea class="textarea msg-input" id="day-msg" rows="2" placeholder="今天开始前，给自己一句安静的话…">' + esc(diary.messageToSelf || '') + '</textarea>' +
+          '<div class="actions" style="margin-top:8px">' +
+            '<button class="btn btn-primary btn-sm" data-act="save-msg" data-date="' + date + '">保存这句话</button>' +
+          '</div>' +
+        '</div>' +
+      '</section>' +
+
+      renderTodoList('daily', date) +
 
       '<section class="section">' +
         '<div class="section-head"><div class="section-title"><span class="dot"></span>今日记录</div><button class="chip" data-go="/new?date=' + date + '">+ 记录</button></div>' +
@@ -1442,7 +1626,7 @@ input,textarea,select{font:inherit;color:inherit}
     if (d){
       d.text = text; d.location = location; d.gps = _pendingGps; d.updatedAt = now;
     } else {
-      d = { id: uid(), date, text, location, gps: _pendingGps, createdAt: now, updatedAt: now };
+      d = { id: uid(), date, text, location, gps: _pendingGps, messageToSelf: '', createdAt: now, updatedAt: now };
       state.diary.push(d);
     }
     save(K.diary, state.diary);
@@ -1606,6 +1790,7 @@ input,textarea,select{font:inherit;color:inherit}
         '<div class="h">本周</div>'+
         '<div class="sub">'+esc(fmtFullDate(r.startDate))+' \u2192 '+esc(fmtFullDate(r.endDate))+'</div>'+
         '<div class="muted" style="font-size:12.5px;margin-bottom:8px">一次简短复盘。一周一次。没有压力。</div>'+
+        renderTodoList('weekly', wk)+
         '<div class="review-grid">'+
           reviewField('实际发生了什么？', r.whatHappened, 'r-happened')+
           reviewField('有什么改善？', r.whatImproved, 'r-improved')+
@@ -1675,6 +1860,10 @@ input,textarea,select{font:inherit;color:inherit}
     if (act === 'export-data') return exportData();
     if (act === 'restore-data') return openRestore();
     if (act === 'save-diary') return saveDiary(b.dataset.date);
+    if (act === 'save-msg') return saveMessageToSelf(b.dataset.date);
+    if (act === 'add-todo'){ addTodo(b.dataset.scope, b.dataset.period, ($('#'+b.dataset.input)||{}).value || ''); toast('已添加。'); render(); return; }
+    if (act === 'toggle-todo'){ toggleTodo(b.dataset.id); render(); return; }
+    if (act === 'del-todo'){ delTodo(b.dataset.id); toast('已删除。'); render(); return; }
     if (act === 'view-card') return viewCard(b.dataset.id);
     if (act === 'del-card') return deleteCard(b.dataset.id);
   }
@@ -1950,7 +2139,7 @@ input,textarea,select{font:inherit;color:inherit}
       version: 3, app: 'MY WORK BUDDY', exportedAt: new Date().toISOString(),
       tasks: state.tasks, logs: state.logs, evidence: state.evidence,
       reviews: state.reviews, painStatus: state.painStatus,
-      diary: state.diary, cards: state.cards, images: imgData
+      diary: state.diary, cards: state.cards, todos: state.todos, images: imgData
     };
     const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -1997,6 +2186,7 @@ input,textarea,select{font:inherit;color:inherit}
         state.painStatus = backup.painStatus || {};
         state.diary = backup.diary || [];
         state.cards = backup.cards || [];
+        state.todos = backup.todos || [];
         saveAll();
         if (backup.images){
           toast('恢复图片…');
@@ -2123,6 +2313,16 @@ input,textarea,select{font:inherit;color:inherit}
         e.target.value = '';
       });
     }
+    // todo inputs: enter to add
+    document.querySelectorAll('.todo-input').forEach(inp => {
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter'){
+          e.preventDefault();
+          const btn = inp.parentElement.querySelector('[data-act="add-todo"]');
+          if (btn){ btn.click(); }
+        }
+      });
+    });
   }
 
   // ---------- init ----------
@@ -2136,6 +2336,7 @@ input,textarea,select{font:inherit;color:inherit}
       state.painStatus = d.painStatus;
       state.diary = d.diary;
       state.cards = d.cards;
+      state.todos = d.todos;
       saveAll();
       try{ localStorage.setItem(K.seeded,'1'); }catch{}
     }
