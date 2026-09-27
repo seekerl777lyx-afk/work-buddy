@@ -748,6 +748,50 @@ input,textarea,select{font:inherit;color:inherit}
 
 /* Calendar todo mark */
 .cal-ic.todo{color:var(--green)}
+
+/* ============================================================
+   13天饿不死计划
+   ============================================================ */
+.fast-dot{background:var(--amber)!important}
+.fast-home-card{border-left:3px solid var(--amber)}
+.fast-hero{padding:8px 4px 4px}
+.fh-title{font-size:26px;color:var(--ink);font-weight:300;letter-spacing:-.01em;line-height:1.25}
+.fh-desc{font-size:14px;color:var(--ink-2);line-height:1.6;margin-top:12px}
+
+.fast-progress-wrap{background:var(--surface);border:1px solid var(--line-2);border-radius:var(--radius-sm);padding:14px 16px;box-shadow:var(--shadow-sm);margin:0 2px}
+.fast-progress-info{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.fpi-day{font-family:var(--serif);font-size:18px;color:var(--ink);font-weight:400}
+.fpi-date{font-size:12px;color:var(--ink-3)}
+.fast-progress-bar{height:6px;border-radius:999px;background:var(--surface-3);overflow:hidden}
+.fast-progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--amber),var(--amber-soft));transition:width .4s ease}
+.fast-done-badge{margin-top:10px;font-size:12px;color:var(--green);font-weight:500;text-align:center}
+
+.fast-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);border-radius:var(--radius-sm);overflow:hidden;margin:14px 2px 0}
+.fs-item{background:var(--surface);padding:12px 6px;text-align:center}
+.fs-val{font-size:15px;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.fs-lbl{font-size:10px;letter-spacing:.06em;color:var(--ink-3);margin-top:3px}
+
+.fast-food-list .row{border:0;border-bottom:1px solid var(--line-2)}
+.fast-food-row .meta{color:var(--amber);font-weight:500}
+.fast-food-add{display:flex;gap:8px;margin-top:10px;align-items:center}
+.fast-food-add .input{flex:1;min-width:0}
+.fast-food-cal{max-width:84px}
+
+.fast-quick-add{margin-top:14px}
+.fast-qa-label{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-bottom:8px}
+.fast-qa-chips{display:flex;flex-wrap:wrap;gap:6px}
+.fast-qa-chip{font-size:12px;padding:6px 10px}
+
+.fast-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.fast-gd{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;border-radius:var(--radius-xs);background:var(--surface);border:1px solid var(--line-2);text-align:center;transition:background .15s}
+.fast-gd:active{background:var(--surface-2)}
+.fast-gd.today{border-color:var(--amber);background:var(--amber-soft)}
+.fast-gd.logged{border-color:var(--blue-soft)}
+.fast-gd.future{opacity:.4}
+.fgd-d{font-size:9px;font-weight:600;letter-spacing:.08em;color:var(--ink-3);text-transform:uppercase}
+.fgd-n{font-size:16px;font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums}
+.fgd-w{font-size:10.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.fgd-c{font-size:9px;color:var(--ink-3);min-height:11px}
   </style>
 </head>
 <body>
@@ -763,7 +807,7 @@ input,textarea,select{font:inherit;color:inherit}
   'use strict';
 
   // ---------- storage keys ----------
-  const K = { tasks:'mwb2.tasks', logs:'mwb2.logs', evidence:'mwb2.evidence', reviews:'mwb2.reviews', pain:'mwb2.painStatus', seeded:'mwb2.seeded', draft:'mwb2.draft', diary:'mwb2.diary', cards:'mwb2.cards', todos:'mwb2.todos' };
+  const K = { tasks:'mwb2.tasks', logs:'mwb2.logs', evidence:'mwb2.evidence', reviews:'mwb2.reviews', pain:'mwb2.painStatus', seeded:'mwb2.seeded', draft:'mwb2.draft', diary:'mwb2.diary', cards:'mwb2.cards', todos:'mwb2.todos', fast:'mwb2.fast' };
 
   // ---------- helpers ----------
   const $ = (s,r=document)=>r.querySelector(s);
@@ -791,8 +835,8 @@ input,textarea,select{font:inherit;color:inherit}
   const PAIN_LABEL = { open:'待处理', testing:'试验中', resolved:'已解决' };
 
   // ---------- state ----------
-  let state = { tasks:[], logs:[], evidence:[], reviews:[], painStatus:{}, diary:[], cards:[], todos:[] };
-  function saveAll(){ save(K.tasks,state.tasks); save(K.logs,state.logs); save(K.evidence,state.evidence); save(K.reviews,state.reviews); save(K.pain,state.painStatus); save(K.diary,state.diary); save(K.cards,state.cards); save(K.todos,state.todos); }
+  let state = { tasks:[], logs:[], evidence:[], reviews:[], painStatus:{}, diary:[], cards:[], todos:[], fast:null };
+  function saveAll(){ save(K.tasks,state.tasks); save(K.logs,state.logs); save(K.evidence,state.evidence); save(K.reviews,state.reviews); save(K.pain,state.painStatus); save(K.diary,state.diary); save(K.cards,state.cards); save(K.todos,state.todos); save(K.fast,state.fast); }
   function loadAll(){
     state.tasks = load(K.tasks) || [];
     state.logs = load(K.logs) || [];
@@ -802,6 +846,7 @@ input,textarea,select{font:inherit;color:inherit}
     state.diary = load(K.diary) || [];
     state.cards = load(K.cards) || [];
     state.todos = load(K.todos) || [];
+    state.fast = load(K.fast) || null;
   }
 
   // ---------- defaults (first-run seed) ----------
@@ -885,7 +930,7 @@ input,textarea,select{font:inherit;color:inherit}
     if (path==='/'||path==='/home') return 'home';
     if (path==='/tasks'||path==='/task') return 'tasks';
     if (path==='/new') return 'new';
-    if (path==='/log'||path==='/day') return 'log';
+    if (path==='/log'||path==='/day'||path==='/fast') return 'log';
     if (path==='/insights'||path==='/weekly') return 'insights';
     return 'home';
   }
@@ -1018,6 +1063,30 @@ input,textarea,select{font:inherit;color:inherit}
             '<div class="day-preview empty-preview" data-go="/day?date='+today+'">'+
               '<div class="dp-msg">还没有给今天写一句话。</div>'+
               '<div class="dp-link">写一句给自己 \u203a</div>'+
+            '</div>'+
+          '</section>';
+      })() +
+
+      (function(){
+        const f = state.fast;
+        if (!f || !f.startDate) return '';
+        const sd = parseISO(f.startDate);
+        const today = todayISO();
+        const daysIn = Math.floor((parseISO(today) - sd) / 86400000) + 1;
+        const dayNum = Math.max(1, Math.min(13, daysIn));
+        const entry = (f.entries && f.entries[today]) || {};
+        const foodCount = entry.foods ? entry.foods.length : 0;
+        const totC = entry.foods ? entry.foods.reduce((s,x)=>s+(+x.calories||0),0) : 0;
+        const w = entry.weight;
+        return ''+
+          '<section class="section">'+
+            '<div class="section-head"><div class="section-title"><span class="dot fast-dot"></span>13天饿不死计划</div><div class="right">第 '+dayNum+' / 13 天</div></div>'+
+            '<div class="row fast-home-card" data-go="/fast">'+
+              '<div class="left"><div>'+
+                '<div class="name">今日 '+foodCount+' 项 / '+totC+' kcal</div>'+
+                '<div class="meta">'+(w?('体重 '+w+' kg'):'未称重')+' \u00b7 点击打卡 \u203a</div>'+
+              '</div></div>'+
+              '<div class="chev">\u203a</div>'+
             '</div>'+
           '</section>';
       })() +
@@ -1541,6 +1610,295 @@ input,textarea,select{font:inherit;color:inherit}
     render();
   }
 
+  // ============================================================
+  // 13天饿不死计划
+  // ============================================================
+  const COMMON_FOODS = [
+    { n:'白米饭 1碗', c:230 }, { n:'面条 1碗', c:280 }, { n:'馒头 1个', c:220 },
+    { n:'鸡蛋 1个', c:75 }, { n:'牛奶 250ml', c:160 }, { n:'豆浆 250ml', c:55 },
+    { n:'苹果 1个', c:95 }, { n:'香蕉 1根', c:105 }, { n:'橙子 1个', c:85 },
+    { n:'面包 1片', c:80 }, { n:'燕麦 30g', c:115 }, { n:'红薯 100g', c:90 },
+    { n:'鸡胸肉 100g', c:133 }, { n:'瘦猪肉 100g', c:143 }, { n:'鱼肉 100g', c:110 },
+    { n:'豆腐 100g', c:76 }, { n:'蔬菜沙拉 1份', c:60 }, { n:'番茄 1个', c:25 },
+    { n:'黄瓜 1根', c:15 }, { n:'酸奶 100g', c:72 },
+  ];
+
+  function fastEntries(){ return (state.fast && state.fast.entries) || {}; }
+  function getFastEntry(date){
+    const f = state.fast;
+    if (!f || !f.entries) return null;
+    return f.entries[date] || null;
+  }
+  function ensureFastEntry(date){
+    if (!state.fast) state.fast = { startDate: date, entries: {} };
+    if (!state.fast.entries) state.fast.entries = {};
+    if (!state.fast.entries[date]) state.fast.entries[date] = { weight: null, foods: [] };
+    return state.fast.entries[date];
+  }
+  function fastDayCalories(date){
+    const e = getFastEntry(date);
+    if (!e || !e.foods) return 0;
+    return e.foods.reduce((s,x)=> s + (+x.calories || 0), 0);
+  }
+
+  function viewFast(p){
+    const f = state.fast;
+    if (!f || !f.startDate){
+      const today = todayISO();
+      return ''+
+        '<div class="topbar">'+
+          '<button class="back" data-go="/home" aria-label="返回">'+ICON.back+'</button>'+
+          '<div class="title">13天饿不死计划</div>'+
+          '<div style="width:36px"></div>'+
+        '</div>'+
+        '<div class="fast-hero">'+
+          '<div class="fh-title serif">13天饿不死计划</div>'+
+          '<div class="fh-desc">连续13天，每天记录吃了什么、摄入多少千卡，以及体重变化。不是断食，是带着觉知地吃。</div>'+
+        '</div>'+
+        '<section class="section">'+
+          '<div class="section-head"><div class="section-title"><span class="dot fast-dot"></span>开始</div></div>'+
+          '<div class="sheet">'+
+            '<div class="field"><label>开始日期</label>'+
+              '<input class="input" id="fast-start-date" type="date" value="'+today+'">'+
+            '</div>'+
+            '<div class="field"><label>起始体重（kg，可选）</label>'+
+              '<input class="input" id="fast-start-weight" type="number" step="0.1" inputmode="decimal" placeholder="如：65.5">'+
+            '</div>'+
+            '<div class="actions">'+
+              '<button class="btn btn-ghost" data-go="/home">取消</button>'+
+              '<button class="btn btn-primary" data-act="start-fast" data-date="'+today+'">开始计划</button>'+
+            '</div>'+
+          '</div>'+
+        '</section>'+
+        '<div class="spacer-lg"></div>';
+    }
+
+    // plan active
+    const startDate = f.startDate;
+    const sd = parseISO(startDate);
+    const today = todayISO();
+    const daysIn = Math.floor((parseISO(today) - sd) / 86400000) + 1;
+    const dayNum = Math.max(1, Math.min(13, daysIn));
+    const isDone = daysIn > 13;
+    const viewDate = p.date || today;
+    const vd = parseISO(viewDate);
+    const entry = getFastEntry(viewDate) || { weight: null, foods: [] };
+    const dayCal = entry.foods ? entry.foods.reduce((s,x)=> s + (+x.calories||0), 0) : 0;
+
+    // all weight entries for chart
+    const weightData = [];
+    for (let i = 0; i < 13; i++){
+      const d = new Date(sd.getTime() + i * 86400000);
+      const iso = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+      const e = getFastEntry(iso);
+      weightData.push({ date: iso, weight: e && e.weight != null ? +e.weight : null, cal: fastDayCalories(iso) });
+    }
+
+    // stats
+    const startWeight = (getFastEntry(startDate) || {}).weight;
+    const currentWeight = entry.weight;
+    const loggedDays = weightData.filter(x=> x.weight != null).length;
+    const allCals = weightData.filter(x=> x.cal > 0);
+    const avgCal = allCals.length ? avg(allCals.map(x=>x.cal)) : 0;
+    const totalCal = weightData.reduce((s,x)=> s + x.cal, 0);
+    let weightChange = '';
+    if (startWeight != null && currentWeight != null){
+      const diff = currentWeight - startWeight;
+      weightChange = (diff >= 0 ? '+' : '') + diff.toFixed(1) + ' kg';
+    }
+
+    // 13-day grid
+    const gridHTML = weightData.map((x, i) => {
+      const d = parseISO(x.date);
+      const isToday = x.date === today;
+      const isFuture = x.date > today;
+      const hasLog = x.weight != null || x.cal > 0;
+      const cls = 'fast-gd' + (isToday ? ' today' : '') + (isFuture ? ' future' : '') + (hasLog ? ' logged' : '');
+      return '<button class="' + cls + '" data-act="goto-fast-date" data-date="' + x.date + '">' +
+        '<span class="fgd-d">D' + (i+1) + '</span>' +
+        '<span class="fgd-n">' + d.getDate() + '</span>' +
+        '<span class="fgd-w">' + (x.weight != null ? x.weight + 'kg' : (isFuture ? '—' : '·')) + '</span>' +
+        '<span class="fgd-c">' + (x.cal > 0 ? x.cal + 'kcal' : '') + '</span>' +
+      '</button>';
+    }).join('');
+
+    return ''+
+      '<div class="topbar">'+
+        '<button class="back" data-go="/home" aria-label="返回">'+ICON.back+'</button>'+
+        '<div class="title">13天饿不死计划</div>'+
+        '<div style="width:36px"></div>'+
+      '</div>'+
+
+      '<div class="fast-progress-wrap">'+
+        '<div class="fast-progress-info">'+
+          '<span class="fpi-day">第 '+dayNum+' / 13 天</span>'+
+          '<span class="fpi-date">'+fmtMD(vd)+' \u00b7 '+wdays[vd.getDay()]+'</span>'+
+        '</div>'+
+        '<div class="fast-progress-bar">'+
+          '<div class="fast-progress-fill" style="width:'+(dayNum/13*100).toFixed(1)+'%"></div>'+
+        '</div>'+
+        (isDone ? '<div class="fast-done-badge">13天已满！查看你的成果。</div>' : '')+
+      '</div>'+
+
+      '<div class="fast-stats">'+
+        '<div class="fs-item"><div class="fs-val">'+(startWeight != null ? startWeight+'kg' : '—')+'</div><div class="fs-lbl">起始体重</div></div>'+
+        '<div class="fs-item"><div class="fs-val">'+(currentWeight != null ? currentWeight+'kg' : '—')+'</div><div class="fs-lbl">今日体重</div></div>'+
+        '<div class="fs-item"><div class="fs-val">'+(weightChange || '—')+'</div><div class="fs-lbl">体重变化</div></div>'+
+        '<div class="fs-item"><div class="fs-val">'+(avgCal? Math.round(avgCal) : '—')+'</div><div class="fs-lbl">日均kcal</div></div>'+
+      '</div>'+
+
+      (weightData.some(x=> x.weight != null) ? ''+
+        '<section class="section">'+
+          '<div class="section-head"><div class="section-title"><span class="dot fast-dot"></span>体重趋势</div></div>'+
+          '<div class="chart-wrap">'+
+            fastWeightChart(weightData)+
+            '<div class="muted" style="font-size:12px;margin-top:8px">记录了 '+loggedDays+' 天体重数据。</div>'+
+          '</div>'+
+        '</section>' : '')+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot fast-dot"></span>'+(viewDate===today?'今日打卡':'查看 '+fmtMD(vd))+'</div></div>'+
+        '<div class="sheet">'+
+          '<div class="field">'+
+            '<label>体重（kg）</label>'+
+            '<div class="loc-row">'+
+              '<input class="input" id="fast-weight" type="number" step="0.1" inputmode="decimal" placeholder="如：65.5" value="'+(entry.weight != null ? entry.weight : '')+'">'+
+              '<button class="chip" data-act="save-weight" data-date="'+viewDate+'">记录</button>'+
+            '</div>'+
+          '</div>'+
+        '</div>'+
+      '</section>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot fast-dot"></span>今日饮食</div><span class="right">'+dayCal+' kcal</span></div>'+
+        (entry.foods && entry.foods.length ? '<div class="list fast-food-list">'+
+          entry.foods.map(food => ''+
+            '<div class="row fast-food-row">'+
+              '<div class="left"><div>'+
+                '<div class="name">'+esc(food.name)+'</div>'+
+                '<div class="meta">'+food.calories+' kcal</div>'+
+              '</div></div>'+
+              '<button class="todo-del" data-act="del-food" data-date="'+viewDate+'" data-fid="'+food.id+'" aria-label="删除">'+ICON.x+'</button>'+
+            '</div>').join('')+
+        '</div>' : '<div class="empty">还没有记录。下面添加。</div>')+
+
+        '<div class="fast-food-add">'+
+          '<input class="input" id="fast-food-name" placeholder="食物名称" enterkeyhint="next">'+
+          '<input class="input fast-food-cal" id="fast-food-cal" type="number" inputmode="numeric" placeholder="kcal" enterkeyhint="done">'+
+          '<button class="chip" data-act="add-food" data-date="'+viewDate+'">添加</button>'+
+        '</div>'+
+
+        '<div class="fast-quick-add">'+
+          '<div class="fast-qa-label">快速添加</div>'+
+          '<div class="fast-qa-chips">'+
+            COMMON_FOODS.map(cf => '<button class="chip fast-qa-chip" data-act="add-food" data-date="'+viewDate+'" data-name="'+esc(cf.n)+'" data-cal="'+cf.c+'">'+esc(cf.n)+' '+cf.c+'</button>').join('')+
+          '</div>'+
+        '</div>'+
+      '</section>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot fast-dot"></span>13天进度</div></div>'+
+        '<div class="fast-grid">'+gridHTML+'</div>'+
+        '<div class="cal-sum">'+
+          '<div class="cal-sum-title">计划总览</div>'+
+          '<div class="cal-sum-row"><span>已打卡天数</span><b>'+weightData.filter(x=>x.weight!=null||x.cal>0).length+' / 13</b></div>'+
+          '<div class="cal-sum-row"><span>总摄入</span><b>'+totalCal+' kcal</b></div>'+
+          '<div class="cal-sum-row"><span>日均摄入</span><b>'+(allCals.length?Math.round(avgCal):0)+' kcal</b></div>'+
+          '<div class="cal-sum-row"><span>记录体重</span><b>'+loggedDays+' 天</b></div>'+
+        '</div>'+
+      '</section>'+
+
+      '<section class="section">'+
+        '<div class="section-head"><div class="section-title"><span class="dot"></span>管理</div></div>'+
+        '<div class="insight-card">'+
+          '<div class="desc">重新开始会清空所有打卡记录。</div>'+
+          '<div style="margin-top:10px"><button class="btn btn-danger btn-sm" data-act="reset-fast">重新开始计划</button></div>'+
+        '</div>'+
+      '</section>'+
+
+      '<div class="spacer-lg"></div>';
+  }
+
+  function fastWeightChart(data){
+    const w = 320, h = 150, pad = 22;
+    const weights = data.map(x=> x.weight).filter(v=> v != null);
+    if (!weights.length) return '<div class="empty" style="margin-top:8px">还没有体重数据。</div>';
+    const wMin = Math.min.apply(null, weights);
+    const wMax = Math.max.apply(null, weights);
+    const range = wMax - wMin || 1;
+    const xStep = (w - pad*2) / 12;
+    const xPos = i => pad + i * xStep;
+    const yPos = v => pad + (1 - (v - wMin) / range) * (h - pad*2);
+    const pts = data.map((d, i) => d.weight != null ? [xPos(i), yPos(d.weight)] : null).filter(Boolean);
+    const path = pts.length >= 2 ? 'M ' + pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' L ') : '';
+    const dots = data.map((d, i) => d.weight != null ? '<circle cx="' + xPos(i).toFixed(1) + '" cy="' + yPos(d.weight).toFixed(1) + '" r="3.5" fill="#4A6FA5" stroke="#fff" stroke-width="1.5"/>' : '').join('');
+    const labels = data.map((d, i) => d.weight != null ? '<text x="' + xPos(i).toFixed(1) + '" y="' + (yPos(d.weight) - 7).toFixed(1) + '" font-size="9.5" fill="#4A6FA5" font-family="Inter" text-anchor="middle">' + d.weight + '</text>' : '').join('');
+    return ''+
+      '<svg class="chart-svg" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none">'+
+        [wMin, (wMin+wMax)/2, wMax].map(function(v){
+          return '<line x1="'+pad+'" y1="'+yPos(v).toFixed(1)+'" x2="'+(w-pad)+'" y2="'+yPos(v).toFixed(1)+'" stroke="#EDF1F6" stroke-dasharray="2 5"/>';
+        }).join('')+
+        (path ? '<path d="'+path+'" fill="none" stroke="#4A6FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' : '')+
+        dots + labels +
+        '<text x="'+pad+'" y="'+(h-4)+'" font-size="9" fill="#8A98AA" font-family="Inter">D1</text>'+
+        '<text x="'+(w-pad)+'" y="'+(h-4)+'" font-size="9" fill="#8A98AA" font-family="Inter" text-anchor="end">D13</text>'+
+      '</svg>';
+  }
+
+  function startFast(date){
+    const dateVal = trim(($('#fast-start-date')||{}).value) || date;
+    const weightVal = trim(($('#fast-start-weight')||{}).value);
+    state.fast = { startDate: dateVal, entries: {} };
+    if (weightVal){
+      const w = parseFloat(weightVal);
+      if (w > 0) state.fast.entries[dateVal] = { weight: w, foods: [] };
+    }
+    save(K.fast, state.fast);
+    toast('计划已开始！');
+    go('/fast');
+  }
+
+  function addFood(btn){
+    var date = btn.dataset.date;
+    var name = btn.dataset.name || trim(($('#fast-food-name')||{}).value || '');
+    var cal = btn.dataset.cal || trim(($('#fast-food-cal')||{}).value || '0');
+    if (!name){ toast('请输入食物名称。'); return; }
+    var entry = ensureFastEntry(date);
+    entry.foods = entry.foods || [];
+    entry.foods.push({ id: uid(), name: name, calories: +cal || 0, createdAt: new Date().toISOString() });
+    save(K.fast, state.fast);
+    toast('已添加 ' + name + '。');
+    render();
+  }
+
+  function delFood(date, fid){
+    const entry = getFastEntry(date);
+    if (!entry || !entry.foods) return;
+    entry.foods = entry.foods.filter(function(x){ return x.id !== fid; });
+    save(K.fast, state.fast);
+    toast('已删除。');
+    render();
+  }
+
+  function saveWeight(date){
+    const val = trim(($('#fast-weight')||{}).value);
+    const w = parseFloat(val);
+    if (!w || w <= 0){ toast('请输入有效体重。'); return; }
+    const entry = ensureFastEntry(date);
+    entry.weight = w;
+    save(K.fast, state.fast);
+    toast('体重已记录：' + w + ' kg');
+    render();
+  }
+
+  function resetFast(){
+    if (!confirm('确认重新开始？所有打卡记录将被清除。')) return;
+    state.fast = null;
+    save(K.fast, state.fast);
+    toast('已重置。');
+    go('/fast');
+  }
+
   function viewDay(p){
     const date = p.date || todayISO();
     _dayDate = date;
@@ -1825,6 +2183,7 @@ input,textarea,select{font:inherit;color:inherit}
     else if (path === '/new') html = viewNewLog(params);
     else if (path === '/log') html = viewLog(params);
     else if (path === '/day') html = viewDay(params);
+    else if (path === '/fast') html = viewFast(params);
     else if (path === '/insights') html = viewInsights(params);
     else if (path === '/weekly') html = viewWeekly(params);
     else html = viewHome();
@@ -1866,6 +2225,12 @@ input,textarea,select{font:inherit;color:inherit}
     if (act === 'del-todo'){ delTodo(b.dataset.id); toast('已删除。'); render(); return; }
     if (act === 'view-card') return viewCard(b.dataset.id);
     if (act === 'del-card') return deleteCard(b.dataset.id);
+    if (act === 'start-fast'){ startFast(b.dataset.date); return; }
+    if (act === 'add-food'){ addFood(b); return; }
+    if (act === 'del-food'){ delFood(b.dataset.date, b.dataset.fid); return; }
+    if (act === 'save-weight'){ saveWeight(b.dataset.date); return; }
+    if (act === 'reset-fast'){ resetFast(); return; }
+    if (act === 'goto-fast-date'){ go('/fast?date='+b.dataset.date); return; }
   }
 
   // ---------- modal ----------
@@ -2136,10 +2501,10 @@ input,textarea,select{font:inherit;color:inherit}
       try { const blob = await idb.get(c.id); if (blob) imgData[c.id] = await blobToBase64(blob); } catch (e) {}
     }
     const backup = {
-      version: 3, app: 'MY WORK BUDDY', exportedAt: new Date().toISOString(),
+      version: 4, app: 'MY WORK BUDDY', exportedAt: new Date().toISOString(),
       tasks: state.tasks, logs: state.logs, evidence: state.evidence,
       reviews: state.reviews, painStatus: state.painStatus,
-      diary: state.diary, cards: state.cards, todos: state.todos, images: imgData
+      diary: state.diary, cards: state.cards, todos: state.todos, fast: state.fast, images: imgData
     };
     const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -2187,6 +2552,7 @@ input,textarea,select{font:inherit;color:inherit}
         state.diary = backup.diary || [];
         state.cards = backup.cards || [];
         state.todos = backup.todos || [];
+        state.fast = backup.fast || null;
         saveAll();
         if (backup.images){
           toast('恢复图片…');
@@ -2323,6 +2689,19 @@ input,textarea,select{font:inherit;color:inherit}
         }
       });
     });
+    // fast food inputs: enter to add
+    const foodName = $('#fast-food-name');
+    const foodCal = $('#fast-food-cal');
+    if (foodName && foodCal){
+      const submitFood = () => {
+        if (!trim(foodName.value)){ foodName.focus(); return; }
+        const btn = document.querySelector('[data-act="add-food"][data-date="' + (foodCal.closest('section') ? '' : '') + '"]');
+        const addBtn = foodCal.parentElement.querySelector('[data-act="add-food"]');
+        if (addBtn) addBtn.click();
+      };
+      foodName.addEventListener('keydown', (e) => { if (e.key === 'Enter'){ e.preventDefault(); foodCal.focus(); } });
+      foodCal.addEventListener('keydown', (e) => { if (e.key === 'Enter'){ e.preventDefault(); const addBtn = foodCal.parentElement.querySelector('[data-act="add-food"]'); if (addBtn) addBtn.click(); } });
+    }
   }
 
   // ---------- init ----------
